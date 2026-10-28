@@ -28,3 +28,4 @@ jobs:
           args: >
             -Dsonar.projectKey=sonar-sqra-testing_sonarqube
             -Dsonar.organization=sonar-sqra-testing
+            -Dsonar.scanner.javaExePath=${{ env.JAVA_HOME }}/bin/java
