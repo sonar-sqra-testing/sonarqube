@@ -1,4 +1,4 @@
-name: SonarQube Cloud (dev8) CI analysis
+name: SonarQube Cloud (staging) CI analysis
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://dev8.sc-dev8.io
+          SONAR_HOST_URL: https://sc-staging.io
         with:
           args: >
             -Dsonar.projectKey=sonar-sqra-testing_sonarqube
