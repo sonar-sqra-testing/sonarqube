@@ -1,0 +1,26 @@
+name: SonarQube Cloud (dev8) CI analysis
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sonarqube:
+    name: SonarQube Cloud scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: SonarQube Cloud scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://dev8.sc-dev8.io
+        with:
+          args: >
+            -Dsonar.projectKey=sonar-sqra-testing_sonarqube
+            -Dsonar.organization=sonar-sqra-testing
