@@ -23,9 +23,9 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sc-staging.io
         with:
           args: >
             -Dsonar.projectKey=sonar-sqra-testing_sonarqube
             -Dsonar.organization=sonar-sqra-testing
-            -Dsonar.scanner.javaExePath=${{ env.JAVA_HOME }}/bin/java
+            -Dsonar.scanner.sonarcloudUrl=https://sc-staging.io
+            -Dsonar.scanner.apiBaseUrl=https://api.sc-staging.io
