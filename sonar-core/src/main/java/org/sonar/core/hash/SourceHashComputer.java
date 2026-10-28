@@ -19,6 +19,7 @@
  */
 package org.sonar.core.hash;
 
+import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -30,14 +31,17 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * {@link #addLine(String, boolean)}.
  */
 public class SourceHashComputer {
-  private final MessageDigest md5Digest = DigestUtils.getMd5Digest();
+  private final ByteArrayOutputStream content = new ByteArrayOutputStream();
 
   public void addLine(String line, boolean hasNextLine) {
     String lineToHash = hasNextLine ? (line + '\n') : line;
-    this.md5Digest.update(lineToHash.getBytes(UTF_8));
+    this.content.writeBytes(lineToHash.getBytes(UTF_8));
   }
 
   public String getHash() {
-    return Hex.encodeHexString(md5Digest.digest());
+    MessageDigest md5Digest = DigestUtils.getMd5Digest();
+    byte[] hash = md5Digest.digest(content.toByteArray());
+    content.reset();
+    return Hex.encodeHexString(hash);
   }
 }
