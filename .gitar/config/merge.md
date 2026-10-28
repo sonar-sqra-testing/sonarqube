@@ -1,26 +1,12 @@
 # Auto-merge criteria
 
-These criteria are additive to the organization-level auto-merge settings. A
-pull request must satisfy both. When a pull request fails these criteria,
-leave the merge to a human reviewer. This repository has no low-impact-path
-carve-out: every eligible pull request is gated on author and risk alone.
+Additive to the organization's auto-merge settings; a PR must satisfy both.
+Otherwise, leave the merge to a human.
 
-## Scope: `sonarqube-agent-staging` only
-
-Only arm auto-merge for a pull request opened by the
-`sonarqube-agent-staging` GitHub App (author login
-`sonarqube-agent-staging[bot]`). Never arm auto-merge for a pull request
-opened by any other author, regardless of risk rating or review outcome.
-
-## Risk gate: Low risk only
-
-Arm auto-merge only when Gitar's own risk rating for the pull request is Low.
-Do not arm on Medium or High risk. Re-check the rating any time the pull
-request changes, including a fix Gitar makes to it itself — a push that
-raises the risk disarms auto-merge until the rating returns to Low.
-
-## Existing safeguards still apply
-
-Any open blocking review finding and the required status checks (the `Build`
-job and the `SonarQube Cloud (staging) CI analysis` scan) must still pass
-before merge happens, exactly as for any other auto-merge.
+- Only arm auto-merge on a PR opened by the `sonarqube-agent-staging` GitHub
+  App (`sonarqube-agent-staging[bot]`). Never arm it for any other author.
+- Only arm it when Gitar's own risk rating for the PR is Low. Re-check on
+  every change to the PR — a push that raises the rating disarms auto-merge
+  until it's Low again.
+- Blocking review findings and required checks (`Build`,
+  `SonarQube Cloud (staging) CI analysis`) must still pass, as always.
