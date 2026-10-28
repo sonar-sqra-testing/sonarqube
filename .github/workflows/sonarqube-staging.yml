@@ -20,11 +20,10 @@ jobs:
           distribution: temurin
           java-version: "21"
       - name: SonarQube Cloud scan
-        uses: SonarSource/sonarqube-scan-action@v4
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sc-staging.io
-          SONAR_SCANNER_JRE: ${{ env.JAVA_HOME }}
         with:
           args: >
             -Dsonar.projectKey=sonar-sqra-testing_sonarqube
