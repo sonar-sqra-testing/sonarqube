@@ -1,0 +1,38 @@
+name: Arm Gitar auto-apply for sonarqube-agent-staging
+
+# Gitar's auto-apply (fix application, including CI-failure fixing and CI
+# recovery) is opt-in per pull request, not a global default: it activates
+# via the `gitar-managed` label or a `gitar auto-apply:on` PR comment. This
+# workflow applies that label automatically, but only on pull requests opened
+# by the sonarqube-agent-staging GitHub App, so no other PR is affected.
+# Auto-approve and auto-merge are governed separately by .gitar/config/.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  arm-auto-apply:
+    if: github.event.pull_request.user.login == 'sonarqube-agent-staging[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ensure the gitar-managed label exists
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create gitar-managed \
+            --repo "$GITHUB_REPOSITORY" \
+            --color BFD4F2 \
+            --description "Arms Gitar auto-apply (incl. CI-failure fixing) for this PR" \
+            --force
+
+      - name: Label the PR to arm Gitar auto-apply
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr edit "${{ github.event.pull_request.number }}" \
+            --repo "$GITHUB_REPOSITORY" \
+            --add-label gitar-managed
