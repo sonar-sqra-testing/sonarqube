@@ -1,0 +1,18 @@
+name: Submit Review
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  SubmitReview_job:
+    name: Submit Review
+    runs-on: ubuntu-latest
+    # For external PR, ticket should be moved manually
+    if: |
+      github.event.pull_request.head.repo.full_name == github.repository
+      && (github.event.review.state == 'changes_requested'
+          || github.event.review.state == 'approved')
+    steps:
+      - name: Report review
+        run: echo "Review ${{ github.event.review.state }} on PR #${{ github.event.pull_request.number }} by ${{ github.event.review.user.login }}"

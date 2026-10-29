@@ -1,0 +1,17 @@
+name: Pull Request Closed
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  PullRequestClosed_job:
+    name: Pull Request Closed
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    # For external PR, ticket should be moved manually
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - name: Report PR closed
+        run: echo "PR #${{ github.event.pull_request.number }} closed (merged=${{ github.event.pull_request.merged }})"
