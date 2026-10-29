@@ -36,6 +36,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @RunWith(DataProviderRunner.class)
 public class GithubAppConfigurationTest {
 
+  private static final Random RANDOM = new Random();
+
   @Test
   @UseDataProvider("incompleteConfigurationParametersSonarQube")
   public void isComplete_returns_false_if_configuration_is_incomplete_on_SonarQube(@Nullable Long applicationId, @Nullable String privateKey, @Nullable String apiEndpoint) {
@@ -56,7 +58,7 @@ public class GithubAppConfigurationTest {
 
   @Test
   public void getId_returns_applicationId_if_configuration_is_valid() {
-    long applicationId = new Random().nextLong();
+    long applicationId = RANDOM.nextLong();
     GithubAppConfiguration underTest = newValidConfiguration(applicationId);
 
     assertThat(underTest.getId()).isEqualTo(applicationId);
@@ -74,7 +76,7 @@ public class GithubAppConfigurationTest {
 
   @DataProvider
   public static Object[][] incompleteConfigurationParametersSonarQube() {
-    long applicationId = new Random().nextLong();
+    long applicationId = RANDOM.nextLong();
     String privateKey = secure().nextAlphabetic(9);
     String apiEndpoint = secure().nextAlphabetic(11);
 
@@ -116,7 +118,7 @@ public class GithubAppConfigurationTest {
 
   @Test
   public void equals_is_not_implemented() {
-    long applicationId = new Random().nextLong();
+    long applicationId = RANDOM.nextLong();
     String privateKey = secure().nextAlphabetic(8);
     String apiEndpoint = secure().nextAlphabetic(7);
 
@@ -129,7 +131,7 @@ public class GithubAppConfigurationTest {
 
   @Test
   public void hashcode_is_based_on_all_fields() {
-    long applicationId = new Random().nextLong();
+    long applicationId = RANDOM.nextLong();
     String privateKey = secure().nextAlphabetic(8);
     String apiEndpoint = secure().nextAlphabetic(7);
 
