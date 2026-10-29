@@ -5,12 +5,23 @@ on:
     types: [submitted]
 
 jobs:
+  approval-gate:
+    name: Approval gate
+    # Runs started by bots (GitHub Apps) wait for a reviewer of the bot-approval environment
+    if: endsWith(github.actor, '[bot]')
+    runs-on: ubuntu-latest
+    environment: bot-approval
+    steps:
+      - run: echo "Approved to run for ${{ github.actor }}"
+
   SubmitReview_job:
+    needs: approval-gate
     name: Submit Review
     runs-on: ubuntu-latest
     # For external PR, ticket should be moved manually
     if: |
-      github.event.pull_request.head.repo.full_name == github.repository
+      !cancelled() && contains(fromJSON('["success","skipped"]'), needs.approval-gate.result)
+      && github.event.pull_request.head.repo.full_name == github.repository
       && (github.event.review.state == 'changes_requested'
           || github.event.review.state == 'approved')
     steps:
