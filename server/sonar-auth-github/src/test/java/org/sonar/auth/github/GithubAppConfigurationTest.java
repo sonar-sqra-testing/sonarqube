@@ -22,7 +22,7 @@ package org.sonar.auth.github;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import java.util.Random;
+import java.security.SecureRandom;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import org.apache.commons.lang3.ArrayUtils;
@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @RunWith(DataProviderRunner.class)
 public class GithubAppConfigurationTest {
 
-  private static final Random RANDOM = new Random();
+  private static final SecureRandom RANDOM = new SecureRandom();
 
   @Test
   @UseDataProvider("incompleteConfigurationParametersSonarQube")
