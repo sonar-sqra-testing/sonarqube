@@ -31,6 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(DataProviderRunner.class)
 public class TimeoutConfigurationImplTest {
+  private final Random random = new Random();
   private final MapSettings settings = new MapSettings();
   private final TimeoutConfigurationImpl underTest = new TimeoutConfigurationImpl(settings.asConfig());
 
@@ -49,7 +50,7 @@ public class TimeoutConfigurationImplTest {
 
   @Test
   public void getConnectTimeout_returns_value_of_property() {
-    long expected = new Random().nextInt(9_456_789);
+    long expected = random.nextInt(9_456_789);
     settings.setProperty("sonar.alm.timeout.connect", expected);
 
     assertThat(underTest.getConnectTimeout()).isEqualTo(expected);
@@ -70,7 +71,7 @@ public class TimeoutConfigurationImplTest {
 
   @Test
   public void getReadTimeout_returns_value_of_property() {
-    long expected = new Random().nextInt(9_456_789);
+    long expected = random.nextInt(9_456_789);
     settings.setProperty("sonar.alm.timeout.read", expected);
 
     assertThat(underTest.getReadTimeout()).isEqualTo(expected);
