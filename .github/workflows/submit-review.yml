@@ -15,4 +15,5 @@ jobs:
           || github.event.review.state == 'approved')
     steps:
       - name: Report review
-        run: echo "Review ${{ github.event.review.state }} on PR #${{ github.event.pull_request.number }} by ${{ github.event.review.user.login }}"
+        run: |
+          echo "Review ${{ github.event.review.state }} on PR #${{ github.event.pull_request.number }} by ${{ github.event.review.user.login }}"

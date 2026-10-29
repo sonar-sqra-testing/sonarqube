@@ -12,4 +12,5 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - name: Report review request
-        run: echo "Review requested on PR #${{ github.event.pull_request.number }}"
+        run: |
+          echo "Review requested on PR #${{ github.event.pull_request.number }}"
