@@ -426,7 +426,7 @@ public class IntegrationTest {
   private static MockResponse newSuccessfulAccessTokenResponse() {
     // github does not return the standard JSON format but plain-text
     // see https://developer.github.com/v3/oauth/
-    return new MockResponse().setBody("access_token=e72e16c7e42f292c6912e7710c838347ae178b4a&scope=user%2Cgist&token_type=bearer");
+    return new MockResponse().setBody("access_token=fake-access-token&scope=user%2Cgist&token_type=bearer");
   }
 
   private static HttpServletRequest newRequest(String verifierCode) {
