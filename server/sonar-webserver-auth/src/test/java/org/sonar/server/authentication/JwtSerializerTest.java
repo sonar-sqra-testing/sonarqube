@@ -46,7 +46,7 @@ public class JwtSerializerTest {
 
   private static final MacAlgorithm SIGNATURE_ALGORITHM = Jwts.SIG.HS256;
 
-  private static final String A_SECRET_KEY = "HrPSavOYLNNrwTY+SOqpChr7OwvbR/zbDLdVXRN0+Eg=";
+  private static final String A_SECRET_KEY = Base64.getEncoder().encodeToString(SIGNATURE_ALGORITHM.key().build().getEncoded());
   private static final String USER_LOGIN = "john";
   private static final String SESSION_TOKEN_UUID = "ABCD";
   private static final long NOW = 1_704_067_200_000L;
@@ -146,7 +146,7 @@ public class JwtSerializerTest {
       .subject(USER_LOGIN)
       .issuedAt(new Date(system2.now()))
       .expiration(addMinutes(new Date(system2.now()), 20))
-      .signWith(decodeSecretKey("LyWgHktP0FuHB2K+kMs3KWMCJyFHVZDdDSqpIxAMVaQ="), SIGNATURE_ALGORITHM)
+      .signWith(SIGNATURE_ALGORITHM.key().build(), SIGNATURE_ALGORITHM)
       .compact();
 
     assertThat(underTest.decode(token)).isEmpty();
