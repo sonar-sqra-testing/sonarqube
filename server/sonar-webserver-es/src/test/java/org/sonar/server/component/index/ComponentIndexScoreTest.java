@@ -110,10 +110,10 @@ class ComponentIndexScoreTest extends ComponentIndexTest {
   @Test
   void should_prefer_favorite_over_recently_browsed() {
     ProjectDto project1 = db.components().insertPrivateProject(c -> c.setName("File1")).getProjectDto();
-    index(project1);
+    indexAndAuthorize(project1);
 
     ProjectDto project2 = db.components().insertPrivateProject(c -> c.setName("File2")).getProjectDto();
-    index(project2);
+    indexAndAuthorize(project2);
 
     assertSearch(SuggestionQuery.builder()
       .setQuery("File")
