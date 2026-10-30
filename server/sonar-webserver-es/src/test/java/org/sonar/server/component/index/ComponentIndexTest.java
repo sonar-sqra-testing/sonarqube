@@ -65,7 +65,7 @@ public abstract class ComponentIndexTest {
     // index them, but not in the expected order
     projects.stream()
       .sorted(Comparator.comparing(ProjectDto::getUuid).reversed())
-      .forEach(this::index);
+      .forEach(this::indexAndAuthorize);
 
     assertExactResults(query, projects.toArray(new ProjectDto[0]));
   }
@@ -105,14 +105,14 @@ public abstract class ComponentIndexTest {
   }
 
   protected ProjectDto indexProject(String key, String name) {
-    return index(db.components().insertPublicProject("UUID" + key, c -> c.setKey(key).setName(name)).getProjectDto());
+    return indexAndAuthorize(db.components().insertPublicProject("UUID" + key, c -> c.setKey(key).setName(name)).getProjectDto());
   }
 
   protected EntityDto newProject(String key, String name) {
     return db.components().insertPublicProject("UUID_" + key, c -> c.setKey(key).setName(name)).getProjectDto();
   }
 
-  protected ProjectDto index(ProjectDto dto) {
+  protected ProjectDto indexAndAuthorize(ProjectDto dto) {
     indexer.index(dto);
     authorizationIndexerTester.allowOnlyAnyone(dto);
     return dto;
