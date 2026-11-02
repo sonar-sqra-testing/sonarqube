@@ -164,7 +164,7 @@ public class NotificationFactoryTest {
 
   @Test
   public void newNewIssuesNotification_DetailsSupplier_getUserNameByUuid_returns_name_of_user_from_map_argument() {
-    Set<UserDto> users = IntStream.range(0, 1 + new Random().nextInt(10))
+    Set<UserDto> users = IntStream.range(0, 1 + secureRandom.nextInt(10))
       .mapToObj(i -> UserTesting.newUserDto().setLogin("user" + i))
       .collect(Collectors.toSet());
 
@@ -764,4 +764,6 @@ public class NotificationFactoryTest {
       throw new RuntimeException(e);
     }
   }
+
+  private final java.security.SecureRandom secureRandom = new java.security.SecureRandom();
 }
