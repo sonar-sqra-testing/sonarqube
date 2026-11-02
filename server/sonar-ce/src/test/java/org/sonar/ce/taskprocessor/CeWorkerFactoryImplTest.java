@@ -34,7 +34,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 public class CeWorkerFactoryImplTest {
-  private int randomOrdinal = new Random().nextInt(20);
+  private static final Random RANDOM = new Random();
+
+  private int randomOrdinal = RANDOM.nextInt(20);
   private CeWorkerFactoryImpl underTest = new CeWorkerFactoryImpl(mock(InternalCeQueue.class),
     mock(CeTaskProcessorRepository.class), UuidFactoryImpl.INSTANCE, mock(CeWorkerController.class), mock(EsClusterOperational.class));
 
@@ -63,7 +65,7 @@ public class CeWorkerFactoryImplTest {
 
   @Test
   public void create_allows_multiple_calls_with_same_ordinal() {
-    IntStream.range(0, new Random().nextInt(50)).forEach(ignored -> {
+    IntStream.range(0, RANDOM.nextInt(50)).forEach(ignored -> {
       CeWorker ceWorker = underTest.create(randomOrdinal);
 
       assertThat(ceWorker.getOrdinal()).isEqualTo(randomOrdinal);
@@ -99,7 +101,7 @@ public class CeWorkerFactoryImplTest {
   @Test
   public void CeWorkerFactory_must_returns_the_workers_returned_by_created() {
     Set<CeWorker> expected = new HashSet<>();
-    for (int i = 0; i < 1 + new Random().nextInt(10); i++) {
+    for (int i = 0; i < 1 + RANDOM.nextInt(10); i++) {
       expected.add(underTest.create(i));
     }
 
