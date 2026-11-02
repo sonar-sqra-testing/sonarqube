@@ -219,3 +219,5 @@ Note that contributing extensions for translations into other languages still wo
 Copyright (C) SonarSource Sàrl.
 
 Licensed under the [GNU Lesser General Public License, Version 3.0](https://www.gnu.org/licenses/lgpl.txt)
+
+<!-- Test PR: trivial change to exercise PR workflows. -->
