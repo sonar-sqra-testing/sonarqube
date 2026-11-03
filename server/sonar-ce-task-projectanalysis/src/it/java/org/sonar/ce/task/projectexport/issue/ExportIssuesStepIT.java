@@ -374,7 +374,7 @@ public class ExportIssuesStepIT {
   @Test
   public void execute_fails_with_ISE_if_locations_cannot_be_parsed_to_protobuf() throws URISyntaxException, IOException {
     byte[] rubbishBytes = getRubbishBytes();
-    String uuid = insertIssue(createBaseIssueDto(readyRuleDto, SOME_PROJECT_UUID).setLocations(rubbishBytes)).getKey();
+    insertIssue(createBaseIssueDto(readyRuleDto, SOME_PROJECT_UUID).setLocations(rubbishBytes));
 
     assertThatThrownBy(() -> underTest.execute(new TestComputationStepContext()))
       .isInstanceOf(IllegalStateException.class)
