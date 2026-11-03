@@ -25,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
@@ -320,10 +321,12 @@ public class StatusActionIT {
     final Path projectDumpsDirectoryPath = Paths.get(projectDumpsDirectoryPathname);
 
     if (Files.exists(projectDumpsDirectoryPath)) {
-      Files.walk(projectDumpsDirectoryPath)
-        .sorted(reverseOrder())
-        .map(Path::toFile)
-        .forEach(File::delete);
+      try (Stream<Path> paths = Files.walk(projectDumpsDirectoryPath)) {
+        paths
+          .sorted(reverseOrder())
+          .map(Path::toFile)
+          .forEach(File::delete);
+      }
     }
   }
 }
