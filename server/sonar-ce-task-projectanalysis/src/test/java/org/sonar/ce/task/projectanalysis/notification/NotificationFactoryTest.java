@@ -120,7 +120,7 @@ public class NotificationFactoryTest {
 
   @Test
   public void newMyNewIssuesNotification_DetailsSupplier_getUserNameByUuid_returns_name_of_user_from_map_argument() {
-    Set<UserDto> users = IntStream.range(0, 1 + new Random().nextInt(10))
+    Set<UserDto> users = IntStream.range(0, 1 + Integer.parseInt(secure().nextNumeric(1)))
       .mapToObj(i -> UserTesting.newUserDto().setLogin("user" + i))
       .collect(Collectors.toSet());
 
