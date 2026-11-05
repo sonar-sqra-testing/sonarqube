@@ -385,12 +385,12 @@ public class ComponentIssuesLoaderIT {
 
   @Test
   public void loadLatestDiffChangesForReopeningOfClosedIssues_does_not_query_DB_if_issue_list_is_empty() {
-    DbClient dbClient = mock(DbClient.class);
-    ComponentIssuesLoader underTest = new ComponentIssuesLoader(dbClient, null, null, newConfiguration("0"), null, issueChangesToDeleteRepository);
+    DbClient mockedDbClient = mock(DbClient.class);
+    ComponentIssuesLoader underTest = new ComponentIssuesLoader(mockedDbClient, null, null, newConfiguration("0"), null, issueChangesToDeleteRepository);
 
     underTest.loadLatestDiffChangesForReopeningOfClosedIssues(emptyList());
 
-    verifyNoInteractions(dbClient, system2);
+    verifyNoInteractions(mockedDbClient, system2);
   }
 
   @Test
