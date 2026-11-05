@@ -225,7 +225,6 @@ class PurgeCommandsIT {
   void deleteProjects() {
     ProjectData projectData = dbTester.components().insertPrivateProject();
     ComponentDto mainBranch = projectData.getMainBranchComponent();
-    ProjectDto projectDto = dbTester.getDbClient().projectDao().selectProjectByKey(dbTester.getSession(), mainBranch.getKey()).get();
     ComponentDto file = dbTester.components().insertComponent(newFileDto(mainBranch));
     SnapshotDto analysis = dbTester.components().insertSnapshot(mainBranch);
     dbTester.events().insertEvent(analysis);
