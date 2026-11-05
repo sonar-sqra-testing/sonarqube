@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -289,9 +288,9 @@ public class LogsActionIT {
 
 
   //helper methods for dealing with zip
-  public static List<File> extractFilesFromZip(InputStream zipInputStream) throws IOException {
+  public List<File> extractFilesFromZip(InputStream zipInputStream) throws IOException {
     List<File> extractedFiles = new ArrayList<>();
-    File tempDir = Files.createTempDirectory("extractedZip").toFile();
+    File tempDir = temp.newFolder();
 
     try (ZipInputStream zis = new ZipInputStream(zipInputStream)) {
       ZipEntry zipEntry;
