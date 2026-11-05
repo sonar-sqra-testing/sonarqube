@@ -77,7 +77,7 @@ public class ProjectTrackerBaseLazyInputIT {
   public void return_only_open_project_issues_if_no_folders() {
     ComponentDto file = dbTester.components().insertComponent(newFileDto(rootProjectDto));
     IssueDto openIssueOnProject = dbTester.issues().insert(rule, rootProjectDto, rootProjectDto, i -> i.setStatus("OPEN").setResolution(null));
-    IssueDto closedIssueOnProject = dbTester.issues().insert(rule, rootProjectDto, rootProjectDto, i -> i.setStatus("CLOSED").setResolution("FIXED"));
+    dbTester.issues().insert(rule, rootProjectDto, rootProjectDto, i -> i.setStatus("CLOSED").setResolution("FIXED"));
     IssueDto openIssue1OnFile = dbTester.issues().insert(rule, rootProjectDto, file, i -> i.setStatus("OPEN").setResolution(null));
 
     assertThat(underTest.loadIssues()).extracting(DefaultIssue::key).containsOnly(openIssueOnProject.getKey());
