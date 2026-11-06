@@ -1047,7 +1047,7 @@ class AuthorizationDaoIT {
 
   @Test
   void keepAuthorizedEntityUuids_returns_empty_list_if_input_is_empty() {
-    ProjectDto Project = db.components().insertPublicProject().getProjectDto();
+    db.components().insertPublicProject();
     UserDto user = db.users().insertUser();
 
     assertThat(underTest.keepAuthorizedEntityUuids(dbSession, Collections.emptySet(), user.getUuid(), ProjectPermission.USER))
@@ -1060,7 +1060,7 @@ class AuthorizationDaoIT {
 
   @Test
   void keepAuthorizedEntityUuids_returns_empty_list_if_input_does_not_reference_existing_projects() {
-    ProjectDto Project = db.components().insertPublicProject().getProjectDto();
+    db.components().insertPublicProject();
     UserDto user = db.users().insertUser();
 
     assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet("does_not_exist"), user.getUuid(), ProjectPermission.USER))
