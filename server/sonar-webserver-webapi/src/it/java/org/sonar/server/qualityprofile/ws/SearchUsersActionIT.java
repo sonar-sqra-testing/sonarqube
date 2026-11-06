@@ -337,6 +337,7 @@ public class SearchUsersActionIT {
   @Test
   public void fail_when_not_enough_permission() {
     QProfileDto profile = db.qualityProfiles().insert(p -> p.setLanguage(XOO));
+    db.users().insertUser();
     userSession.logIn(db.users().insertUser()).addPermission(GlobalPermission.ADMINISTER_QUALITY_GATES);
 
     assertThatThrownBy(() -> ws.newRequest()

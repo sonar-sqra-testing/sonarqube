@@ -282,6 +282,7 @@ public class SearchUsersActionIT {
 
   @Test
   public void fail_when_quality_gate_does_not_exist() {
+    db.users().insertUser();
     userSession.logIn().addPermission(ADMINISTER_QUALITY_GATES);
 
     TestRequest request = ws.newRequest().setParam(PARAM_GATE_NAME, "unknown");
@@ -295,6 +296,7 @@ public class SearchUsersActionIT {
   @Test
   public void fail_when_not_enough_permission() {
     QualityGateDto gate = db.qualityGates().insertQualityGate();
+    db.users().insertUser();
     userSession.logIn(db.users().insertUser());
 
     TestRequest request = ws.newRequest().setParam(PARAM_GATE_NAME, gate.getName());
