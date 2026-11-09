@@ -1,0 +1,19 @@
+name: Simulated flaky CI
+
+# Test helper: fails with an infra-looking error until the third attempt of the run, then passes.
+# It lets a CI re-run be checked on pull requests. Remove it once the test is done.
+on:
+  pull_request:
+
+jobs:
+  simulated-flaky-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail until attempt 3
+        run: |
+          echo "Run attempt: ${GITHUB_RUN_ATTEMPT}"
+          if [ "${GITHUB_RUN_ATTEMPT}" -lt 3 ]; then
+            echo "Error during SonarScanner execution: HTTP code 503 while trying to download plugin 'jasmin': no healthy upstream"
+            exit 1
+          fi
+          echo "Passed on attempt ${GITHUB_RUN_ATTEMPT}"
