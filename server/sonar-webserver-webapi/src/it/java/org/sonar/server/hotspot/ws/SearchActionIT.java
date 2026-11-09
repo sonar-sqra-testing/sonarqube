@@ -622,7 +622,7 @@ class SearchActionIT {
     RuleDto rule = newRule(SECURITY_HOTSPOT);
     IssueDto toReviewHotspot = insertHotspot(rule, mainBranch, file, i -> i.setStatus(STATUS_TO_REVIEW));
     IssueDto reviewedHotspot = insertHotspot(rule, mainBranch, file, i -> i.setStatus(STATUS_REVIEWED).setResolution(RESOLUTION_ACKNOWLEDGED));
-    IssueDto wrongStatusHotspot = insertHotspot(rule, mainBranch, file, i -> i.setStatus(STATUS_RESOLVED).setResolution(RESOLUTION_FIXED));
+    insertHotspot(rule, mainBranch, file, i -> i.setStatus(STATUS_RESOLVED).setResolution(RESOLUTION_FIXED));
 
     indexIssues();
 
@@ -1045,7 +1045,7 @@ class SearchActionIT {
     indexPermissions();
     ComponentDto file = dbTester.components().insertComponent(newFileDto(project));
     RuleDto rule = newRule(SECURITY_HOTSPOT, t -> t.setSecurityStandards(securityStandards));
-    IssueDto hotspot = insertHotspot(project, file, rule);
+    insertHotspot(project, file, rule);
     indexIssues();
 
     SearchWsResponse response = newRequest(project)
@@ -1108,9 +1108,9 @@ class SearchActionIT {
     userSessionRule.registerProjects(projectData.getProjectDto());
     indexPermissions();
     ComponentDto directory = dbTester.components().insertComponent(newDirectory(project, "donut/acme"));
-    ComponentDto directory2 = dbTester.components().insertComponent(newDirectory(project, "foo/bar"));
+    dbTester.components().insertComponent(newDirectory(project, "foo/bar"));
     ComponentDto file = dbTester.components().insertComponent(newFileDto(project));
-    ComponentDto file2 = dbTester.components().insertComponent(newFileDto(project));
+    dbTester.components().insertComponent(newFileDto(project));
     RuleDto rule = newRule(SECURITY_HOTSPOT);
     IssueDto fileHotspot = insertHotspot(project, file, rule);
     IssueDto dirHotspot = insertHotspot(project, directory, rule);
