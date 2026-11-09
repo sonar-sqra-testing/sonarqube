@@ -66,6 +66,8 @@ public class CeQueueImplIT {
   private static final long NOW = 1_450_000_000_000L;
   private static final String NODE_NAME = "nodeName1";
 
+  private final Random random = new Random();
+
   private System2 system2 = new TestSystem2().setNow(NOW);
 
   @Rule
@@ -167,7 +169,7 @@ public class CeQueueImplIT {
   public void submit_with_UNIQUE_QUEUE_PER_MAIN_COMPONENT_does_not_create_task_when_there_is_many_pending_task_for_same_main_component() {
     String mainComponentUuid = secure().nextAlphabetic(5);
     CeTaskSubmit taskSubmit = createTaskSubmit("with_component", newComponent(mainComponentUuid), null);
-    String[] uuids = IntStream.range(0, 2 + new Random().nextInt(5))
+    String[] uuids = IntStream.range(0, 2 + random.nextInt(5))
       .mapToObj(i -> insertPendingInQueue(newComponent(mainComponentUuid)))
       .map(CeQueueDto::getUuid)
       .toArray(String[]::new);
@@ -197,7 +199,7 @@ public class CeQueueImplIT {
   public void submit_without_UNIQUE_QUEUE_PER_MAIN_COMPONENT_creates_task_when_there_is_many_pending_task_for_same_main_component() {
     String mainComponentUuid = secure().nextAlphabetic(5);
     CeTaskSubmit taskSubmit = createTaskSubmit("with_component", newComponent(mainComponentUuid), null);
-    String[] uuids = IntStream.range(0, 2 + new Random().nextInt(5))
+    String[] uuids = IntStream.range(0, 2 + random.nextInt(5))
       .mapToObj(i -> insertPendingInQueue(newComponent(mainComponentUuid)))
       .map(CeQueueDto::getUuid)
       .toArray(String[]::new);
@@ -215,7 +217,7 @@ public class CeQueueImplIT {
   public void submit_with_UNIQUE_QUEUE_PER_TASK_TYPE_does_not_create_task_when_there_is_a_task_with_the_same_type() {
     String mainComponentUuid = secure().nextAlphabetic(5);
     CeTaskSubmit taskSubmit = createTaskSubmit("some type", newComponent(mainComponentUuid), null);
-    String[] uuids = IntStream.range(0, 2 + new Random().nextInt(5))
+    String[] uuids = IntStream.range(0, 2 + random.nextInt(5))
       .mapToObj(i -> insertPendingInQueue(newComponent(mainComponentUuid)))
       .map(CeQueueDto::getUuid)
       .toArray(String[]::new);
@@ -348,7 +350,7 @@ public class CeQueueImplIT {
   public void massSubmit_without_UNIQUE_QUEUE_PER_MAIN_COMPONENT_creates_task_when_there_is_many_pending_task_for_other_main_component() {
     String mainComponentUuid = secure().nextAlphabetic(5);
     CeTaskSubmit taskSubmit = createTaskSubmit("with_component", newComponent(mainComponentUuid), null);
-    String[] uuids = IntStream.range(0, 2 + new Random().nextInt(5))
+    String[] uuids = IntStream.range(0, 2 + random.nextInt(5))
       .mapToObj(i -> insertPendingInQueue(newComponent(mainComponentUuid)))
       .map(CeQueueDto::getUuid)
       .toArray(String[]::new);
@@ -375,7 +377,7 @@ public class CeQueueImplIT {
     Component componentForMainComponentUuid2 = newComponent(mainComponentUuid2);
     CeTaskSubmit taskSubmit2 = createTaskSubmit("no_pending", componentForMainComponentUuid2, null);
     CeTaskSubmit taskSubmit3 = createTaskSubmit("with_many_pending", newComponent(mainComponentUuid3), null);
-    String[] uuids3 = IntStream.range(0, 2 + new Random().nextInt(5))
+    String[] uuids3 = IntStream.range(0, 2 + random.nextInt(5))
       .mapToObj(i -> insertPendingInQueue(newComponent(mainComponentUuid3)))
       .map(CeQueueDto::getUuid)
       .toArray(String[]::new);
