@@ -45,7 +45,6 @@ public class SubAggregationHelperTest {
 
   @Test
   public void buildTermsAggregationV2_adds_term_subaggregation_with_minDoc_1_and_default_sort() {
-    String aggName = secure().nextAlphabetic(10);
     SimpleFieldTopAggregationDefinition topAggregation = new SimpleFieldTopAggregationDefinition("bar", false);
 
     Stream.of(underTest, underTestWithCustomSubAgg)
