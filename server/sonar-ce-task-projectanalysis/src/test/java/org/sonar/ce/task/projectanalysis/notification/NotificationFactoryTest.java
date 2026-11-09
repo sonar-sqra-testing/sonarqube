@@ -395,7 +395,7 @@ public class NotificationFactoryTest {
 
   @Test
   public void newIssuesChangesNotification_fails_with_ISE_if_analysis_date_has_not_been_set() {
-    Set<DefaultIssue> issues = IntStream.range(0, 1 + new Random().nextInt(2))
+    Set<DefaultIssue> issues = IntStream.range(0, 2)
       .mapToObj(i -> new DefaultIssue())
       .collect(Collectors.toSet());
     Map<String, UserDto> assigneesByUuid = nonEmptyAssigneesByUuid();
