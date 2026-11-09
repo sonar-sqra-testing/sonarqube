@@ -34,7 +34,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 public class CeWorkerFactoryImplTest {
-  private int randomOrdinal = new Random().nextInt(20);
+  private final Random random = new Random();
+  private int randomOrdinal = random.nextInt(20);
   private CeWorkerFactoryImpl underTest = new CeWorkerFactoryImpl(mock(InternalCeQueue.class),
     mock(CeTaskProcessorRepository.class), UuidFactoryImpl.INSTANCE, mock(CeWorkerController.class), mock(EsClusterOperational.class));
 
@@ -99,7 +100,7 @@ public class CeWorkerFactoryImplTest {
   @Test
   public void CeWorkerFactory_must_returns_the_workers_returned_by_created() {
     Set<CeWorker> expected = new HashSet<>();
-    for (int i = 0; i < 1 + new Random().nextInt(10); i++) {
+    for (int i = 0; i < 1 + random.nextInt(10); i++) {
       expected.add(underTest.create(i));
     }
 
