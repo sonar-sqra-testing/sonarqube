@@ -46,6 +46,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 public class TrackerExecutionTest {
+  private static final Random RANDOM = new Random();
   private final TrackerBaseInputFactory baseInputFactory = mock(TrackerBaseInputFactory.class);
   private final ClosedIssuesInputFactory closedIssuesInputFactory = mock(ClosedIssuesInputFactory.class);
   private final Tracker<DefaultIssue, DefaultIssue> tracker = mock(Tracker.class);
@@ -122,7 +123,7 @@ public class TrackerExecutionTest {
     when(analysisMetadataHolder.isFirstAnalysis()).thenReturn(false);
     when(tracker.trackNonClosed(rawInput, openIssuesInput)).thenReturn(nonClosedTracking);
     when(tracker.trackClosed(nonClosedTracking, closedIssuesInput)).thenReturn(closedTracking);
-    Set<DefaultIssue> mappedClosedIssues = IntStream.range(1, 2 + new Random().nextInt(2))
+    Set<DefaultIssue> mappedClosedIssues = IntStream.range(1, 2 + RANDOM.nextInt(2))
       .mapToObj(i -> new DefaultIssue().setKey("closed" + i).setStatus(Issue.STATUS_CLOSED))
       .collect(toSet());
 
