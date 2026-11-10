@@ -27,7 +27,6 @@ import org.sonar.ce.task.projectanalysis.component.Component;
 import org.sonar.core.issue.DefaultIssue;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
 public class ComponentIssuesRepositoryImpl implements MutableComponentIssuesRepository {
@@ -50,11 +49,15 @@ public class ComponentIssuesRepositoryImpl implements MutableComponentIssuesRepo
       // No issues on directories
       return Collections.emptyList();
     }
-    checkState(this.component != null && this.issues != null, "Issues have not been initialized");
-    checkArgument(component.equals(this.component),
+    Component currentComponent = this.component;
+    List<DefaultIssue> currentIssues = this.issues;
+    if (currentComponent == null || currentIssues == null) {
+      throw new IllegalStateException("Issues have not been initialized");
+    }
+    checkArgument(component.equals(currentComponent),
       "Only issues from component '%s' are available, but wanted component is '%s'.",
-      this.component.getReportAttributes().getRef(), component.getReportAttributes().getRef());
-    return issues;
+      currentComponent.getReportAttributes().getRef(), component.getReportAttributes().getRef());
+    return currentIssues;
   }
 
   @Override
