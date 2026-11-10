@@ -71,6 +71,7 @@ public class ComponentTesting {
       .setLanguage("xoo");
   }
 
+  /** Builds a DEP component under the given branch. */
   public static ComponentDto newDependencyDto(ComponentDto branch, String dependencyUuid) {
     return newChildComponent(dependencyUuid, branch, branch)
       .setKey("DEP_KEY_" + dependencyUuid)
