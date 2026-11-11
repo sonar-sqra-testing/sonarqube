@@ -136,7 +136,7 @@ public class MaintainabilityMeasuresVisitor extends PathAwareVisitorAdapter<Main
   private double computeDensity(Metric remediationEffortMetric, Component component, Counter developmentCost) {
     Optional<Measure> measure = measureRepository.getRawMeasure(component, remediationEffortMetric);
     double maintainabilityRemediationEffort = measure.isPresent() ? measure.get().getLongValue() : 0L;
-    if (Double.doubleToRawLongBits(developmentCost.devCosts) != 0L) {
+    if (developmentCost.devCosts != 0L) {
       return maintainabilityRemediationEffort / developmentCost.devCosts;
     }
     return 0D;
