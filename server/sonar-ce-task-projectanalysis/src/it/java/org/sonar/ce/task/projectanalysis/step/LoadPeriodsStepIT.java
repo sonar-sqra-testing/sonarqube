@@ -362,7 +362,7 @@ public class LoadPeriodsStepIT extends BaseStepTest {
 
   @Test
   public void load_previous_version_when_version_is_changing() {
-    SnapshotDto analysis1 = dbTester.components().insertSnapshot(project, snapshot -> snapshot.setCreatedAt(1226379600000L).setProjectVersion("0.9").setLast(false)); // 2008-11-11
+    dbTester.components().insertSnapshot(project, snapshot -> snapshot.setCreatedAt(1226379600000L).setProjectVersion("0.9").setLast(false)); // 2008-11-11
     SnapshotDto analysis2 = dbTester.components().insertSnapshot(project, snapshot -> snapshot.setCreatedAt(1226494680000L).setProjectVersion("0.9").setLast(true)); // 2008-11-12
 
     dbTester.events().insertEvent(newEvent(analysis2).setName("0.9").setCategory(CATEGORY_VERSION).setDate(analysis2.getCreatedAt()));
