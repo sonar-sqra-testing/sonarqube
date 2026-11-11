@@ -176,7 +176,7 @@ public class PersistProjectMeasuresStepIT extends BaseStepTest {
 
     // components as persisted in db
     ComponentDto projectDto = insertComponent("project-key", "project-uuid");
-    ComponentDto dirDto = insertComponent("dir-key", "dir-uuid");
+    insertComponent("dir-key", "dir-uuid");
     ComponentDto fileDto = insertComponent("file-key", "file-uuid");
     db.components().insertSnapshot(projectDto, s -> s.setUuid(ANALYSIS_UUID));
   }
