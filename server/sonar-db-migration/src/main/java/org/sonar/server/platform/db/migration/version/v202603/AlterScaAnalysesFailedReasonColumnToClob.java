@@ -35,6 +35,8 @@ public class AlterScaAnalysesFailedReasonColumnToClob extends DdlChange {
   static final String TABLE_NAME = "sca_analyses";
   static final String COLUMN_NAME = "failed_reason";
   static final String TEMP_COLUMN_NAME = "failed_reason_tmp";
+  private static final String COPY_TO_TEMP_SQL = "UPDATE " + TABLE_NAME + " SET " + TEMP_COLUMN_NAME + " = " + COLUMN_NAME;
+  private static final String COPY_FROM_TEMP_SQL = "UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME + " = " + TEMP_COLUMN_NAME;
 
   public AlterScaAnalysesFailedReasonColumnToClob(Database db) {
     super(db);
@@ -52,7 +54,7 @@ public class AlterScaAnalysesFailedReasonColumnToClob extends DdlChange {
             .setIsNullable(true)
             .build())
           .build());
-        context.execute("UPDATE " + TABLE_NAME + " SET " + TEMP_COLUMN_NAME + " = " + COLUMN_NAME);
+        context.execute(COPY_TO_TEMP_SQL);
         context.execute(new DropColumnsBuilder(getDialect(), TABLE_NAME, COLUMN_NAME).build());
         finishConversion(context);
       } else if (!DatabaseUtils.tableColumnExists(connection, TABLE_NAME, COLUMN_NAME)) {
@@ -65,14 +67,14 @@ public class AlterScaAnalysesFailedReasonColumnToClob extends DdlChange {
           // failed_reason is still VARCHAR: the temp column was added, but the data copy may or may not have
           // completed before the process died. Redo the copy unconditionally (safe since the original column
           // still exists), then drop and finish.
-          context.execute("UPDATE " + TABLE_NAME + " SET " + TEMP_COLUMN_NAME + " = " + COLUMN_NAME);
+          context.execute(COPY_TO_TEMP_SQL);
           context.execute(new DropColumnsBuilder(getDialect(), TABLE_NAME, COLUMN_NAME).build());
           finishConversion(context);
         } else {
           // failed_reason is already CLOB: finishConversion ran its add column step and auto-committed,
           // but died before copying data back from the temp column. The temp column still holds all the data.
           // Do not overwrite the temp column — just complete the copy-back and drop the temp.
-          context.execute("UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME + " = " + TEMP_COLUMN_NAME);
+          context.execute(COPY_FROM_TEMP_SQL);
           context.execute(new DropColumnsBuilder(getDialect(), TABLE_NAME, TEMP_COLUMN_NAME).build());
         }
       }
@@ -86,7 +88,7 @@ public class AlterScaAnalysesFailedReasonColumnToClob extends DdlChange {
         .setIsNullable(true)
         .build())
       .build());
-    context.execute("UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME + " = " + TEMP_COLUMN_NAME);
+    context.execute(COPY_FROM_TEMP_SQL);
     context.execute(new DropColumnsBuilder(getDialect(), TABLE_NAME, TEMP_COLUMN_NAME).build());
   }
 }

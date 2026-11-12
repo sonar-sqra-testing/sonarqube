@@ -76,6 +76,7 @@ public class EsTester extends ExternalResource implements AfterEachCallback {
 
   private static final Logger LOG = LoggerFactory.getLogger(EsTester.class);
   private static final ObjectMapper JSON = new ObjectMapper();
+  private static final String INDEX_BLOCKS_WRITE = "index.blocks.write";
 
   private static final EsClient ES_REST_CLIENT = createEsRestClient();
 
@@ -182,7 +183,7 @@ public class EsTester extends ExternalResource implements AfterEachCallback {
     try {
       ES_REST_CLIENT.putSettingsV2(req -> req
         .index(ALL_INDICES.getName())
-        .settings(s -> s.otherSettings(Map.of("index.blocks.write", JsonData.of(false)))));
+        .settings(s -> s.otherSettings(Map.of(INDEX_BLOCKS_WRITE, JsonData.of(false)))));
     } catch (ElasticsearchException e) {
       // Ignore 404 — no indices yet, nothing to reset
       Throwable cause = e.getCause();
@@ -380,13 +381,13 @@ public class EsTester extends ExternalResource implements AfterEachCallback {
 
   public void lockWrites(IndexType index) {
     synchronized (CLEANUP_LOCK) {
-      setIndexSettings(index.getMainType().getIndex().getName(), ImmutableMap.of("index.blocks.write", "true"));
+      setIndexSettings(index.getMainType().getIndex().getName(), ImmutableMap.of(INDEX_BLOCKS_WRITE, "true"));
     }
   }
 
   public void unlockWrites(IndexType index) {
     synchronized (CLEANUP_LOCK) {
-      setIndexSettings(index.getMainType().getIndex().getName(), ImmutableMap.of("index.blocks.write", "false"));
+      setIndexSettings(index.getMainType().getIndex().getName(), ImmutableMap.of(INDEX_BLOCKS_WRITE, "false"));
     }
   }
 

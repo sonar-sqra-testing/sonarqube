@@ -38,6 +38,7 @@ public class Helper {
 
   static final Set<String> PATH_EXCLUSIONS = new HashSet<>(asList("api/orchestrator"));
   private static final String OUTPUT_DIR = "build/generated-sources/results";
+  private static final String STRING_TYPE = "String";
   private final Map<String, List<String[]>> responseTypes;
 
   public Helper() {
@@ -121,7 +122,7 @@ public class Helper {
         } catch (ClassNotFoundException e) {
         }
         return Stream.empty();
-      })).findFirst().orElseGet(() -> "String");
+      })).findFirst().orElseGet(() -> STRING_TYPE);
   }
 
   private Stream<String> guessResponseInnerClassName(String action) {
@@ -140,7 +141,7 @@ public class Helper {
 
   public String responseTypeImport(String path, String action) {
     String fullyQualified = responseTypeFullyQualified(path, action);
-    if ("String".equals(fullyQualified)) {
+    if (STRING_TYPE.equals(fullyQualified)) {
       return null;
     }
     return "import " + fullyQualified + ";";
@@ -173,7 +174,7 @@ public class Helper {
     if (parameterDescription != null && parameterDescription.getAsString().matches(".*[Cc]omma.?separated.*|.*[Ll]ist of.*")) {
       return "List<String>";
     }
-    return "String";
+    return STRING_TYPE;
   }
 
   public String apiDocUrl(String path) {

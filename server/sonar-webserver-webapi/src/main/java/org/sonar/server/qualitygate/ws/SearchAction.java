@@ -49,6 +49,8 @@ import static org.sonar.server.ws.WsUtils.writeProtobuf;
 
 public class SearchAction implements QualityGatesWsAction {
 
+  private static final String VERSION_2025_1 = "2025.1";
+
   private final DbClient dbClient;
   private final UserSession userSession;
   private final QualityGatesWsSupport wsSupport;
@@ -69,9 +71,9 @@ public class SearchAction implements QualityGatesWsAction {
       .setSince("4.3")
       .setResponseExample(Resources.getResource(this.getClass(), "search-example.json"))
       .setChangelog(
-        new Change("2025.1", "Field 'containsAiCode' response field has added."),
-        new Change("2025.1", "Field 'isAiCodeAssured' response field has been removed."),
-        new Change("2025.1", "Field 'aiCodeAssurance' response field has been removed."),
+        new Change(VERSION_2025_1, "Field 'containsAiCode' response field has added."),
+        new Change(VERSION_2025_1, "Field 'isAiCodeAssured' response field has been removed."),
+        new Change(VERSION_2025_1, "Field 'aiCodeAssurance' response field has been removed."),
         new Change("10.8", "Field 'isAiCodeAssured' response field has been deprecated. Use 'aiCodeAssurance' instead."),
         new Change("10.8", "New field 'aiCodeAssurance' in the response."),
         new Change("10.0", "deprecated 'more' response field has been removed"),
