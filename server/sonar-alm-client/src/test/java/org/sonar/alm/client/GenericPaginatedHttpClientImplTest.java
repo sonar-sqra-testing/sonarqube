@@ -225,11 +225,11 @@ public class GenericPaginatedHttpClientImplTest {
 
   @Test
   public void getRepositoryCollaborators_whenDevOpsPlatformCallThrowsIOException_shouldLogAndReThrow() throws IOException {
-    AccessToken accessToken = mock();
-    when(appHttpClient.get(APP_URL, accessToken, "query?per_page=100")).thenThrow(new IOException("error"));
+    AccessToken mockedAccessToken = mock();
+    when(appHttpClient.get(APP_URL, mockedAccessToken, "query?per_page=100")).thenThrow(new IOException("error"));
 
     assertThatIllegalStateException()
-      .isThrownBy(() -> underTest.get(APP_URL, accessToken, "query", mock()))
+      .isThrownBy(() -> underTest.get(APP_URL, mockedAccessToken, "query", mock()))
       .isInstanceOf(IllegalStateException.class)
       .withMessage("SonarQube was not able to retrieve resources from external system. Error while executing a paginated call to https://github.com/, "
         + "endpoint:query?per_page=100. error");

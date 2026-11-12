@@ -112,10 +112,10 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void setAnalysisDate_throws_ISE_when_called_twice() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-    underTest.setAnalysisDate(SOME_DATE);
+    AnalysisMetadataHolderImpl holder = new AnalysisMetadataHolderImpl(editionProvider);
+    holder.setAnalysisDate(SOME_DATE);
 
-    assertThatThrownBy(() -> underTest.setAnalysisDate(SOME_DATE))
+    assertThatThrownBy(() -> holder.setAnalysisDate(SOME_DATE))
       .isInstanceOf(IllegalStateException.class)
       .hasMessage("Analysis date has already been set");
   }
@@ -134,16 +134,12 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void isFirstAnalysis_return_true() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-
     underTest.setBaseAnalysis(null);
     assertThat(underTest.isFirstAnalysis()).isTrue();
   }
 
   @Test
   public void isFirstAnalysis_return_false() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-
     underTest.setBaseAnalysis(baseProjectAnalysis);
     assertThat(underTest.isFirstAnalysis()).isFalse();
   }
@@ -164,7 +160,6 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void setBaseProjectSnapshot_throws_ISE_when_called_twice() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
     underTest.setBaseAnalysis(baseProjectAnalysis);
 
     assertThatThrownBy(() -> underTest.setBaseAnalysis(baseProjectAnalysis))
@@ -174,8 +169,6 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void isCrossProjectDuplicationEnabled_return_true() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-
     underTest.setCrossProjectDuplicationEnabled(true);
 
     assertThat(underTest.isCrossProjectDuplicationEnabled()).isTrue();
@@ -183,8 +176,6 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void isCrossProjectDuplicationEnabled_return_false() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-
     underTest.setCrossProjectDuplicationEnabled(false);
 
     assertThat(underTest.isCrossProjectDuplicationEnabled()).isFalse();
@@ -199,18 +190,16 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void setIsCrossProjectDuplicationEnabled_throws_ISE_when_called_twice() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-    underTest.setCrossProjectDuplicationEnabled(true);
+    AnalysisMetadataHolderImpl holder = new AnalysisMetadataHolderImpl(editionProvider);
+    holder.setCrossProjectDuplicationEnabled(true);
 
-    assertThatThrownBy(() -> underTest.setCrossProjectDuplicationEnabled(false))
+    assertThatThrownBy(() -> holder.setCrossProjectDuplicationEnabled(false))
       .isInstanceOf(IllegalStateException.class)
       .hasMessage("Cross project duplication flag has already been set");
   }
 
   @Test
   public void set_branch() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-
     underTest.setBranch(new DefaultBranchImpl(DEFAULT_MAIN_BRANCH_NAME));
 
     assertThat(underTest.getBranch().getName()).isEqualTo("main");
@@ -225,7 +214,6 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void setBranch_throws_ISE_when_called_twice() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
     underTest.setBranch(new DefaultBranchImpl(DEFAULT_MAIN_BRANCH_NAME));
 
     assertThatThrownBy(() -> underTest.setBranch(new DefaultBranchImpl("main")))
@@ -239,11 +227,11 @@ public class AnalysisMetadataHolderImplTest {
     when(editionProvider.get()).thenReturn(Optional.ofNullable(edition));
     Branch branch = mock(Branch.class);
     when(branch.isMain()).thenReturn(true);
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
+    AnalysisMetadataHolderImpl holder = new AnalysisMetadataHolderImpl(editionProvider);
 
-    underTest.setBranch(branch);
+    holder.setBranch(branch);
 
-    assertThat(underTest.getBranch()).isSameAs(branch);
+    assertThat(holder.getBranch()).isSameAs(branch);
   }
 
   @Test
@@ -252,11 +240,11 @@ public class AnalysisMetadataHolderImplTest {
     when(editionProvider.get()).thenReturn(Optional.ofNullable(edition));
     Branch branch = mock(Branch.class);
     when(branch.isMain()).thenReturn(false);
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
+    AnalysisMetadataHolderImpl analysisMetadataHolder = new AnalysisMetadataHolderImpl(editionProvider);
 
-    underTest.setBranch(branch);
+    analysisMetadataHolder.setBranch(branch);
 
-    assertThat(underTest.getBranch()).isSameAs(branch);
+    assertThat(analysisMetadataHolder.getBranch()).isSameAs(branch);
   }
 
   @Test
@@ -264,9 +252,9 @@ public class AnalysisMetadataHolderImplTest {
     when(editionProvider.get()).thenReturn(Optional.of(Edition.COMMUNITY));
     Branch branch = mock(Branch.class);
     when(branch.isMain()).thenReturn(false);
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
+    AnalysisMetadataHolderImpl metadataHolder = new AnalysisMetadataHolderImpl(editionProvider);
 
-    assertThatThrownBy(() -> underTest.setBranch(branch))
+    assertThatThrownBy(() -> metadataHolder.setBranch(branch))
       .isInstanceOf(IllegalStateException.class)
       .hasMessage("Branches and Pull Requests are not supported in Community Edition");
   }
@@ -291,8 +279,6 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void setPullRequestId() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-
     String pullRequestId = "pr-123";
     underTest.setPullRequestKey(pullRequestId);
 
@@ -308,7 +294,6 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void setPullRequestId_throws_ISE_when_called_twice() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
     underTest.setPullRequestKey("pr-123");
 
     assertThatThrownBy(() -> underTest.setPullRequestKey("pr-234"))
@@ -318,8 +303,6 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void set_and_get_project() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-
     Project project = Project.from(newPrivateProjectDto());
     underTest.setProject(project);
 
@@ -335,7 +318,6 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void setProject_throws_ISE_when_called_twice() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
     underTest.setProject(Project.from(newPrivateProjectDto()));
 
     assertThatThrownBy(() -> underTest.setProject(Project.from(newPrivateProjectDto())))
@@ -345,8 +327,6 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void getRootComponentRef() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-
     underTest.setRootComponentRef(10);
 
     assertThat(underTest.getRootComponentRef()).isEqualTo(10);
@@ -361,10 +341,10 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void setRootComponentRef_throws_ISE_when_called_twice() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-    underTest.setRootComponentRef(10);
+    AnalysisMetadataHolderImpl holder = new AnalysisMetadataHolderImpl(editionProvider);
+    holder.setRootComponentRef(10);
 
-    assertThatThrownBy(() -> underTest.setRootComponentRef(9))
+    assertThatThrownBy(() -> holder.setRootComponentRef(9))
       .isInstanceOf(IllegalStateException.class)
       .hasMessage("Root component ref has already been set");
   }
@@ -374,7 +354,6 @@ public class AnalysisMetadataHolderImplTest {
     Branch branch = mock(Branch.class);
     when(branch.getType()).thenReturn(BranchType.PULL_REQUEST);
 
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
     underTest.setBranch(branch);
 
     assertThat(underTest.isPullRequest()).isTrue();
@@ -382,7 +361,6 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void setScmRevision_throws_ISE_when_called_twice() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
     underTest.setScmRevision("bd56dab");
 
     assertThatThrownBy(() -> underTest.setScmRevision("bd56dab"))
@@ -392,28 +370,23 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void getScmRevision_returns_empty_if_scmRevision_is_not_initialized() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
-
     assertThat(underTest.getScmRevision()).isNotPresent();
   }
 
   @Test
   public void getScmRevision_returns_scmRevision_if_scmRevision_is_initialized() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
     underTest.setScmRevision("bd56dab");
     assertThat(underTest.getScmRevision()).hasValue("bd56dab");
   }
 
   @Test
   public void getScmRevision_does_not_return_empty_string() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
     underTest.setScmRevision("");
     assertThat(underTest.getScmRevision()).isEmpty();
   }
 
   @Test
   public void getScmRevision_does_not_return_blank_string() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
     underTest.setScmRevision("    ");
     assertThat(underTest.getScmRevision()).isEmpty();
   }
