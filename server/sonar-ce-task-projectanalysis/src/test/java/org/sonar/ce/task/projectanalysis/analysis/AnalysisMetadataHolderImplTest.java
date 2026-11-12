@@ -381,14 +381,12 @@ public class AnalysisMetadataHolderImplTest {
 
   @Test
   public void getScmRevision_does_not_return_empty_string() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
     underTest.setScmRevision("");
     assertThat(underTest.getScmRevision()).isEmpty();
   }
 
   @Test
   public void getScmRevision_does_not_return_blank_string() {
-    AnalysisMetadataHolderImpl underTest = new AnalysisMetadataHolderImpl(editionProvider);
     underTest.setScmRevision("    ");
     assertThat(underTest.getScmRevision()).isEmpty();
   }
