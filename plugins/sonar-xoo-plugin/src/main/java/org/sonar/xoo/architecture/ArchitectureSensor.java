@@ -28,6 +28,8 @@ import org.sonar.api.scanner.sensor.ProjectSensor;
 import org.sonar.xoo.Xoo;
 
 public class ArchitectureSensor implements ProjectSensor {
+  private static final String ARCHITECTURE_GRAPH_PREFIX = "architecture.graph.";
+
   @Override
   public void describe(SensorDescriptor descriptor) {
     descriptor.name("architecture-xoo-sensor")
@@ -44,21 +46,21 @@ public class ArchitectureSensor implements ProjectSensor {
       .count();
 
     context.addAnalysisData(
-      "architecture.graph." + Xoo.KEY + ".file_graph",
+      ARCHITECTURE_GRAPH_PREFIX + Xoo.KEY + ".file_graph",
       mimeType,
       new ByteArrayInputStream(("{\"graph\":\"files\", \"fileCount\":" + count + "}")
         .getBytes(StandardCharsets.UTF_8))
     );
 
     context.addAnalysisData(
-      "architecture.graph." + Xoo.KEY + ".file_graph.module_persp",
+      ARCHITECTURE_GRAPH_PREFIX + Xoo.KEY + ".file_graph.module_persp",
       mimeType,
       new ByteArrayInputStream(("{\"graph\":\"modules\", \"fileCount\":" + count + "}")
         .getBytes(StandardCharsets.UTF_8))
     );
 
     context.addAnalysisData(
-      "architecture.graph." + Xoo.KEY + ".namespace",
+      ARCHITECTURE_GRAPH_PREFIX + Xoo.KEY + ".namespace",
       mimeType,
       new ByteArrayInputStream(("{\"graph\":\"namespace\", \"fileCount\":" + count + "}")
         .getBytes(StandardCharsets.UTF_8))

@@ -34,6 +34,8 @@ import org.sonarqube.ws.client.WsConnector;
 @Generated("sonar-ws-generator")
 public class AlmIntegrationsService extends BaseService {
 
+  private static final String PARAM_ALM_SETTING = "almSetting";
+
   public AlmIntegrationsService(WsConnector wsConnector) {
     super(wsConnector, "api/alm_integrations");
   }
@@ -48,7 +50,7 @@ public class AlmIntegrationsService extends BaseService {
   public void checkPat(CheckPatRequest request) {
     call(
       new GetRequest(path("check_pat"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setMediaType(MediaTypes.JSON)
     ).content();
   }
@@ -63,7 +65,7 @@ public class AlmIntegrationsService extends BaseService {
   public Projects.CreateWsResponse importBitbucketserverProject(ImportBitbucketserverProjectRequest request) {
     return call(
       new PostRequest(path("import_bitbucketserver_project"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setParam("projectKey", request.getProjectKey())
         .setParam("repositorySlug", request.getRepositorySlug())
         .setMediaType(MediaTypes.JSON),
@@ -80,7 +82,7 @@ public class AlmIntegrationsService extends BaseService {
   public Projects.CreateWsResponse importBitbucketcloudProject(ImportBitbucketcloudRepoRequest request) {
     return call(
       new PostRequest(path("import_bitbucketcloud_repo"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setParam("repositorySlug", request.getRepositorySlug())
         .setMediaType(MediaTypes.JSON),
       Projects.CreateWsResponse.parser());
@@ -95,7 +97,7 @@ public class AlmIntegrationsService extends BaseService {
   public Projects.CreateWsResponse importGitLabProject(ImportGitLabProjectRequest request) {
     return call(
       new PostRequest(path("import_gitlab_project"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setParam("gitlabProjectId", request.getGitlabProjectId())
         .setMediaType(MediaTypes.JSON),
       Projects.CreateWsResponse.parser());
@@ -109,7 +111,7 @@ public class AlmIntegrationsService extends BaseService {
   public Projects.CreateWsResponse importGithubProject(ImportGithubProjectRequest request) {
     return call(
       new PostRequest(path("import_github_project"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setParam("repositoryKey", request.getRepositoryKey())
         .setMediaType(MediaTypes.JSON),
       Projects.CreateWsResponse.parser());
@@ -123,7 +125,7 @@ public class AlmIntegrationsService extends BaseService {
   public void listGithubOrganizations(ListGithubOrganizationsRequest request) {
     call(
       new GetRequest(path("list_github_organizations"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setParam("token", request.getToken())
         .setMediaType(MediaTypes.JSON),
       Projects.CreateWsResponse.parser());
@@ -139,7 +141,7 @@ public class AlmIntegrationsService extends BaseService {
   public Projects.CreateWsResponse importAzureProject(ImportAzureProjectRequest request) {
     return call(
       new PostRequest(path("import_azure_project"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setParam("projectName", request.getProjectName())
         .setParam("repositoryName", request.getRepositoryName())
         .setMediaType(MediaTypes.JSON),
@@ -157,7 +159,7 @@ public class AlmIntegrationsService extends BaseService {
   public AlmIntegrations.SearchGitlabReposWsResponse searchGitlabRepos(SearchGitlabReposRequest request) {
     return call(
       new GetRequest(path("search_gitlab_repos"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setParam("projectName", request.getProjectName())
         .setMediaType(MediaTypes.JSON),
       AlmIntegrations.SearchGitlabReposWsResponse.parser());
@@ -173,7 +175,7 @@ public class AlmIntegrationsService extends BaseService {
   public AlmIntegrations.ListAzureProjectsWsResponse listAzureProjects(ListAzureProjectsRequest request) {
     return call(
       new GetRequest(path("list_azure_projects"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setMediaType(MediaTypes.JSON),
       AlmIntegrations.ListAzureProjectsWsResponse.parser());
   }
@@ -188,7 +190,7 @@ public class AlmIntegrationsService extends BaseService {
   public AlmIntegrations.ListBitbucketserverProjectsWsResponse listBitbucketserverProjects(ListBitbucketserverProjectsRequest request) {
     return call(
       new GetRequest(path("list_bitbucketserver_projects"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setMediaType(MediaTypes.JSON),
       AlmIntegrations.ListBitbucketserverProjectsWsResponse.parser());
   }
@@ -203,7 +205,7 @@ public class AlmIntegrationsService extends BaseService {
   public AlmIntegrations.SearchBitbucketserverReposWsResponse searchBitbucketserverRepos(SearchBitbucketserverReposRequest request) {
     return call(
       new GetRequest(path("search_bitbucketserver_repos"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setParam("projectName", request.getProjectName())
         .setParam("repositoryName", request.getRepositoryName())
         .setMediaType(MediaTypes.JSON),
@@ -220,7 +222,7 @@ public class AlmIntegrationsService extends BaseService {
   public AlmIntegrations.SearchBitbucketcloudReposWsResponse searchBitbucketcloudRepos(SearchBitbucketcloudReposRequest request) {
     return call(
       new GetRequest(path("search_bitbucketcloud_repos"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setMediaType(MediaTypes.JSON),
       AlmIntegrations.SearchBitbucketcloudReposWsResponse.parser());
   }
@@ -254,7 +256,7 @@ public class AlmIntegrationsService extends BaseService {
   public void setPat(SetPatRequest request) {
     call(
       new PostRequest(path("set_pat"))
-        .setParam("almSetting", request.getAlmSetting())
+        .setParam(PARAM_ALM_SETTING, request.getAlmSetting())
         .setParam("pat", request.getPat())
         .setParam("username", request.getUsername())
         .setMediaType(MediaTypes.JSON)

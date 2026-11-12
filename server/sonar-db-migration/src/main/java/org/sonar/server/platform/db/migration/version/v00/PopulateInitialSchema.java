@@ -61,10 +61,13 @@ public class PopulateInitialSchema extends DataChange {
   private static final String ADMIN_USER = "admin";
   private static final String ADMIN_CRYPTED_PASSWORD = "100000$R9xDN18ebKxA3ZTaputi6wDt+fcKhP2h3GgAjGbcBlCSlkMLENxw9wziHS46QIW3fWOjEMpeyEts+pNuPXSbYA==";
   private static final String ADMIN_SALT = "pSDhsn3IM3KCa74CRRf7T7Vx+OE=";
-  private static final List<String> ADMIN_ROLES = Arrays.asList("admin", "profileadmin", "gateadmin", "provisioning", "applicationcreator", "portfoliocreator");
+  private static final List<String> ADMIN_ROLES = Arrays.asList(ADMIN_USER, "profileadmin", "gateadmin", "provisioning", "applicationcreator", "portfoliocreator");
   private static final String DISABLED = "DISABLED";
   private static final String DEFAULT_AI_PROVIDER_KEY = "OPENAI";
   private static final String DEFAULT_AI_PROVIDER_MODEL_KEY = "OPENAI_GPT_4O";
+  private static final String IS_EMPTY_COLUMN = "is_empty";
+  private static final String TEXT_VALUE_COLUMN = "text_value";
+  private static final String CREATED_AT_COLUMN = "created_at";
 
   private final System2 system2;
   private final UuidFactory uuidFactory;
@@ -163,7 +166,7 @@ public class PopulateInitialSchema extends DataChange {
     truncateTable(context, tableName);
 
     long now = system2.now();
-    Upsert upsert = context.prepareUpsert(createInsertStatement(tableName, "kee", "is_empty", "text_value", "created_at"));
+    Upsert upsert = context.prepareUpsert(createInsertStatement(tableName, "kee", IS_EMPTY_COLUMN, TEXT_VALUE_COLUMN, CREATED_AT_COLUMN));
     upsert
       .setString(1, "installation.date")
       .setBoolean(2, false)
@@ -187,7 +190,7 @@ public class PopulateInitialSchema extends DataChange {
 
     long now = system2.now();
     var upsert = context
-      .prepareUpsert(createInsertStatement(tableName, "uuid", "prop_key", "is_empty", "text_value", "created_at"));
+      .prepareUpsert(createInsertStatement(tableName, "uuid", "prop_key", IS_EMPTY_COLUMN, TEXT_VALUE_COLUMN, CREATED_AT_COLUMN));
 
     upsert.setString(1, uuidFactory.create())
       .setString(2, "sonar.forceAuthentication")
@@ -230,7 +233,7 @@ public class PopulateInitialSchema extends DataChange {
     Date now = new Date(system2.now());
     Upsert upsert = context.prepareUpsert(createInsertStatement(
       "groups",
-      "uuid", "name", "description", "created_at", "updated_at"));
+      "uuid", "name", "description", CREATED_AT_COLUMN, "updated_at"));
     upsert
       .setString(1, uuidFactory.create())
       .setString(2, ADMINS_GROUP)
@@ -264,7 +267,7 @@ public class PopulateInitialSchema extends DataChange {
 
     String uuid = uuidFactory.create();
     Date now = new Date(system2.now());
-    context.prepareUpsert(createInsertStatement("quality_gates", "uuid", "name", "is_built_in", "created_at", "updated_at"))
+    context.prepareUpsert(createInsertStatement("quality_gates", "uuid", "name", "is_built_in", CREATED_AT_COLUMN, "updated_at"))
       .setString(1, uuid)
       .setString(2, "Sonar way")
       .setBoolean(3, true)
@@ -307,7 +310,7 @@ public class PopulateInitialSchema extends DataChange {
       "triage", Set.of(USER, CODEVIEWER),
       "write", Set.of(USER, CODEVIEWER, ISSUE_ADMIN, SECURITYHOTSPOT_ADMIN, SCAN),
       "maintain", Set.of(USER, CODEVIEWER, ISSUE_ADMIN, SECURITYHOTSPOT_ADMIN, SCAN),
-      "admin", Set.of(USER, CODEVIEWER, ISSUE_ADMIN, SECURITYHOTSPOT_ADMIN, SCAN, ADMIN));
+      ADMIN_USER, Set.of(USER, CODEVIEWER, ISSUE_ADMIN, SECURITYHOTSPOT_ADMIN, SCAN, ADMIN));
 
     String insertQuery = """
     insert into devops_perms_mapping (uuid, devops_platform_role, sonarqube_permission)
@@ -372,9 +375,9 @@ public class PopulateInitialSchema extends DataChange {
           createInsertStatement("properties",
             "uuid",
             "prop_key",
-            "is_empty",
-            "text_value",
-            "created_at"));
+            IS_EMPTY_COLUMN,
+            TEXT_VALUE_COLUMN,
+            CREATED_AT_COLUMN));
         upsert.setString(1, uuidFactory.create())
           .setString(2, MULTI_QUALITY_MODE_ENABLED)
           .setBoolean(3, false)

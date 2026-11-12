@@ -57,6 +57,8 @@ public class RuleTesting {
   public static final RuleKey XOO_X2 = RuleKey.of("xoo", "x2");
   public static final RuleKey XOO_X3 = RuleKey.of("xoo", "x3");
 
+  private static final String DESCRIPTION_PREFIX = "description_";
+
   private static final AtomicLong nextRuleId = new AtomicLong(0);
 
   private static final Random RANDOM = new SecureRandom();
@@ -78,7 +80,7 @@ public class RuleTesting {
   public static RuleDto newRule(RuleKey key, RuleDescriptionSectionDto... ruleDescriptionSectionDtos) {
     RuleDto ruleDto = newRuleWithoutDescriptionSection(key);
     if (ruleDescriptionSectionDtos.length == 0) {
-      ruleDto.addRuleDescriptionSectionDto(createDefaultRuleDescriptionSection(uuidFactory.create(), "description_" + secure().nextAlphabetic(5)));
+      ruleDto.addRuleDescriptionSectionDto(createDefaultRuleDescriptionSection(uuidFactory.create(), DESCRIPTION_PREFIX + secure().nextAlphabetic(5)));
     } else {
       stream(ruleDescriptionSectionDtos).forEach(ruleDto::addRuleDescriptionSectionDto);
     }
@@ -138,7 +140,7 @@ public class RuleTesting {
       .setRuleUuid(rule.getUuid())
       .setName("name_" + secure().nextAlphabetic(5))
       .setDefaultValue("default_" + secure().nextAlphabetic(5))
-      .setDescription("description_" + secure().nextAlphabetic(5))
+      .setDescription(DESCRIPTION_PREFIX + secure().nextAlphabetic(5))
       .setType(RuleParamType.STRING.type());
   }
 
@@ -165,7 +167,7 @@ public class RuleTesting {
   }
 
   public static RuleDto newCustomRule(RuleDto templateRule) {
-    return newCustomRule(templateRule, "description_" + secure().nextAlphabetic(5));
+    return newCustomRule(templateRule, DESCRIPTION_PREFIX + secure().nextAlphabetic(5));
   }
 
   public static RuleDto newCustomRule(RuleDto templateRule, String description) {

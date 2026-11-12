@@ -44,6 +44,8 @@ import static org.sonar.ce.task.projectanalysis.measure.ValueType.STRING;
 
 public interface Measure {
 
+  String VALUE_TYPE = "valueType";
+
   enum Level {
     OK("Passed"),
     ERROR("Failed"),
@@ -246,7 +248,7 @@ public interface Measure {
     @Override
     public String toString() {
       return toStringHelper(this)
-        .add("valueType", valueType)
+        .add(VALUE_TYPE, valueType)
         .add("value", value)
         .add("data", data)
         .add("dataLevel", dataLevel)
@@ -337,7 +339,7 @@ public interface Measure {
     @Override
     public String toString() {
       return toStringHelper(this)
-        .add("valueType", valueType)
+        .add(VALUE_TYPE, valueType)
         .add("value", value)
         .toString();
     }
@@ -397,7 +399,7 @@ public interface Measure {
     @Override
     public String toString() {
       return toStringHelper(this)
-        .add("valueType", NO_VALUE)
+        .add(VALUE_TYPE, NO_VALUE)
         .toString();
     }
   }
