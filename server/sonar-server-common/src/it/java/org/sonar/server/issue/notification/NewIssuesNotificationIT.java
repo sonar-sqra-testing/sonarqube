@@ -424,10 +424,10 @@ public class NewIssuesNotificationIT {
   public void RuleDefinition_implements_equals_base_on_name_and_language() {
     String name = secure().nextAlphabetic(5);
     String language = secure().nextAlphabetic(6);
-    RuleDefinition underTest = new RuleDefinition(name, language);
+    RuleDefinition ruleDefinition = new RuleDefinition(name, language);
 
-    assertThat(underTest)
-      .isEqualTo(underTest)
+    assertThat(ruleDefinition)
+      .isEqualTo(ruleDefinition)
       .isEqualTo(new RuleDefinition(name, language))
       .isNotEqualTo(new RuleDefinition(language, name))
       .isNotEqualTo(new RuleDefinition(secure().nextAlphabetic(7), name))
@@ -441,13 +441,13 @@ public class NewIssuesNotificationIT {
   public void RuleDefinition_implements_hashcode_base_on_name_and_language() {
     String name = secure().nextAlphabetic(5);
     String language = secure().nextAlphabetic(6);
-    RuleDefinition underTest = new RuleDefinition(name, language);
+    RuleDefinition ruleDefinition = new RuleDefinition(name, language);
 
-    assertThat(underTest)
-      .hasSameHashCodeAs(underTest)
+    assertThat(ruleDefinition)
+      .hasSameHashCodeAs(ruleDefinition)
       .hasSameHashCodeAs(new RuleDefinition(name, language));
 
-    assertThat(underTest.hashCode())
+    assertThat(ruleDefinition.hashCode())
       .isNotEqualTo(new RuleDefinition(language, name).hashCode())
       .isNotEqualTo(new RuleDefinition(secure().nextAlphabetic(7), name).hashCode())
       .isNotEqualTo(new RuleDefinition(language, secure().nextAlphabetic(7)).hashCode())

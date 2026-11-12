@@ -106,51 +106,51 @@ public class CeWorkerControllerImplTest {
 
   @Test
   public void getCeWorkerIn_returns_empty_if_worker_is_unregistered_in_CeWorkerController() {
-    CeWorker ceWorker = mock(CeWorker.class);
+    CeWorker unregisteredCeWorker = mock(CeWorker.class);
     Thread currentThread = Thread.currentThread();
     Thread otherThread = new Thread();
 
-    mockWorkerIsRunningOnNoThread(ceWorker);
+    mockWorkerIsRunningOnNoThread(unregisteredCeWorker);
     assertThat(underTest.getCeWorkerIn(currentThread)).isEmpty();
     assertThat(underTest.getCeWorkerIn(otherThread)).isEmpty();
 
-    mockWorkerIsRunningOnThread(ceWorker, currentThread);
+    mockWorkerIsRunningOnThread(unregisteredCeWorker, currentThread);
     assertThat(underTest.getCeWorkerIn(currentThread)).isEmpty();
     assertThat(underTest.getCeWorkerIn(otherThread)).isEmpty();
 
-    mockWorkerIsRunningOnThread(ceWorker, otherThread);
+    mockWorkerIsRunningOnThread(unregisteredCeWorker, otherThread);
     assertThat(underTest.getCeWorkerIn(currentThread)).isEmpty();
     assertThat(underTest.getCeWorkerIn(otherThread)).isEmpty();
   }
 
   @Test
   public void getCeWorkerIn_returns_empty_if_worker_registered_in_CeWorkerController_but_has_no_current_thread() {
-    CeWorker ceWorker = mock(CeWorker.class);
+    CeWorker worker = mock(CeWorker.class);
     Thread currentThread = Thread.currentThread();
     Thread otherThread = new Thread();
 
-    underTest.registerProcessingFor(ceWorker);
+    underTest.registerProcessingFor(worker);
 
-    mockWorkerIsRunningOnNoThread(ceWorker);
+    mockWorkerIsRunningOnNoThread(worker);
     assertThat(underTest.getCeWorkerIn(currentThread)).isEmpty();
     assertThat(underTest.getCeWorkerIn(otherThread)).isEmpty();
   }
 
   @Test
   public void getCeWorkerIn_returns_thread_if_worker_registered_in_CeWorkerController_but_has_a_current_thread() {
-    CeWorker ceWorker = mock(CeWorker.class);
+    CeWorker mockedCeWorker = mock(CeWorker.class);
     Thread currentThread = Thread.currentThread();
     Thread otherThread = new Thread();
 
-    underTest.registerProcessingFor(ceWorker);
+    underTest.registerProcessingFor(mockedCeWorker);
 
-    mockWorkerIsRunningOnThread(ceWorker, currentThread);
-    assertThat(underTest.getCeWorkerIn(currentThread)).contains(ceWorker);
+    mockWorkerIsRunningOnThread(mockedCeWorker, currentThread);
+    assertThat(underTest.getCeWorkerIn(currentThread)).contains(mockedCeWorker);
     assertThat(underTest.getCeWorkerIn(otherThread)).isEmpty();
 
-    mockWorkerIsRunningOnThread(ceWorker, otherThread);
+    mockWorkerIsRunningOnThread(mockedCeWorker, otherThread);
     assertThat(underTest.getCeWorkerIn(currentThread)).isEmpty();
-    assertThat(underTest.getCeWorkerIn(otherThread)).contains(ceWorker);
+    assertThat(underTest.getCeWorkerIn(otherThread)).contains(mockedCeWorker);
   }
 
   private void mockWorkerIsRunningOnThread(CeWorker ceWorker, Thread thread) {

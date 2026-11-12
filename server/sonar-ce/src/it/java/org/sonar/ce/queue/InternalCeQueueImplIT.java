@@ -273,19 +273,19 @@ public class InternalCeQueueImplIT {
 
   @Test
   public void remove_updates_queueStatus_success_even_if_task_does_not_exist_in_DB() {
-    CEQueueStatus queueStatus = mock(CEQueueStatus.class);
+    CEQueueStatus mockedQueueStatus = mock(CEQueueStatus.class);
 
     CeTask task = submit(CeTaskTypes.REPORT, newProject("PROJECT_1"));
     db.getDbClient().ceQueueDao().deleteByUuid(db.getSession(), task.getUuid());
     db.commit();
 
-    InternalCeQueueImpl underTest = new InternalCeQueueImpl(system2, db.getDbClient(), null, queueStatus, null, null, nodeInformation);
+    InternalCeQueueImpl queue = new InternalCeQueueImpl(system2, db.getDbClient(), null, mockedQueueStatus, null, null, nodeInformation);
 
     try {
-      underTest.remove(task, CeActivityDto.Status.SUCCESS, null, null);
+      queue.remove(task, CeActivityDto.Status.SUCCESS, null, null);
       fail("remove should have thrown a IllegalStateException");
     } catch (IllegalStateException e) {
-      verify(queueStatus).addSuccess(anyLong());
+      verify(mockedQueueStatus).addSuccess(anyLong());
     }
   }
 
@@ -296,10 +296,10 @@ public class InternalCeQueueImplIT {
     CeTask task = submit(CeTaskTypes.REPORT, newProject("PROJECT_1"));
     db.getDbClient().ceQueueDao().deleteByUuid(db.getSession(), task.getUuid());
     db.commit();
-    InternalCeQueueImpl underTest = new InternalCeQueueImpl(system2, db.getDbClient(), null, queueStatusMock, null, null, nodeInformation);
+    InternalCeQueueImpl queueWithMockedStatus = new InternalCeQueueImpl(system2, db.getDbClient(), null, queueStatusMock, null, null, nodeInformation);
 
     try {
-      underTest.remove(task, CeActivityDto.Status.FAILED, null, null);
+      queueWithMockedStatus.remove(task, CeActivityDto.Status.FAILED, null, null);
       fail("remove should have thrown a IllegalStateException");
     } catch (IllegalStateException e) {
       verify(queueStatusMock).addError(anyLong());
@@ -314,9 +314,9 @@ public class InternalCeQueueImplIT {
     CeTask task = submit(CeTaskTypes.REPORT, newProject("PROJECT_1"));
     db.executeUpdateSql("update ce_queue set status = 'PENDING', started_at = 123 where uuid = '" + task.getUuid() + "'");
     db.commit();
-    InternalCeQueueImpl underTest = new InternalCeQueueImpl(system2, db.getDbClient(), null, queueStatusMock, null, null, nodeInformation);
+    InternalCeQueueImpl ceQueueWithMockedStatus = new InternalCeQueueImpl(system2, db.getDbClient(), null, queueStatusMock, null, null, nodeInformation);
 
-    underTest.cancelWornOuts();
+    ceQueueWithMockedStatus.cancelWornOuts();
 
     Optional<CeActivityDto> ceActivityDto = db.getDbClient().ceActivityDao().selectByUuid(db.getSession(), task.getUuid());
     assertThat(ceActivityDto).isPresent();

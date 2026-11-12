@@ -48,18 +48,18 @@ public class EvaluatedConditionTest {
 
   @Test
   public void constructor_accepts_null_value() {
-    EvaluatedCondition underTest = new EvaluatedCondition(CONDITION_1, ERROR, null);
+    EvaluatedCondition conditionWithNullValue = new EvaluatedCondition(CONDITION_1, ERROR, null);
 
-    assertThat(underTest.getValue()).isEmpty();
+    assertThat(conditionWithNullValue.getValue()).isEmpty();
   }
 
   @Test
   public void verify_getters() {
-    EvaluatedCondition underTest = new EvaluatedCondition(CONDITION_1, ERROR, "value");
+    EvaluatedCondition evaluatedCondition = new EvaluatedCondition(CONDITION_1, ERROR, "value");
 
-    assertThat(underTest.getCondition()).isEqualTo(CONDITION_1);
-    assertThat(underTest.getStatus()).isEqualTo(ERROR);
-    assertThat(underTest.getValue()).contains("value");
+    assertThat(evaluatedCondition.getCondition()).isEqualTo(CONDITION_1);
+    assertThat(evaluatedCondition.getStatus()).isEqualTo(ERROR);
+    assertThat(evaluatedCondition.getValue()).contains("value");
   }
 
   @Test
@@ -72,9 +72,9 @@ public class EvaluatedConditionTest {
 
   @Test
   public void toString_does_not_quote_null_value() {
-    EvaluatedCondition underTest = new EvaluatedCondition(CONDITION_1, ERROR, null);
+    EvaluatedCondition nullValueCondition = new EvaluatedCondition(CONDITION_1, ERROR, null);
 
-    assertThat(underTest).hasToString("EvaluatedCondition{condition=Condition{metricKey='metricKey', " +
+    assertThat(nullValueCondition).hasToString("EvaluatedCondition{condition=Condition{metricKey='metricKey', " +
       "operator=GREATER_THAN, errorThreshold='2'}, " +
       "originalCondition=Condition{metricKey='metricKey', " +
       "operator=GREATER_THAN, errorThreshold='2'}, " +

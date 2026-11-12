@@ -70,11 +70,11 @@ public class MigrationContainerImplTest {
     registry.add(1, "test", NoOpMigrationStep.class);
     registry.add(2, "test2", NoOpMigrationStep.class);
 
-    SpringComponentContainer parent = new SpringComponentContainer();
-    parent.add(registry.build());
-    parent.startComponents();
-    MigrationContainerImpl underTest = new MigrationContainerImpl(parent, NoOpExecutor.class);
-    assertThat(underTest.getComponentsByType(MigrationStep.class)).hasSize(1);
+    SpringComponentContainer parentContainer = new SpringComponentContainer();
+    parentContainer.add(registry.build());
+    parentContainer.startComponents();
+    MigrationContainerImpl migrationContainer = new MigrationContainerImpl(parentContainer, NoOpExecutor.class);
+    assertThat(migrationContainer.getComponentsByType(MigrationStep.class)).hasSize(1);
   }
 
   @Test
@@ -90,9 +90,9 @@ public class MigrationContainerImplTest {
   @Test
   public void cleanup_does_not_fail_even_if_stop_of_component_fails() {
     parent.add(StopFailing.class);
-    MigrationContainerImpl underTest = new MigrationContainerImpl(parent, NoOpExecutor.class);
+    MigrationContainerImpl migrationContainer = new MigrationContainerImpl(parent, NoOpExecutor.class);
 
-    underTest.cleanup();
+    migrationContainer.cleanup();
   }
 
   private static class NoOpExecutor implements MigrationStepsExecutor {

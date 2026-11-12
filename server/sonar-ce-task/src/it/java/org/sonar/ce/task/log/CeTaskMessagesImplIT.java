@@ -107,9 +107,9 @@ public class CeTaskMessagesImplIT {
     DbClient dbClientMock = mock(DbClient.class);
     UuidFactory uuidFactoryMock = mock(UuidFactory.class);
     CeTask ceTaskMock = mock(CeTask.class);
-    CeTaskMessagesImpl underTest = new CeTaskMessagesImpl(dbClientMock, uuidFactoryMock, ceTaskMock);
+    CeTaskMessagesImpl underTestWithMocks = new CeTaskMessagesImpl(dbClientMock, uuidFactoryMock, ceTaskMock);
 
-    underTest.addAll(Collections.emptyList());
+    underTestWithMocks.addAll(Collections.emptyList());
 
     verifyNoInteractions(dbClientMock, uuidFactoryMock, ceTaskMock);
   }
