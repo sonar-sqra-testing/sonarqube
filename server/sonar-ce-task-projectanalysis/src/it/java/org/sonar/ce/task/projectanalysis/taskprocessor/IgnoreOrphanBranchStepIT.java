@@ -95,15 +95,15 @@ public class IgnoreOrphanBranchStepIT {
 
   @Test
   public void fail_if_missing_main_component_in_task() {
-    CeTask ceTask = new CeTask.Builder()
+    CeTask taskWithoutEntity = new CeTask.Builder()
       .setType("type")
       .setUuid("uuid")
       .setComponent(null)
       .setEntity(null)
       .build();
-    IgnoreOrphanBranchStep underTest = new IgnoreOrphanBranchStep(ceTask, dbClient);
+    IgnoreOrphanBranchStep stepWithoutEntity = new IgnoreOrphanBranchStep(taskWithoutEntity, dbClient);
 
-    assertThatThrownBy(() -> underTest.execute(EMPTY_CONTEXT))
+    assertThatThrownBy(() -> stepWithoutEntity.execute(EMPTY_CONTEXT))
       .isInstanceOf(UnsupportedOperationException.class)
       .hasMessage("entity not found in task");
   }

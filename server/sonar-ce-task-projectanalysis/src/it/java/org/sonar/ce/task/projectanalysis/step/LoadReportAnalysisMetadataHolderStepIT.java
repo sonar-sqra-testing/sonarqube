@@ -273,17 +273,17 @@ public class LoadReportAnalysisMetadataHolderStepIT {
 
   @Test
   public void execute_does_not_fail_when_report_has_a_quality_profile_that_does_not_exist_anymore() {
-    ComponentDto project = db.components().insertPublicProject().getMainBranchComponent();
+    ComponentDto publicProject = db.components().insertPublicProject().getMainBranchComponent();
     ScannerReport.Metadata.Builder metadataBuilder = newBatchReportBuilder();
     metadataBuilder
-      .setProjectKey(project.getKey());
+      .setProjectKey(publicProject.getKey());
     metadataBuilder.putQprofilesPerLanguage("js", ScannerReport.Metadata.QProfile.newBuilder().setKey("p1").setName("Sonar way").setLanguage("js").build());
     reportReader.setMetadata(metadataBuilder.build());
-    putRootComponent(project.getKey());
+    putRootComponent(publicProject.getKey());
 
-    ComputationStep underTest = createStep(createCeTask(project.getKey()));
+    ComputationStep step = createStep(createCeTask(publicProject.getKey()));
 
-    underTest.execute(new TestComputationStepContext());
+    step.execute(new TestComputationStepContext());
   }
 
   @Test

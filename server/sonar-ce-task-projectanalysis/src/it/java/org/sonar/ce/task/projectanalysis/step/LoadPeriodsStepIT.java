@@ -307,13 +307,13 @@ public class LoadPeriodsStepIT extends BaseStepTest {
 
   @Test
   public void throw_ISE_when_specific_analysis_is_set_but_does_not_exist_in_DB() {
-    ComponentDto project = dbTester.components().insertPublicProject().getMainBranchComponent();
-    setProjectPeriod(project.uuid(), NewCodePeriodType.SPECIFIC_ANALYSIS, "nonexistent");
-    setupRoot(project, project.uuid(), "any-string");
+    ComponentDto publicProject = dbTester.components().insertPublicProject().getMainBranchComponent();
+    setProjectPeriod(publicProject.uuid(), NewCodePeriodType.SPECIFIC_ANALYSIS, "nonexistent");
+    setupRoot(publicProject, publicProject.uuid(), "any-string");
 
     assertThatThrownBy(() -> underTest.execute(new TestComputationStepContext()))
       .isInstanceOf(IllegalStateException.class)
-      .hasMessage("Analysis 'nonexistent' of project '" + project.uuid() + "' defined as the baseline does not exist");
+      .hasMessage("Analysis 'nonexistent' of project '" + publicProject.uuid() + "' defined as the baseline does not exist");
   }
 
   @Test
@@ -541,9 +541,9 @@ public class LoadPeriodsStepIT extends BaseStepTest {
       .setProjectVersion(version)
       .build());
 
-    Project project = mock(Project.class);
-    when(project.getUuid()).thenReturn(projectUuid);
-    when(analysisMetadataHolder.getProject()).thenReturn(project);
+    Project mockedProject = mock(Project.class);
+    when(mockedProject.getUuid()).thenReturn(projectUuid);
+    when(analysisMetadataHolder.getProject()).thenReturn(mockedProject);
   }
 
   private void setupRoot(ComponentDto branchComponent, String version) {

@@ -110,22 +110,22 @@ public class ExportBranchesStepIT {
     underTest.execute(new TestComputationStepContext());
 
     assertThat(logTester.logs(Level.DEBUG)).contains("3 branches exported");
-    Map<String, ProjectDump.Branch> branches = dumpWriter.getWrittenMessagesOf(DumpElement.BRANCHES)
+    Map<String, ProjectDump.Branch> exportedBranches = dumpWriter.getWrittenMessagesOf(DumpElement.BRANCHES)
       .stream()
       .collect(toMap(ProjectDump.Branch::getUuid, Function.identity()));
-    assertThat(branches).hasSize(3);
-    ProjectDump.Branch mainBranch = branches.values().stream().filter(ProjectDump.Branch::getIsMain).findFirst().get();
+    assertThat(exportedBranches).hasSize(3);
+    ProjectDump.Branch mainBranch = exportedBranches.values().stream().filter(ProjectDump.Branch::getIsMain).findFirst().get();
     assertThat(mainBranch).isNotNull();
     assertThat(mainBranch.getKee()).isEqualTo(BranchDto.DEFAULT_MAIN_BRANCH_NAME);
     assertThat(mainBranch.getProjectUuid()).isEqualTo(PROJECT_UUID);
     assertThat(mainBranch.getMergeBranchUuid()).isEmpty();
     assertThat(mainBranch.getBranchType()).isEqualTo("BRANCH");
-    ProjectDump.Branch branch1 = branches.get("branch-1-uuid");
+    ProjectDump.Branch branch1 = exportedBranches.get("branch-1-uuid");
     assertThat(branch1.getKee()).isEqualTo("branch-1");
     assertThat(branch1.getProjectUuid()).isEqualTo(PROJECT_UUID);
     assertThat(branch1.getMergeBranchUuid()).isEqualTo("master");
     assertThat(branch1.getBranchType()).isEqualTo("BRANCH");
-    ProjectDump.Branch branch5 = branches.get("branch-5-uuid");
+    ProjectDump.Branch branch5 = exportedBranches.get("branch-5-uuid");
     assertThat(branch5.getKee()).isEqualTo("branch-5");
     assertThat(branch5.getProjectUuid()).isEqualTo(PROJECT_UUID);
     assertThat(branch5.getMergeBranchUuid()).isEqualTo("master");

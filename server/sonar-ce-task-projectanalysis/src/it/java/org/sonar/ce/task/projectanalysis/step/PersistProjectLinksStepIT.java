@@ -85,14 +85,14 @@ public class PersistProjectLinksStepIT extends BaseStepTest {
   public void no_effect_if_branch_is_not_main() {
     DbClient dbClient = mock(DbClient.class);
     TreeRootHolder treeRootHolder = mock(TreeRootHolder.class);
-    ScannerReportReader reportReader = mock(ScannerReportReader.class);
+    ScannerReportReader mockedReportReader = mock(ScannerReportReader.class);
     UuidFactory uuidFactory = mock(UuidFactory.class);
     mockBranch(false);
-    PersistProjectLinksStep underTest = new PersistProjectLinksStep(analysisMetadataHolder, dbClient, treeRootHolder, reportReader, uuidFactory);
+    PersistProjectLinksStep underTest = new PersistProjectLinksStep(analysisMetadataHolder, dbClient, treeRootHolder, mockedReportReader, uuidFactory);
 
     underTest.execute(new TestComputationStepContext());
 
-    verifyNoInteractions(uuidFactory, reportReader, treeRootHolder, dbClient);
+    verifyNoInteractions(uuidFactory, mockedReportReader, treeRootHolder, dbClient);
   }
 
   @Test
