@@ -244,21 +244,21 @@ class ActiveRuleDaoIT {
 
   @Test
   void selectByTypeAndProfileUuids() {
-    RuleDto rule1 = db.rules().insert(r -> r.setType(RuleType.VULNERABILITY.getDbConstant()));
-    ActiveRuleDto activeRule1 = createFor(profile1, rule1).setSeverity(BLOCKER);
+    RuleDto vulnerabilityRule = db.rules().insert(r -> r.setType(RuleType.VULNERABILITY.getDbConstant()));
+    ActiveRuleDto activeRule1 = createFor(profile1, vulnerabilityRule).setSeverity(BLOCKER);
 
     underTest.insert(dbSession, activeRule1);
 
     assertThat(underTest.selectByTypeAndProfileUuids(dbSession, singletonList(RuleType.VULNERABILITY.getDbConstant()),
       singletonList(profile1.getKee())))
       .extracting(OrgActiveRuleDto::getOrgProfileUuid, OrgActiveRuleDto::getRuleUuid)
-      .contains(tuple(profile1.getKee(), rule1.getUuid()));
+      .contains(tuple(profile1.getKee(), vulnerabilityRule.getUuid()));
   }
 
   @Test
   void selectByTypeAndProfileUuids_ignores_rules_in_other_profiles() {
-    RuleDto rule1 = db.rules().insert(r -> r.setType(RuleType.VULNERABILITY.getDbConstant()));
-    ActiveRuleDto activeRule1 = createFor(profile2, rule1).setSeverity(BLOCKER);
+    RuleDto vulnerabilityRule = db.rules().insert(r -> r.setType(RuleType.VULNERABILITY.getDbConstant()));
+    ActiveRuleDto activeRule1 = createFor(profile2, vulnerabilityRule).setSeverity(BLOCKER);
 
     underTest.insert(dbSession, activeRule1);
 
@@ -269,8 +269,8 @@ class ActiveRuleDaoIT {
 
   @Test
   void selectByTypeAndProfileUuids_ignores_rules_with_another_rule_type() {
-    RuleDto rule1 = db.rules().insert(r -> r.setType(RuleType.VULNERABILITY.getDbConstant()));
-    ActiveRuleDto activeRule1 = createFor(profile1, rule1).setSeverity(BLOCKER);
+    RuleDto vulnerabilityRule = db.rules().insert(r -> r.setType(RuleType.VULNERABILITY.getDbConstant()));
+    ActiveRuleDto activeRule1 = createFor(profile1, vulnerabilityRule).setSeverity(BLOCKER);
 
     underTest.insert(dbSession, activeRule1);
 
@@ -279,7 +279,7 @@ class ActiveRuleDaoIT {
         singletonList(RuleType.VULNERABILITY.getDbConstant()),
         singletonList(profile1.getKee())))
       .extracting(OrgActiveRuleDto::getOrgProfileUuid, OrgActiveRuleDto::getRuleUuid)
-      .contains(tuple(profile1.getKee(), rule1.getUuid()));
+      .contains(tuple(profile1.getKee(), vulnerabilityRule.getUuid()));
 
     assertThat(
       underTest.selectByTypeAndProfileUuids(dbSession,
@@ -290,18 +290,18 @@ class ActiveRuleDaoIT {
 
   @Test
   void selectByHotspotAndSoftwareQualityAndProfileUuids_shouldReturnExpectedResult() {
-    RuleDto rule1 = db.rules().insert(r -> r.setType(RuleType.VULNERABILITY.getDbConstant())
+    RuleDto vulnerabilityRule = db.rules().insert(r -> r.setType(RuleType.VULNERABILITY.getDbConstant())
       .replaceAllDefaultImpacts(List.of(new ImpactDto(SECURITY, org.sonar.api.issue.impact.Severity.MEDIUM))));
-    ActiveRuleDto activeRule1 = createFor(profile2, rule1).setSeverity(MAJOR);
+    ActiveRuleDto activeRule1 = createFor(profile2, vulnerabilityRule).setSeverity(MAJOR);
     underTest.insert(dbSession, activeRule1);
-    RuleDto rule2 = db.rules().insert(r -> r.setType(RuleType.SECURITY_HOTSPOT.getDbConstant()));
-    ActiveRuleDto activeRule2 = createFor(profile2, rule2).setSeverity(MAJOR);
+    RuleDto hotspotRule = db.rules().insert(r -> r.setType(RuleType.SECURITY_HOTSPOT.getDbConstant()));
+    ActiveRuleDto activeRule2 = createFor(profile2, hotspotRule).setSeverity(MAJOR);
     underTest.insert(dbSession, activeRule2);
 
     // Creating extra rules to ensure that the query is filtering by the right rules
-    RuleDto rule3 = db.rules().insert(r -> r.setType(RuleType.CODE_SMELL.getDbConstant())
+    RuleDto codeSmellRule = db.rules().insert(r -> r.setType(RuleType.CODE_SMELL.getDbConstant())
       .replaceAllDefaultImpacts(List.of(new ImpactDto(MAINTAINABILITY, org.sonar.api.issue.impact.Severity.MEDIUM))));
-    ActiveRuleDto activeRule3 = createFor(profile2, rule3).setSeverity(MAJOR);
+    ActiveRuleDto activeRule3 = createFor(profile2, codeSmellRule).setSeverity(MAJOR);
     underTest.insert(dbSession, activeRule3);
 
     RuleDto rule4 = db.rules().insert(r -> r.setType(RuleType.VULNERABILITY.getDbConstant())
@@ -311,7 +311,7 @@ class ActiveRuleDaoIT {
 
     assertThat(underTest.selectByHotspotAndSoftwareQualityAndProfileUuids(dbSession, SECURITY.name(), singletonList(profile2.getKee())))
       .extracting(OrgActiveRuleDto::getRuleUuid)
-      .containsExactlyInAnyOrder(rule1.getUuid(), rule2.getUuid());
+      .containsExactlyInAnyOrder(vulnerabilityRule.getUuid(), hotspotRule.getUuid());
   }
 
   @Test

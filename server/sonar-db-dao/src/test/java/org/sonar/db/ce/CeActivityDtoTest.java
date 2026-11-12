@@ -47,21 +47,21 @@ class CeActivityDtoTest {
       .setCreatedAt(now + 9_999)
       .setStartedAt(now + 865);
 
-    CeActivityDto underTest = new CeActivityDto(ceQueueDto);
+    CeActivityDto activityDto = new CeActivityDto(ceQueueDto);
 
-    assertThat(underTest.getUuid()).isEqualTo(ceQueueDto.getUuid());
-    assertThat(underTest.getTaskType()).isEqualTo(ceQueueDto.getTaskType());
-    assertThat(underTest.getComponentUuid()).isEqualTo(ceQueueDto.getComponentUuid());
-    assertThat(underTest.getEntityUuid()).isEqualTo(ceQueueDto.getEntityUuid());
-    assertThat(underTest.getIsLastKey()).isEqualTo(ceQueueDto.getTaskType() + ceQueueDto.getComponentUuid());
-    assertThat(underTest.getIsLast()).isFalse();
-    assertThat(underTest.getMainIsLastKey()).isEqualTo(ceQueueDto.getTaskType() + ceQueueDto.getEntityUuid());
-    assertThat(underTest.getMainIsLast()).isFalse();
-    assertThat(underTest.getSubmitterUuid()).isEqualTo(ceQueueDto.getSubmitterUuid());
-    assertThat(underTest.getWorkerUuid()).isEqualTo(ceQueueDto.getWorkerUuid());
-    assertThat(underTest.getSubmittedAt()).isEqualTo(ceQueueDto.getCreatedAt());
-    assertThat(underTest.getStartedAt()).isEqualTo(ceQueueDto.getStartedAt());
-    assertThat(underTest.getStatus()).isNull();
+    assertThat(activityDto.getUuid()).isEqualTo(ceQueueDto.getUuid());
+    assertThat(activityDto.getTaskType()).isEqualTo(ceQueueDto.getTaskType());
+    assertThat(activityDto.getComponentUuid()).isEqualTo(ceQueueDto.getComponentUuid());
+    assertThat(activityDto.getEntityUuid()).isEqualTo(ceQueueDto.getEntityUuid());
+    assertThat(activityDto.getIsLastKey()).isEqualTo(ceQueueDto.getTaskType() + ceQueueDto.getComponentUuid());
+    assertThat(activityDto.getIsLast()).isFalse();
+    assertThat(activityDto.getMainIsLastKey()).isEqualTo(ceQueueDto.getTaskType() + ceQueueDto.getEntityUuid());
+    assertThat(activityDto.getMainIsLast()).isFalse();
+    assertThat(activityDto.getSubmitterUuid()).isEqualTo(ceQueueDto.getSubmitterUuid());
+    assertThat(activityDto.getWorkerUuid()).isEqualTo(ceQueueDto.getWorkerUuid());
+    assertThat(activityDto.getSubmittedAt()).isEqualTo(ceQueueDto.getCreatedAt());
+    assertThat(activityDto.getStartedAt()).isEqualTo(ceQueueDto.getStartedAt());
+    assertThat(activityDto.getStatus()).isNull();
   }
 
   @Test

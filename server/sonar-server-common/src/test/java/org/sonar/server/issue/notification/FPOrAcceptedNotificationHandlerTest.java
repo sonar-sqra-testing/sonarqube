@@ -132,9 +132,9 @@ public class FPOrAcceptedNotificationHandlerTest {
       .collect(toSet());
     when(emailNotificationChannel.isActivated()).thenReturn(true);
     when(serializerMock.from(any(IssuesChangesNotification.class))).thenReturn(mock(IssuesChangesNotificationBuilder.class));
-    FPOrAcceptedNotificationHandler underTest = new FPOrAcceptedNotificationHandler(notificationManager, emailNotificationChannel, serializerMock);
+    FPOrAcceptedNotificationHandler handlerWithSerializerMock = new FPOrAcceptedNotificationHandler(notificationManager, emailNotificationChannel, serializerMock);
 
-    underTest.deliver(notifications);
+    handlerWithSerializerMock.deliver(notifications);
 
     notifications.forEach(notification -> verify(serializerMock).from(notification));
   }
@@ -150,10 +150,10 @@ public class FPOrAcceptedNotificationHandlerTest {
       .thenReturn(mock(IssuesChangesNotificationBuilder.class))
       .thenReturn(mock(IssuesChangesNotificationBuilder.class))
       .thenThrow(expected);
-    FPOrAcceptedNotificationHandler underTest = new FPOrAcceptedNotificationHandler(notificationManager, emailNotificationChannel, serializerMock);
+    FPOrAcceptedNotificationHandler handlerWithSerializerMock = new FPOrAcceptedNotificationHandler(notificationManager, emailNotificationChannel, serializerMock);
 
     try {
-      underTest.deliver(notifications);
+      handlerWithSerializerMock.deliver(notifications);
       fail("should have throws IAE");
     } catch (IllegalArgumentException e) {
       verify(serializerMock, times(3)).from(any(IssuesChangesNotification.class));

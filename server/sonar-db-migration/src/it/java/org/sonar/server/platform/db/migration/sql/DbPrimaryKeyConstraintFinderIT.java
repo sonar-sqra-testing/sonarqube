@@ -51,16 +51,16 @@ class DbPrimaryKeyConstraintFinderIT {
 
   @Test
   void findConstraintName_constraint_exists() throws SQLException {
-    DbPrimaryKeyConstraintFinder underTest = new DbPrimaryKeyConstraintFinder(db.database());
-    Optional<String> constraintName = underTest.findConstraintName("TEST_PRIMARY_KEY");
+    DbPrimaryKeyConstraintFinder h2Finder = new DbPrimaryKeyConstraintFinder(db.database());
+    Optional<String> constraintName = h2Finder.findConstraintName("TEST_PRIMARY_KEY");
     assertThat(constraintName).isPresent();
     assertThat(constraintName.get()).contains("PK_TEST_PRIMARY_KEY");
   }
 
   @Test
   void findConstraintName_constraint_not_exist_fails_silently() throws SQLException {
-    DbPrimaryKeyConstraintFinder underTest = new DbPrimaryKeyConstraintFinder(db.database());
-    assertThat(underTest.findConstraintName("NOT_EXISTING_TABLE")).isNotPresent();
+    DbPrimaryKeyConstraintFinder h2Finder = new DbPrimaryKeyConstraintFinder(db.database());
+    assertThat(h2Finder.findConstraintName("NOT_EXISTING_TABLE")).isNotPresent();
   }
 
   @Test

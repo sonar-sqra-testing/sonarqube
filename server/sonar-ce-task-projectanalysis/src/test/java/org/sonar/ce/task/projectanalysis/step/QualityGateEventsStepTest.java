@@ -252,17 +252,17 @@ class QualityGateEventsStepTest {
     Branch pr = mock(Branch.class);
     when(pr.getType()).thenReturn(BranchType.PULL_REQUEST);
     analysisMetadataHolder.setBranch(pr);
-    TreeRootHolder treeRootHolder = mock(TreeRootHolder.class);
+    TreeRootHolder mockedTreeRootHolder = mock(TreeRootHolder.class);
     MetricRepository metricRepository = mock(MetricRepository.class);
     MeasureRepository measureRepository = mock(MeasureRepository.class);
     EventRepository eventRepository = mock(EventRepository.class);
     NotificationService notificationService = mock(NotificationService.class);
 
-    QualityGateEventsStep underTest = new QualityGateEventsStep(treeRootHolder, metricRepository, measureRepository,
+    QualityGateEventsStep underTest = new QualityGateEventsStep(mockedTreeRootHolder, metricRepository, measureRepository,
       eventRepository, notificationService, analysisMetadataHolder);
 
     underTest.execute(new TestComputationStepContext());
 
-    verifyNoInteractions(treeRootHolder, metricRepository, measureRepository, eventRepository, notificationService);
+    verifyNoInteractions(mockedTreeRootHolder, metricRepository, measureRepository, eventRepository, notificationService);
   }
 }
