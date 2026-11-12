@@ -288,15 +288,15 @@ public class ViewTester extends ExternalResource {
       private final String manual_measure_value;
       private final List<SubView> subViews;
 
-      public SubView(String key, String name, String desc, String selectionMode, String originalKey, String manual_measure_key, String manual_measure_value,
+      public SubView(String key, String name, String desc, String selectionMode, String originalKey, String manualMeasureKey, String manualMeasureValue,
         List<SubView> subViews) {
         this.key = key;
         this.name = name;
         this.desc = desc;
         this.selectionMode = selectionMode;
         this.originalKey = originalKey;
-        this.manual_measure_key = manual_measure_key;
-        this.manual_measure_value = manual_measure_value;
+        this.manual_measure_key = manualMeasureKey;
+        this.manual_measure_value = manualMeasureValue;
         this.subViews = subViews;
       }
 
