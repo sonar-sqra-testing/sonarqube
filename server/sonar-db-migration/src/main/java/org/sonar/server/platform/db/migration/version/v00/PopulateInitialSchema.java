@@ -61,7 +61,7 @@ public class PopulateInitialSchema extends DataChange {
   private static final String ADMIN_USER = "admin";
   private static final String ADMIN_CRYPTED_PASSWORD = "100000$R9xDN18ebKxA3ZTaputi6wDt+fcKhP2h3GgAjGbcBlCSlkMLENxw9wziHS46QIW3fWOjEMpeyEts+pNuPXSbYA==";
   private static final String ADMIN_SALT = "pSDhsn3IM3KCa74CRRf7T7Vx+OE=";
-  private static final List<String> ADMIN_ROLES = Arrays.asList(ADMIN_USER, "profileadmin", "gateadmin", "provisioning", "applicationcreator", "portfoliocreator");
+  private static final List<String> ADMIN_ROLES = Arrays.asList(ADMIN, "profileadmin", "gateadmin", "provisioning", "applicationcreator", "portfoliocreator");
   private static final String DISABLED = "DISABLED";
   private static final String DEFAULT_AI_PROVIDER_KEY = "OPENAI";
   private static final String DEFAULT_AI_PROVIDER_MODEL_KEY = "OPENAI_GPT_4O";
@@ -310,7 +310,7 @@ public class PopulateInitialSchema extends DataChange {
       "triage", Set.of(USER, CODEVIEWER),
       "write", Set.of(USER, CODEVIEWER, ISSUE_ADMIN, SECURITYHOTSPOT_ADMIN, SCAN),
       "maintain", Set.of(USER, CODEVIEWER, ISSUE_ADMIN, SECURITYHOTSPOT_ADMIN, SCAN),
-      ADMIN_USER, Set.of(USER, CODEVIEWER, ISSUE_ADMIN, SECURITYHOTSPOT_ADMIN, SCAN, ADMIN));
+      ADMIN, Set.of(USER, CODEVIEWER, ISSUE_ADMIN, SECURITYHOTSPOT_ADMIN, SCAN, ADMIN));
 
     String insertQuery = """
     insert into devops_perms_mapping (uuid, devops_platform_role, sonarqube_permission)

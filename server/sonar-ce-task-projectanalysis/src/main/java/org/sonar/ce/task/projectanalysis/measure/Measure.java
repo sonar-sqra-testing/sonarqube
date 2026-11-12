@@ -34,6 +34,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 import static org.sonar.ce.task.projectanalysis.measure.Measure.Level.toLevel;
+import static org.sonar.ce.task.projectanalysis.measure.MeasureToStringKeys.VALUE_TYPE;
 import static org.sonar.ce.task.projectanalysis.measure.ValueType.BOOLEAN;
 import static org.sonar.ce.task.projectanalysis.measure.ValueType.DOUBLE;
 import static org.sonar.ce.task.projectanalysis.measure.ValueType.INT;
@@ -43,8 +44,6 @@ import static org.sonar.ce.task.projectanalysis.measure.ValueType.NO_VALUE;
 import static org.sonar.ce.task.projectanalysis.measure.ValueType.STRING;
 
 public interface Measure {
-
-  String VALUE_TYPE = "valueType";
 
   enum Level {
     OK("Passed"),
