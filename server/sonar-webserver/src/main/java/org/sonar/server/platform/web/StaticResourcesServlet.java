@@ -207,7 +207,7 @@ public class StaticResourcesServlet extends HttpServlet {
     }
 
     @CheckForNull
-    InputStream openCoreExtensionResourceStream(String resource) throws Exception {
+    InputStream openCoreExtensionResourceStream(String resource) {
       return getClass().getClassLoader().getResourceAsStream(resource);
     }
 
