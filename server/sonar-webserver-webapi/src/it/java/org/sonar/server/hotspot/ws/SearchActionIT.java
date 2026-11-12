@@ -622,7 +622,7 @@ class SearchActionIT {
     RuleDto rule = newRule(SECURITY_HOTSPOT);
     IssueDto toReviewHotspot = insertHotspot(rule, mainBranch, file, i -> i.setStatus(STATUS_TO_REVIEW));
     IssueDto reviewedHotspot = insertHotspot(rule, mainBranch, file, i -> i.setStatus(STATUS_REVIEWED).setResolution(RESOLUTION_ACKNOWLEDGED));
-    IssueDto wrongStatusHotspot = insertHotspot(rule, mainBranch, file, i -> i.setStatus(STATUS_RESOLVED).setResolution(RESOLUTION_FIXED));
+    insertHotspot(rule, mainBranch, file, i -> i.setStatus(STATUS_RESOLVED).setResolution(RESOLUTION_FIXED));
 
     indexIssues();
 
