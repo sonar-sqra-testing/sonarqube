@@ -41,6 +41,7 @@ public class EducationRulesDefinition implements RulesDefinition {
   public static final String EDUCATION_RULE_REPOSITORY_KEY = "edu";
   public static final String EDUCATION_KEY = "education";
 
+  // Only used to verify that unknown/unsupported description sections are ignored
   private static final String IGNORED_FAKE_SECTION = "fake_section_to_be_ignored";
 
   public static final String[] CONTEXTS = {"spring", "hibernate", "apache_commons", "vaadin", "mybatis"};
