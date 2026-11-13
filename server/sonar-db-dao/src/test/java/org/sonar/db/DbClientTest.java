@@ -28,7 +28,7 @@ import static org.mockito.Mockito.mock;
 class DbClientTest {
 
   @Test
-  void constructor_with_all_registered_daos_succeeds() {
+  void constructorWithAllRegisteredDaosSucceeds() {
     Dao[] daos = DaoModule.classes().stream()
       .map(daoClass -> (Dao) mock(daoClass))
       .toArray(Dao[]::new);
