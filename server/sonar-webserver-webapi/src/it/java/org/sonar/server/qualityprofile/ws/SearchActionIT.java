@@ -335,7 +335,8 @@ public class SearchActionIT {
     RuleDto rule = db.rules().insertRule(r -> r.setLanguage(XOO1.getKey()));
     RuleDto deprecatedRule1 = db.rules().insertRule(r -> r.setStatus(DEPRECATED));
     RuleDto deprecatedRule2 = db.rules().insertRule(r -> r.setStatus(DEPRECATED));
-    RuleDto inactiveRule = db.rules().insertRule(r -> r.setLanguage(XOO1.getKey()));
+    // inactive rule
+    db.rules().insertRule(r -> r.setLanguage(XOO1.getKey()));
     db.qualityProfiles().activateRule(profile, rule);
     db.qualityProfiles().activateRule(profile, deprecatedRule1);
     db.qualityProfiles().activateRule(profile, deprecatedRule2);

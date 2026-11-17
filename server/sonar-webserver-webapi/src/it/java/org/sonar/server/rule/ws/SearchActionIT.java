@@ -641,7 +641,7 @@ class SearchActionIT {
 
   @Test
   void should_included_selected_non_matching_tag_in_facet() {
-    RuleDto rule = db.rules().insert(setSystemTags("tag1", "tag2", "tag3", "tag4", "tag5", "tag6", "tag7", "tag8", "tag9", "tagA"));
+    db.rules().insert(setSystemTags("tag1", "tag2", "tag3", "tag4", "tag5", "tag6", "tag7", "tag8", "tag9", "tagA"));
     indexRules();
 
     SearchResponse result = ws.newRequest()
@@ -737,7 +737,7 @@ class SearchActionIT {
   @Test
   void return_lang_key_field_when_language_name_is_not_available() {
     String unknownLanguage = "unknown_" + secure().nextAlphanumeric(5);
-    RuleDto rule = db.rules().insert(r -> r.setLanguage(unknownLanguage));
+    db.rules().insert(r -> r.setLanguage(unknownLanguage));
 
     indexRules();
 
@@ -860,7 +860,7 @@ class SearchActionIT {
   void search_template_rules() {
     RuleDto templateRule = db.rules().insert(r -> r.setLanguage("java")
       .setIsTemplate(true));
-    RuleDto rule = db.rules().insert(r -> r.setLanguage("java")
+    db.rules().insert(r -> r.setLanguage("java")
       .setTemplateUuid(templateRule.getUuid()));
 
     indexRules();
@@ -982,7 +982,7 @@ class SearchActionIT {
       .setName("the_var"));
 
     // SONAR-7083
-    RuleParamDto ruleParam3 = db.rules().insertRuleParam(rule, p -> p.setDefaultValue(null)
+    db.rules().insertRuleParam(rule, p -> p.setDefaultValue(null)
       .setType("STRING")
       .setDescription("Empty Param")
       .setName("empty_var"));
