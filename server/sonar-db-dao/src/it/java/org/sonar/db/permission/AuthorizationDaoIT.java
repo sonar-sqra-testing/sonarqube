@@ -777,7 +777,7 @@ class AuthorizationDaoIT {
   @Test
   void keep_authorized_users_returns_empty_list_for_role_and_project_for_anonymous() {
     ProjectDto project1 = db.components().insertPrivateProject().getProjectDto();
-    ProjectDto project2 = db.components().insertPrivateProject().getProjectDto();
+    db.components().insertPrivateProject();
     ProjectDto project3 = db.components().insertPrivateProject().getProjectDto();
     UserDto user1 = db.users().insertUser("u1");
     UserDto user2 = db.users().insertUser("u2");
@@ -1047,7 +1047,7 @@ class AuthorizationDaoIT {
 
   @Test
   void keepAuthorizedEntityUuids_returns_empty_list_if_input_is_empty() {
-    ProjectDto Project = db.components().insertPublicProject().getProjectDto();
+    db.components().insertPublicProject();
     UserDto user = db.users().insertUser();
 
     assertThat(underTest.keepAuthorizedEntityUuids(dbSession, Collections.emptySet(), user.getUuid(), ProjectPermission.USER))
@@ -1060,7 +1060,7 @@ class AuthorizationDaoIT {
 
   @Test
   void keepAuthorizedEntityUuids_returns_empty_list_if_input_does_not_reference_existing_projects() {
-    ProjectDto Project = db.components().insertPublicProject().getProjectDto();
+    db.components().insertPublicProject();
     UserDto user = db.users().insertUser();
 
     assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet("does_not_exist"), user.getUuid(), ProjectPermission.USER))
@@ -1309,7 +1309,7 @@ class AuthorizationDaoIT {
   @Test
   void keepAuthorizedLoginsOnEntity_whenHasBranch_shouldReturnExpectedUsers() {
     ProjectDto project = db.components().insertPrivateProject().getProjectDto();
-    BranchDto branch = db.components().insertProjectBranch(project, c -> c.setBranchType(BranchType.BRANCH));
+    db.components().insertProjectBranch(project, c -> c.setBranchType(BranchType.BRANCH));
 
     GroupDto userGroup = db.users().insertGroup("USERS");
     GroupDto adminGroup = db.users().insertGroup("ADMIN");
