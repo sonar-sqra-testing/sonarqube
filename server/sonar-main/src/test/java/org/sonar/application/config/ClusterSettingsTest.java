@@ -581,8 +581,8 @@ public class ClusterSettingsTest {
     when(network.isLoopback(anyString())).thenReturn(false);
   }
 
-  private void mockNonLocal(String search_host) {
-    when(network.isLocal(search_host)).thenReturn(false);
+  private void mockNonLocal(String searchHost) {
+    when(network.isLocal(searchHost)).thenReturn(false);
   }
 
   private void mockLoopback(String host) {

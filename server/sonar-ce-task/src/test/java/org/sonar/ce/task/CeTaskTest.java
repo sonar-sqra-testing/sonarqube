@@ -149,7 +149,7 @@ public class CeTaskTest {
     CeTask.User user1 = new CeTask.User("UUID_1", null);
     CeTask.User user1bis = new CeTask.User("UUID_1", null);
     CeTask.User user2 = new CeTask.User("UUID_2", null);
-    CeTask.User user1_diff_login = new CeTask.User("UUID_1", "LOGIN");
+    CeTask.User user1DiffLogin = new CeTask.User("UUID_1", "LOGIN");
 
     assertThat(user1.equals(null)).isFalse();
     assertThat(user1)
@@ -158,6 +158,6 @@ public class CeTaskTest {
       .isNotEqualTo(user2)
       .hasSameHashCodeAs(user1)
       .hasSameHashCodeAs(user1bis)
-      .hasSameHashCodeAs(user1_diff_login);
+      .hasSameHashCodeAs(user1DiffLogin);
   }
 }
