@@ -112,8 +112,8 @@ public class AuthorizationDocTest {
 
     AuthorizationDoc doc = AuthorizationDoc.fromDto(IndexType.main(Index.simple("foo"), "bar"), underTest);
 
-    boolean auth_allowAnyone = doc.getField("auth_allowAnyone");
-    assertThat(auth_allowAnyone).isFalse();
+    boolean allowAnyone = doc.getField("auth_allowAnyone");
+    assertThat(allowAnyone).isFalse();
     List<Integer> userIds = doc.getField("auth_userIds");
     assertThat(userIds).isEmpty();
     List<Integer> groupIds = doc.getField("auth_groupIds");
@@ -128,8 +128,8 @@ public class AuthorizationDocTest {
 
     AuthorizationDoc doc = AuthorizationDoc.fromDto(IndexType.main(Index.simple("foo"), "bar"), underTest);
 
-    boolean auth_allowAnyone = doc.getField("auth_allowAnyone");
-    assertThat(auth_allowAnyone).isFalse();
+    boolean allowAnyone = doc.getField("auth_allowAnyone");
+    assertThat(allowAnyone).isFalse();
     List<String> userUuids = doc.getField("auth_userIds");
     assertThat(userUuids).isEqualTo(underTest.getUserUuids());
     List<String> groupUuids = doc.getField("auth_groupIds");
@@ -145,8 +145,8 @@ public class AuthorizationDocTest {
 
     AuthorizationDoc doc = AuthorizationDoc.fromDto(IndexType.main(Index.simple("foo"), "bar"), underTest);
 
-    boolean auth_allowAnyone = doc.getField("auth_allowAnyone");
-    assertThat(auth_allowAnyone).isTrue();
+    boolean allowAnyone = doc.getField("auth_allowAnyone");
+    assertThat(allowAnyone).isTrue();
     try {
       doc.getField("auth_userIds");
       fail("should have thrown IllegalStateException");
