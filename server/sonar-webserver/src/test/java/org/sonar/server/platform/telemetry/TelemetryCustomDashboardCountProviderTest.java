@@ -64,9 +64,9 @@ class TelemetryCustomDashboardCountProviderTest {
 
   @Test
   void communityProviders_reportZeroDashboardCounts() {
-    DashboardCountService dashboardCountService = new DefaultDashboardCountService();
+    DashboardCountService defaultDashboardCountService = new DefaultDashboardCountService();
 
-    assertThat(new TelemetryCustomPortfolioDashboardCountProvider(dashboardCountService).getValue()).contains(0);
-    assertThat(new TelemetryCustomProjectDashboardCountProvider(dashboardCountService).getValue()).contains(0);
+    assertThat(new TelemetryCustomPortfolioDashboardCountProvider(defaultDashboardCountService).getValue()).contains(0);
+    assertThat(new TelemetryCustomProjectDashboardCountProvider(defaultDashboardCountService).getValue()).contains(0);
   }
 }

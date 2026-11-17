@@ -279,8 +279,8 @@ public class StatusActionIT {
 
   @Test
   public void fail_when_using_branch_id() {
-    ComponentDto project = db.components().insertPublicProject().getMainBranchComponent();
-    ComponentDto branch = db.components().insertProjectBranch(project);
+    ComponentDto mainBranchComponent = db.components().insertPublicProject().getMainBranchComponent();
+    ComponentDto branch = db.components().insertProjectBranch(mainBranchComponent);
 
     assertThatThrownBy(() -> {
       underTest.newRequest()

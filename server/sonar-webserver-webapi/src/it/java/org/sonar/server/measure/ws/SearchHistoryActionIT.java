@@ -330,13 +330,13 @@ class SearchHistoryActionIT {
 
   @Test
   void branch() {
-    ProjectData project = db.components().insertPrivateProject();
-    userSession.addProjectPermission(ProjectPermission.USER, project.getProjectDto());
-    ComponentDto branch = db.components().insertProjectBranch(project.getMainBranchComponent(), b -> b.setKey("my_branch"));
-    userSession.addProjectBranchMapping(project.projectUuid(), branch);
-    ComponentDto file = db.components().insertComponent(newFileDto(branch, project.mainBranchUuid()));
-    SnapshotDto analysis = db.components().insertSnapshot(branch);
-    ProjectMeasureDto measure = db.measures().insertProjectMeasure(file, analysis, nclocMetric, m -> m.setValue(2d));
+    ProjectData branchProject = db.components().insertPrivateProject();
+    userSession.addProjectPermission(ProjectPermission.USER, branchProject.getProjectDto());
+    ComponentDto branch = db.components().insertProjectBranch(branchProject.getMainBranchComponent(), b -> b.setKey("my_branch"));
+    userSession.addProjectBranchMapping(branchProject.projectUuid(), branch);
+    ComponentDto file = db.components().insertComponent(newFileDto(branch, branchProject.mainBranchUuid()));
+    SnapshotDto branchAnalysis = db.components().insertSnapshot(branch);
+    ProjectMeasureDto measure = db.measures().insertProjectMeasure(file, branchAnalysis, nclocMetric, m -> m.setValue(2d));
 
     SearchHistoryResponse result = ws.newRequest()
       .setParam(PARAM_COMPONENT, file.getKey())
@@ -354,13 +354,13 @@ class SearchHistoryActionIT {
 
   @Test
   void pull_request() {
-    ProjectData project = db.components().insertPrivateProject();
-    userSession.addProjectPermission(ProjectPermission.USER, project.getProjectDto());
-    ComponentDto branch = db.components().insertProjectBranch(project.getMainBranchComponent(), b -> b.setKey("pr-123").setBranchType(PULL_REQUEST));
-    userSession.addProjectBranchMapping(project.projectUuid(), branch);
-    ComponentDto file = db.components().insertComponent(newFileDto(branch, project.mainBranchUuid()));
-    SnapshotDto analysis = db.components().insertSnapshot(branch);
-    ProjectMeasureDto measure = db.measures().insertProjectMeasure(file, analysis, nclocMetric, m -> m.setValue(2d));
+    ProjectData pullRequestProject = db.components().insertPrivateProject();
+    userSession.addProjectPermission(ProjectPermission.USER, pullRequestProject.getProjectDto());
+    ComponentDto branch = db.components().insertProjectBranch(pullRequestProject.getMainBranchComponent(), b -> b.setKey("pr-123").setBranchType(PULL_REQUEST));
+    userSession.addProjectBranchMapping(pullRequestProject.projectUuid(), branch);
+    ComponentDto file = db.components().insertComponent(newFileDto(branch, pullRequestProject.mainBranchUuid()));
+    SnapshotDto pullRequestAnalysis = db.components().insertSnapshot(branch);
+    ProjectMeasureDto measure = db.measures().insertProjectMeasure(file, pullRequestAnalysis, nclocMetric, m -> m.setValue(2d));
 
     SearchHistoryResponse result = ws.newRequest()
       .setParam(PARAM_COMPONENT, file.getKey())
@@ -486,10 +486,10 @@ class SearchHistoryActionIT {
 
   @Test
   void fail_if_branch_does_not_exist() {
-    ProjectData project = db.components().insertPrivateProject();
-    ComponentDto file = db.components().insertComponent(newFileDto(project.getMainBranchComponent()));
-    userSession.addProjectPermission(ProjectPermission.USER, project.getProjectDto());
-    db.components().insertProjectBranch(project.getProjectDto(), b -> b.setKey("my_branch"));
+    ProjectData branchProject = db.components().insertPrivateProject();
+    ComponentDto file = db.components().insertComponent(newFileDto(branchProject.getMainBranchComponent()));
+    userSession.addProjectPermission(ProjectPermission.USER, branchProject.getProjectDto());
+    db.components().insertProjectBranch(branchProject.getProjectDto(), b -> b.setKey("my_branch"));
 
     assertThatThrownBy(() -> ws.newRequest()
       .setParam(PARAM_COMPONENT, file.getKey())
