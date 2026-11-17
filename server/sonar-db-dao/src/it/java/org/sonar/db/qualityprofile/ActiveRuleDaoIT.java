@@ -808,7 +808,7 @@ class ActiveRuleDaoIT {
   void scrollByIdsForIndexing() {
     ActiveRuleDto ar1 = db.qualityProfiles().activateRule(profile1, rule1);
     ActiveRuleDto ar2 = db.qualityProfiles().activateRule(profile2, rule1);
-    ActiveRuleDto ar3 = db.qualityProfiles().activateRule(profile2, rule2);
+    db.qualityProfiles().activateRule(profile2, rule2);
 
     Accumulator accumulator = new Accumulator();
     underTest.scrollByUuidsForIndexing(dbSession, asList(ar1.getUuid(), ar2.getUuid()), accumulator);
@@ -825,7 +825,7 @@ class ActiveRuleDaoIT {
 
   @Test
   void scrollByRuleProfileForIndexing() {
-    ActiveRuleDto ar1 = db.qualityProfiles().activateRule(profile1, rule1);
+    db.qualityProfiles().activateRule(profile1, rule1);
     ActiveRuleDto ar2 = db.qualityProfiles().activateRule(profile2, rule1);
     ActiveRuleDto ar3 = db.qualityProfiles().activateRule(profile2, rule2);
 
