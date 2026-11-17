@@ -167,15 +167,15 @@ public class CachingRuleFinderIT {
     };
     RuleDto otherRule = dbTester.rules().insert(rule -> rule.setUpdatedAt(system2.now()));
 
-    CachingRuleFinder underTest = new CachingRuleFinder(dbClient, ruleDescriptionFormatter);
+    CachingRuleFinder ruleFinder = new CachingRuleFinder(dbClient, ruleDescriptionFormatter);
 
-    assertThat(toRuleKey(underTest.find(RuleQuery.create().withRepositoryKey(repoKey))))
+    assertThat(toRuleKey(ruleFinder.find(RuleQuery.create().withRepositoryKey(repoKey))))
       .isEqualTo(sameRepoKey[1].getKey());
-    assertThat(toRuleKey(underTest.find(RuleQuery.create().withRepositoryKey(otherRule.getRepositoryKey()))))
+    assertThat(toRuleKey(ruleFinder.find(RuleQuery.create().withRepositoryKey(otherRule.getRepositoryKey()))))
       .isEqualTo(otherRule.getKey());
-    assertThat(underTest.find(RuleQuery.create().withRepositoryKey(repoKey.toLowerCase())))
+    assertThat(ruleFinder.find(RuleQuery.create().withRepositoryKey(repoKey.toLowerCase())))
       .isNull();
-    assertThat(underTest.find(RuleQuery.create().withRepositoryKey(secure().nextAlphabetic(3))))
+    assertThat(ruleFinder.find(RuleQuery.create().withRepositoryKey(secure().nextAlphabetic(3))))
       .isNull();
   }
 
@@ -188,15 +188,15 @@ public class CachingRuleFinderIT {
     };
     RuleDto otherRule = dbTester.rules().insert(rule -> rule.setUpdatedAt(system2.now()));
 
-    CachingRuleFinder underTest = new CachingRuleFinder(dbClient, ruleDescriptionFormatter);
+    CachingRuleFinder ruleFinder = new CachingRuleFinder(dbClient, ruleDescriptionFormatter);
 
-    assertThat(toRuleKey(underTest.find(RuleQuery.create().withKey(ruleKey))))
+    assertThat(toRuleKey(ruleFinder.find(RuleQuery.create().withKey(ruleKey))))
       .isEqualTo(sameRuleKey[1].getKey());
-    assertThat(toRuleKey(underTest.find(RuleQuery.create().withKey(otherRule.getRuleKey()))))
+    assertThat(toRuleKey(ruleFinder.find(RuleQuery.create().withKey(otherRule.getRuleKey()))))
       .isEqualTo(otherRule.getKey());
-    assertThat(underTest.find(RuleQuery.create().withKey(ruleKey.toLowerCase())))
+    assertThat(ruleFinder.find(RuleQuery.create().withKey(ruleKey.toLowerCase())))
       .isNull();
-    assertThat(underTest.find(RuleQuery.create().withKey(secure().nextAlphabetic(3))))
+    assertThat(ruleFinder.find(RuleQuery.create().withKey(secure().nextAlphabetic(3))))
       .isNull();
   }
 
@@ -209,15 +209,15 @@ public class CachingRuleFinderIT {
     };
     RuleDto otherRule = dbTester.rules().insert(rule -> rule.setUpdatedAt(system2.now()));
 
-    CachingRuleFinder underTest = new CachingRuleFinder(dbClient, ruleDescriptionFormatter);
+    CachingRuleFinder ruleFinder = new CachingRuleFinder(dbClient, ruleDescriptionFormatter);
 
-    assertThat(toRuleKey(underTest.find(RuleQuery.create().withConfigKey(configKey))))
+    assertThat(toRuleKey(ruleFinder.find(RuleQuery.create().withConfigKey(configKey))))
       .isEqualTo(sameConfigKey[1].getKey());
-    assertThat(toRuleKey(underTest.find(RuleQuery.create().withConfigKey(otherRule.getConfigKey()))))
+    assertThat(toRuleKey(ruleFinder.find(RuleQuery.create().withConfigKey(otherRule.getConfigKey()))))
       .isEqualTo(otherRule.getKey());
-    assertThat(underTest.find(RuleQuery.create().withConfigKey(configKey.toLowerCase())))
+    assertThat(ruleFinder.find(RuleQuery.create().withConfigKey(configKey.toLowerCase())))
       .isNull();
-    assertThat(underTest.find(RuleQuery.create().withConfigKey(secure().nextAlphabetic(3))))
+    assertThat(ruleFinder.find(RuleQuery.create().withConfigKey(secure().nextAlphabetic(3))))
       .isNull();
   }
 
@@ -240,15 +240,15 @@ public class CachingRuleFinderIT {
     RuleQuery ruleKeyQuery = RuleQuery.create().withKey(ruleKey);
     RuleQuery repoKeyQuery = RuleQuery.create().withRepositoryKey(repoKey);
 
-    CachingRuleFinder underTest = new CachingRuleFinder(dbClient, ruleDescriptionFormatter);
+    CachingRuleFinder ruleFinder = new CachingRuleFinder(dbClient, ruleDescriptionFormatter);
 
-    assertThat(toRuleKey(underTest.find(allQuery))).isEqualTo(rules[0].getKey());
-    assertThat(toRuleKey(underTest.find(ruleAndConfigKeyQuery))).isEqualTo(rules[1].getKey());
-    assertThat(toRuleKey(underTest.find(repoAndConfigKeyQuery))).isEqualTo(rules[2].getKey());
-    assertThat(toRuleKey(underTest.find(repoAndKeyQuery))).isEqualTo(rules[0].getKey());
-    assertThat(toRuleKey(underTest.find(repoKeyQuery))).isEqualTo(rules[2].getKey());
-    assertThat(toRuleKey(underTest.find(ruleKeyQuery))).isEqualTo(rules[1].getKey());
-    assertThat(toRuleKey(underTest.find(configKeyQuery))).isEqualTo(rules[2].getKey());
+    assertThat(toRuleKey(ruleFinder.find(allQuery))).isEqualTo(rules[0].getKey());
+    assertThat(toRuleKey(ruleFinder.find(ruleAndConfigKeyQuery))).isEqualTo(rules[1].getKey());
+    assertThat(toRuleKey(ruleFinder.find(repoAndConfigKeyQuery))).isEqualTo(rules[2].getKey());
+    assertThat(toRuleKey(ruleFinder.find(repoAndKeyQuery))).isEqualTo(rules[0].getKey());
+    assertThat(toRuleKey(ruleFinder.find(repoKeyQuery))).isEqualTo(rules[2].getKey());
+    assertThat(toRuleKey(ruleFinder.find(ruleKeyQuery))).isEqualTo(rules[1].getKey());
+    assertThat(toRuleKey(ruleFinder.find(configKeyQuery))).isEqualTo(rules[2].getKey());
   }
 
   @Test
@@ -273,17 +273,17 @@ public class CachingRuleFinderIT {
     };
     RuleDto otherRule = dbTester.rules().insert(rule -> rule.setUpdatedAt(currentTimeMillis + system2.now()));
 
-    CachingRuleFinder underTest = new CachingRuleFinder(dbClient, ruleDescriptionFormatter);
+    CachingRuleFinder ruleFinder = new CachingRuleFinder(dbClient, ruleDescriptionFormatter);
 
-    assertThat(underTest.findAll(RuleQuery.create().withRepositoryKey(repoKey)))
+    assertThat(ruleFinder.findAll(RuleQuery.create().withRepositoryKey(repoKey)))
       .extracting(CachingRuleFinderIT::toRuleKey)
       .containsExactly(sameRepoKey[1].getKey(), sameRepoKey[0].getKey());
-    assertThat(underTest.findAll(RuleQuery.create().withRepositoryKey(otherRule.getRepositoryKey())))
+    assertThat(ruleFinder.findAll(RuleQuery.create().withRepositoryKey(otherRule.getRepositoryKey())))
       .extracting(CachingRuleFinderIT::toRuleKey)
       .containsExactly(otherRule.getKey());
-    assertThat(underTest.findAll(RuleQuery.create().withRepositoryKey(repoKey.toLowerCase())))
+    assertThat(ruleFinder.findAll(RuleQuery.create().withRepositoryKey(repoKey.toLowerCase())))
       .isEmpty();
-    assertThat(underTest.findAll(RuleQuery.create().withRepositoryKey(secure().nextAlphabetic(3))))
+    assertThat(ruleFinder.findAll(RuleQuery.create().withRepositoryKey(secure().nextAlphabetic(3))))
       .isEmpty();
   }
 

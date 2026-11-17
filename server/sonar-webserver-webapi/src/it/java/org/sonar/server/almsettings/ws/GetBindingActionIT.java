@@ -169,13 +169,13 @@ class GetBindingActionIT {
   @MethodSource("gitlabBindingParameters")
   void get_gitlab_project_binding(String testName, String gitlabUrl, String expectedRepositoryUrl) {
     var projectId = "12345";
-    UserDto user = db.users().insertUser();
-    ProjectDto project = db.components().insertPrivateProject().getProjectDto();
-    userSession.logIn(user).addProjectPermission(USER, project);
+    UserDto gitlabUser = db.users().insertUser();
+    ProjectDto gitlabProject = db.components().insertPrivateProject().getProjectDto();
+    userSession.logIn(gitlabUser).addProjectPermission(USER, gitlabProject);
 
     AlmSettingDto almSetting = db.almSettings().insertGitlabAlmSetting(setting -> setting.setUrl(gitlabUrl).setPersonalAccessToken("token"));
     ProjectAlmSettingDto projectAlmSettingDto = db.almSettings().insertGitlabProjectAlmSetting(
-      almSetting, project, projectAlmSetting -> projectAlmSetting.setAlmRepo(projectId).setAlmSlug("namespace/project-name"));
+      almSetting, gitlabProject, projectAlmSetting -> projectAlmSetting.setAlmRepo(projectId).setAlmSlug("namespace/project-name"));
 
     when(encryption.isEncrypted(anyString())).thenReturn(false);
     when(gitlabApplicationClient.getProject(gitlabUrl, "token", Long.parseLong(projectId)))
@@ -188,7 +188,7 @@ class GetBindingActionIT {
         expectedRepositoryUrl));
 
     GetBindingWsResponse response = ws.newRequest()
-      .setParam("project", project.getKey())
+      .setParam("project", gitlabProject.getKey())
       .executeProtobuf(GetBindingWsResponse.class);
 
     assertThat(response)

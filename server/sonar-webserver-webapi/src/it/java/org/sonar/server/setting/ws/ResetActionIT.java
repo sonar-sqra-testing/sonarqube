@@ -298,8 +298,8 @@ public class ResetActionIT {
 
   @Test
   public void succeed_for_property_without_definition_when_set_on_project_component() {
-    ProjectDto project = randomPublicOrPrivateProject();
-    succeedForPropertyWithoutDefinitionAndValidComponent(project);
+    ProjectDto randomProject = randomPublicOrPrivateProject();
+    succeedForPropertyWithoutDefinitionAndValidComponent(randomProject);
   }
 
   @Test
@@ -321,13 +321,13 @@ public class ResetActionIT {
 
   @Test
   public void fail_when_setting_key_is_defined_in_sonar_properties() {
-    ProjectDto project = db.components().insertPrivateProject().getProjectDto();
-    logInAsProjectAdmin(project);
+    ProjectDto privateProject = db.components().insertPrivateProject().getProjectDto();
+    logInAsProjectAdmin(privateProject);
     String settingKey = ProcessProperties.Property.JDBC_URL.getKey();
 
     TestRequest request = ws.newRequest()
       .setParam("keys", settingKey)
-      .setParam("component", project.getKey());
+      .setParam("component", privateProject.getKey());
     assertThatThrownBy(request::execute)
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage(format("Setting '%s' can only be used in sonar.properties", settingKey));
