@@ -138,8 +138,8 @@ class AlmPatDaoIT {
     AlmPatDto almPatDto = newAlmPatDto();
     underTest.insert(dbSession, almPatDto, null, null);
 
-    String updated_pat = "updated pat";
-    almPatDto.setPersonalAccessToken(updated_pat);
+    String updatedPat = "updated pat";
+    almPatDto.setPersonalAccessToken(updatedPat);
 
     system2.setNow(NOW + 1);
     underTest.update(dbSession, almPatDto, null, null);
@@ -149,7 +149,7 @@ class AlmPatDaoIT {
       .extracting(AlmPatDto::getUuid, AlmPatDto::getPersonalAccessToken,
         AlmPatDto::getUserUuid, AlmPatDto::getAlmSettingUuid,
         AlmPatDto::getCreatedAt, AlmPatDto::getUpdatedAt)
-      .containsExactly(A_UUID, updated_pat, almPatDto.getUserUuid(),
+      .containsExactly(A_UUID, updatedPat, almPatDto.getUserUuid(),
         almPatDto.getAlmSettingUuid(),
         NOW, NOW + 1);
   }
