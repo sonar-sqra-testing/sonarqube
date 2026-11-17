@@ -1014,15 +1014,15 @@ class AuthorizationDaoIT {
   @Test
   void keepAuthorizedEntityUuids_filters_projects_authorized_to_logged_in_user_by_direct_permission() {
     ProjectDto privateProject = db.components().insertPrivateProject().getProjectDto();
-    ProjectDto Project = db.components().insertPublicProject().getProjectDto();
+    ProjectDto project = db.components().insertPublicProject().getProjectDto();
     UserDto user = db.users().insertUser();
     db.users().insertProjectPermissionOnUser(user, ProjectPermission.ADMIN, privateProject);
 
-    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(privateProject.getUuid(), Project.getUuid()), user.getUuid(),
+    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(privateProject.getUuid(), project.getUuid()), user.getUuid(),
       ProjectPermission.ADMIN))
       .containsOnly(privateProject.getUuid());
     // user does not have the permission "issueadmin"
-    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(privateProject.getUuid(), Project.getUuid()), user.getUuid(),
+    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(privateProject.getUuid(), project.getUuid()), user.getUuid(),
       ProjectPermission.ISSUE_ADMIN))
       .isEmpty();
   }
@@ -1030,24 +1030,24 @@ class AuthorizationDaoIT {
   @Test
   void keepAuthorizedEntityUuids_filters_projects_authorized_to_logged_in_user_by_group_permission() {
     ProjectDto privateProject = db.components().insertPrivateProject().getProjectDto();
-    ProjectDto Project = db.components().insertPublicProject().getProjectDto();
+    ProjectDto project = db.components().insertPublicProject().getProjectDto();
     UserDto user = db.users().insertUser();
     GroupDto group = db.users().insertGroup();
     db.users().insertMember(group, user);
     db.users().insertEntityPermissionOnGroup(group, ProjectPermission.ADMIN, privateProject);
 
-    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(privateProject.getUuid(), Project.getUuid()), user.getUuid(),
+    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(privateProject.getUuid(), project.getUuid()), user.getUuid(),
       ProjectPermission.ADMIN))
       .containsOnly(privateProject.getUuid());
     // user does not have the permission "issueadmin"
-    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(privateProject.getUuid(), Project.getUuid()), user.getUuid(),
+    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(privateProject.getUuid(), project.getUuid()), user.getUuid(),
       ProjectPermission.ISSUE_ADMIN))
       .isEmpty();
   }
 
   @Test
   void keepAuthorizedEntityUuids_returns_empty_list_if_input_is_empty() {
-    ProjectDto Project = db.components().insertPublicProject().getProjectDto();
+    ProjectDto project = db.components().insertPublicProject().getProjectDto();
     UserDto user = db.users().insertUser();
 
     assertThat(underTest.keepAuthorizedEntityUuids(dbSession, Collections.emptySet(), user.getUuid(), ProjectPermission.USER))
@@ -1060,7 +1060,7 @@ class AuthorizationDaoIT {
 
   @Test
   void keepAuthorizedEntityUuids_returns_empty_list_if_input_does_not_reference_existing_projects() {
-    ProjectDto Project = db.components().insertPublicProject().getProjectDto();
+    ProjectDto project = db.components().insertPublicProject().getProjectDto();
     UserDto user = db.users().insertUser();
 
     assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet("does_not_exist"), user.getUuid(), ProjectPermission.USER))
@@ -1069,23 +1069,23 @@ class AuthorizationDaoIT {
 
   @Test
   void keepAuthorizedEntityUuids_returns__projects_if_permission_USER_or_CODEVIEWER() {
-    ProjectDto Project = db.components().insertPublicProject().getProjectDto();
+    ProjectDto project = db.components().insertPublicProject().getProjectDto();
     UserDto user = db.users().insertUser();
 
     // logged-in user
-    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(Project.getUuid()), user.getUuid(), ProjectPermission.CODEVIEWER))
-      .containsOnly(Project.getUuid());
-    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(Project.getUuid()), user.getUuid(), ProjectPermission.USER))
-      .containsOnly(Project.getUuid());
-    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(Project.getUuid()), user.getUuid(), ProjectPermission.ADMIN))
+    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(project.getUuid()), user.getUuid(), ProjectPermission.CODEVIEWER))
+      .containsOnly(project.getUuid());
+    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(project.getUuid()), user.getUuid(), ProjectPermission.USER))
+      .containsOnly(project.getUuid());
+    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(project.getUuid()), user.getUuid(), ProjectPermission.ADMIN))
       .isEmpty();
 
     // anonymous
-    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(Project.getUuid()), null, ProjectPermission.CODEVIEWER))
-      .containsOnly(Project.getUuid());
-    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(Project.getUuid()), null, ProjectPermission.USER))
-      .containsOnly(Project.getUuid());
-    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(Project.getUuid()), null, ProjectPermission.ADMIN))
+    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(project.getUuid()), null, ProjectPermission.CODEVIEWER))
+      .containsOnly(project.getUuid());
+    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(project.getUuid()), null, ProjectPermission.USER))
+      .containsOnly(project.getUuid());
+    assertThat(underTest.keepAuthorizedEntityUuids(dbSession, newHashSet(project.getUuid()), null, ProjectPermission.ADMIN))
       .isEmpty();
   }
 

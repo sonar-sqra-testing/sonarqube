@@ -71,10 +71,10 @@ class UpdateIfTest {
 
   @Test
   void newProperties_constructor_IAE_if_workerUuid_is_41_chars() {
-    String str_41_chars = STR_40_CHARS + "a";
+    String str41Chars = STR_40_CHARS + "a";
 
-    assertThatThrownBy(() -> new UpdateIf.NewProperties(CeQueueDto.Status.PENDING, str_41_chars, 123, 345))
+    assertThatThrownBy(() -> new UpdateIf.NewProperties(CeQueueDto.Status.PENDING, str41Chars, 123, 345))
       .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("worker uuid is too long: " + str_41_chars);
+      .hasMessage("worker uuid is too long: " + str41Chars);
   }
 }
