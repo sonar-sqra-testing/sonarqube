@@ -134,53 +134,53 @@ public class MultivalueProperty {
   static String trimFieldsAndRemoveEmptyFields(String str) {
     char[] chars = str.toCharArray();
     char[] res = new char[chars.length];
-    /*
-     * set when reading the first non trimmable char after a separator char (or the beginning of the string)
-     * unset when reading a separator
-     */
-    boolean inField = false;
-    boolean inQuotes = false;
-    int i = 0;
-    int resI = 0;
-    for (; i < chars.length; i++) {
+    ParsingState state = new ParsingState();
+    for (int i = 0; i < chars.length; i++) {
       boolean isSeparator = chars[i] == ',';
-      if (!inQuotes && isSeparator) {
-        // exiting field (may already be unset)
-        inField = false;
-        if (resI > 0) {
-          resI = retroTrim(res, resI);
-        }
+      if (!state.inQuotes && isSeparator) {
+        handleSeparator(state, res);
       } else {
-        boolean isTrimmed = !inQuotes && istrimmable(chars[i]);
-        if (isTrimmed && !inField) {
-          // we haven't meet any non trimmable char since the last separator yet
-          continue;
-        }
-
-        boolean isEscape = isEscapeChar(chars[i]);
-        if (isEscape) {
-          inQuotes = !inQuotes;
-        }
-
-        // add separator as we already had one field
-        if (!inField && resI > 0) {
-          res[resI] = ',';
-          resI++;
-        }
-
-        // register in field (may already be set)
-        inField = true;
-        // copy current char
-        res[resI] = chars[i];
-        resI++;
+        handleFieldChar(state, res, chars[i]);
       }
     }
     // inQuotes can only be true at this point if quotes are unbalanced
-    if (!inQuotes) {
+    if (!state.inQuotes) {
       // trim end of str
-      resI = retroTrim(res, resI);
+      state.resI = retroTrim(res, state.resI);
     }
-    return new String(res, 0, resI);
+    return new String(res, 0, state.resI);
+  }
+
+  private static void handleSeparator(ParsingState state, char[] res) {
+    // exiting field (may already be unset)
+    state.inField = false;
+    if (state.resI > 0) {
+      state.resI = retroTrim(res, state.resI);
+    }
+  }
+
+  private static void handleFieldChar(ParsingState state, char[] res, char c) {
+    boolean isTrimmed = !state.inQuotes && istrimmable(c);
+    if (isTrimmed && !state.inField) {
+      // we haven't meet any non trimmable char since the last separator yet
+      return;
+    }
+
+    if (isEscapeChar(c)) {
+      state.inQuotes = !state.inQuotes;
+    }
+
+    // add separator as we already had one field
+    if (!state.inField && state.resI > 0) {
+      res[state.resI] = ',';
+      state.resI++;
+    }
+
+    // register in field (may already be set)
+    state.inField = true;
+    // copy current char
+    res[state.resI] = c;
+    state.resI++;
   }
 
   private static boolean isEscapeChar(char aChar) {
@@ -189,6 +189,19 @@ public class MultivalueProperty {
 
   private static boolean istrimmable(char aChar) {
     return aChar <= ' ';
+  }
+
+  /**
+   * Mutable parsing state shared by {@link #trimFieldsAndRemoveEmptyFields(String)} and its helper methods.
+   */
+  private static class ParsingState {
+    /*
+     * set when reading the first non trimmable char after a separator char (or the beginning of the string)
+     * unset when reading a separator
+     */
+    boolean inField = false;
+    boolean inQuotes = false;
+    int resI = 0;
   }
 
   /**
