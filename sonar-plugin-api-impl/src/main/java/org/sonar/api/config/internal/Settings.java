@@ -42,6 +42,7 @@ import static org.apache.commons.lang3.Strings.CS;
 /**
  * Implementation of the deprecated Settings interface
  */
+@SuppressWarnings("java:S2176") // part of the public plugin API: renaming would be a breaking change for plugins
 public abstract class Settings extends org.sonar.api.config.Settings {
 
   private final PropertyDefinitions definitions;
