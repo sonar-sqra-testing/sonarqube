@@ -60,7 +60,7 @@ public class MultilineIssuesSensorTest {
   }
 
   @Test
-  public void execute_dataAndExecutionFlowsAreDetectedAndMessageIsFormatted() throws IOException {
+  public void executeDataAndExecutionFlowsAreDetectedAndMessageIsFormatted() throws IOException {
     DefaultInputFile inputFile = newTestFile(IOUtils.toString(getClass().getResource("dataflow.xoo"), StandardCharsets.UTF_8));
 
     DefaultFileSystem fs = new DefaultFileSystem(temp.newFolder());

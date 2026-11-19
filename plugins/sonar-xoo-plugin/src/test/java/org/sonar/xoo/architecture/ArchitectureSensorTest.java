@@ -43,7 +43,7 @@ import org.sonar.xoo.Xoo;
 public class ArchitectureSensorTest {
 
   @Test
-  public void whenDescribeCalled_thenNameAndLanguageAreSet() {
+  public void whenDescribeCalledThenNameAndLanguageAreSet() {
     // given
     SensorDescriptor descriptor = mock(SensorDescriptor.class);
     when(descriptor.name(anyString())).thenReturn(descriptor);
@@ -60,7 +60,7 @@ public class ArchitectureSensorTest {
   }
 
   @Test
-  public void whenExecuteCalled_thenArchitectureDataIsSaved() {
+  public void whenExecuteCalledThenArchitectureDataIsSaved() {
     // given
     final int nbFileSensor = 5;
     SensorContext context = mock(SensorContext.class, RETURNS_DEEP_STUBS);

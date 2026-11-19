@@ -58,7 +58,7 @@ public class AzureDevOpsUrlsTest {
   }
 
   @Test
-  public void isAzureDevOpsServices_matches_expected() {
+  public void isAzureDevOpsServicesMatchesExpected() {
     assertThat(AzureDevOpsUrls.isAzureDevOpsServices(url)).isEqualTo(expected);
   }
 }

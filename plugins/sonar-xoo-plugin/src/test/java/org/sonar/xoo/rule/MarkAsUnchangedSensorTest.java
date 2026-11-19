@@ -39,7 +39,7 @@ public class MarkAsUnchangedSensorTest {
   private final MarkAsUnchangedSensor sensor = new MarkAsUnchangedSensor();
 
   @Test
-  public void mark_as_unchanged_for_all_files() throws IOException {
+  public void markAsUnchangedForAllFiles() throws IOException {
     SensorContextTester context = SensorContextTester.create(temp.newFolder());
     DefaultInputFile inputFile1 = createFile("file1");
     DefaultInputFile inputFile2 = createFile("file2");
@@ -54,7 +54,7 @@ public class MarkAsUnchangedSensorTest {
   }
 
   @Test
-  public void only_runs_if_property_is_set() {
+  public void onlyRunsIfPropertyIsSet() {
     DefaultSensorDescriptor descriptor = new DefaultSensorDescriptor();
     sensor.describe(descriptor);
     Configuration configWithProperty = new MapSettings().setProperty("sonar.markAsUnchanged", "true").asConfig();

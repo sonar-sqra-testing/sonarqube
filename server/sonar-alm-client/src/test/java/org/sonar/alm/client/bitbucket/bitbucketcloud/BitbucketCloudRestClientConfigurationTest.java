@@ -66,7 +66,7 @@ public class BitbucketCloudRestClientConfigurationTest {
   }
 
   @Test
-  public void bitbucketCloudHttpClient_derivesFromInjectedGlobalClient_preservingProxyConfig() {
+  public void bitbucketCloudHttpClientDerivesFromInjectedGlobalClientPreservingProxyConfig() {
     Authenticator proxyAuthenticator = mock(Authenticator.class);
     Interceptor interceptor = chain -> chain.proceed(chain.request());
     OkHttpClient sharedClient = new OkHttpClient.Builder()
