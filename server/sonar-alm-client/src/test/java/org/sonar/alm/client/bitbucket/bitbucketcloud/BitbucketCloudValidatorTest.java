@@ -41,7 +41,7 @@ public class BitbucketCloudValidatorTest {
   private static final String EXAMPLE_APP_ID = "123";
 
   @Test
-  public void validate_forwardsExceptionFromRestClient() {
+  public void validateForwardsExceptionFromRestClient() {
     AlmSettingDto dto = mock(AlmSettingDto.class);
     when(dto.getAppId()).thenReturn(EXAMPLE_APP_ID);
     when(dto.getClientId()).thenReturn("clientId");
@@ -56,7 +56,7 @@ public class BitbucketCloudValidatorTest {
   }
 
   @Test
-  public void validate_callsValidate() {
+  public void validateCallsValidate() {
     AlmSettingDto dto = mock(AlmSettingDto.class);
     when(dto.getAppId()).thenReturn(EXAMPLE_APP_ID);
     when(dto.getClientId()).thenReturn("clientId");
