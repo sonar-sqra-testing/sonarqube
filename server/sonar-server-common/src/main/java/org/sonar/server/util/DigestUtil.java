@@ -29,7 +29,7 @@ public class DigestUtil {
     // utility class
   }
 
-  public static String sha3_224Hex(String input) {
+  public static String sha3224Hex(String input) {
     SHA3.DigestSHA3 sha3Digest = new SHA3.Digest224();
     byte[] hashBytes = sha3Digest.digest(input.getBytes(StandardCharsets.UTF_8));
     return Hex.toHexString(hashBytes);

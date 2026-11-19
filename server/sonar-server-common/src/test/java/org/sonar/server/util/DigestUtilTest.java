@@ -26,13 +26,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DigestUtilTest {
 
   @Test
-  void whenCalledOnTheSameInput_sha3_224Hex_returnsTheSameValueAsDigestUtils() {
+  void whenCalledOnTheSameInput_sha3224Hex_returnsTheSameValueAsDigestUtils() {
     String input = "String to be hashed";
 
     //Apache Commons DigestUtils digest for the string "String to be hashed"
     String apacheCommonsDigest = "57ead8c5fc5c15ed7bde0550648d06a6aed3cba443ed100a6f5e64f3";
 
-    assertEquals(apacheCommonsDigest, DigestUtil.sha3_224Hex(input));
+    assertEquals(apacheCommonsDigest, DigestUtil.sha3224Hex(input));
   }
 
 }
