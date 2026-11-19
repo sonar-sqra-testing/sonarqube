@@ -86,7 +86,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void get_repos() {
+  void getRepos() {
     server.enqueue(new MockResponse()
       .setHeader("Content-Type", "application/json;charset=UTF-8")
       .setBody("""
@@ -127,7 +127,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void get_repo() {
+  void getRepo() {
     server.enqueue(new MockResponse()
       .setHeader("Content-Type", "application/json;charset=UTF-8")
       .setBody("""
@@ -166,7 +166,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void bbc_object_serialization_deserialization() {
+  void bbcObjectSerializationDeserialization() {
     Project project = new Project("PROJECT-UUID-ONE", "projectKey", "projectName");
     MainBranch mainBranch = new MainBranch("branch", "develop");
     Repository repository = new Repository("REPO-UUID-ONE", "repo-slug", "repoName", project, mainBranch);
@@ -191,7 +191,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void searchReposWithAccessToken_authenticatesWithBearerAndReturnsSize() throws Exception {
+  void searchReposWithAccessTokenAuthenticatesWithBearerAndReturnsSize() throws Exception {
     Project project = new Project("PROJECT-UUID-ONE", "projectKey", "projectName");
     MainBranch mainBranch = new MainBranch("branch", "develop");
     Repository repository = new Repository("REPO-UUID-ONE", "repo-slug", "repoName", project, mainBranch);
@@ -213,7 +213,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void searchReposWithAccessToken_withError_throwsBitbucketCloudException() {
+  void searchReposWithAccessTokenWithErrorThrowsBitbucketCloudException() {
     String response = """
       {"type": "error", "error": {"message": "Access forbidden"}}
       """;
@@ -225,7 +225,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void validate_fails_if_unauthorized() {
+  void validateFailsIfUnauthorized() {
     server.enqueue(new MockResponse().setResponseCode(401).setBody("Unauthorized"));
 
     assertThatIllegalArgumentException()
@@ -235,7 +235,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void validate_fails_with_IAE_if_timeout() {
+  void validateFailsWithIaeIfTimeout() {
     server.enqueue(new MockResponse().setSocketPolicy(SocketPolicy.NO_RESPONSE));
 
     assertThatIllegalArgumentException()
@@ -243,7 +243,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void validate_success() throws Exception {
+  void validateSuccess() throws Exception {
     String tokenResponse = "{\"scope\": \"webhook pullrequest:write\", \"access_token\": \"token\", \"expires_in\": 7200, "
       + "\"token_type\": \"bearer\", \"state\": \"client_credentials\", \"refresh_token\": \"abc\"}";
 
@@ -259,7 +259,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void validate_fails_if_unsufficient_pull_request_privileges() {
+  void validateFailsIfUnsufficientPullRequestPrivileges() {
     String tokenResponse = "{\"scope\": \"\", \"access_token\": \"token\", \"expires_in\": 7200, "
       + "\"token_type\": \"bearer\", \"state\": \"client_credentials\", \"refresh_token\": \"abc\"}";
     server.enqueue(new MockResponse().setBody(tokenResponse));
@@ -271,7 +271,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void validate_with_invalid_workspace() {
+  void validateWithInvalidWorkspace() {
     String tokenResponse = "{\"scope\": \"webhook pullrequest:write\", \"access_token\": \"token\", \"expires_in\": 7200, "
       + "\"token_type\": \"bearer\", \"state\": \"client_credentials\", \"refresh_token\": \"abc\"}";
     server.enqueue(new MockResponse().setBody(tokenResponse).setResponseCode(200).setHeader("Content-Type", JSON_MEDIA_TYPE));
@@ -286,7 +286,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void validate_with_private_consumer() {
+  void validateWithPrivateConsumer() {
     String response = "{\"error_description\": \"Cannot use client_credentials with a consumer marked as \\\"public\\\". "
       + "Calls for auto generated consumers should use urn:bitbucket:oauth2:jwt instead.\", \"error\": \"invalid_grant\"}";
 
@@ -299,7 +299,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void validate_with_invalid_credentials() {
+  void validateWithInvalidCredentials() {
     String response = "{\"error_description\": \"Invalid OAuth client credentials\", \"error\": \"unauthorized_client\"}";
 
     server.enqueue(new MockResponse().setBody(response).setResponseCode(400).setHeader("Content-Type", JSON_MEDIA_TYPE));
@@ -311,7 +311,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void validate_with_insufficient_privileges() {
+  void validateWithInsufficientPrivileges() {
     String tokenResponse = "{\"scope\": \"webhook pullrequest:write\", \"access_token\": \"token\", \"expires_in\": 7200, "
       + "\"token_type\": \"bearer\", \"state\": \"client_credentials\", \"refresh_token\": \"abc\"}";
     server.enqueue(new MockResponse().setBody(tokenResponse).setResponseCode(200).setHeader("Content-Type", JSON_MEDIA_TYPE));
@@ -327,7 +327,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void validate_api_token_success() throws Exception {
+  void validateApiTokenSuccess() throws Exception {
     String reposResponse = """
       {"pagelen": 10,
       "values": [],
@@ -347,7 +347,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void validate_api_token_with_invalid_credentials() {
+  void validateApiTokenWithInvalidCredentials() {
     String response = "{\"type\": \"error\", \"error\": {\"message\": \"Invalid credentials.\"}}";
     server.enqueue(new MockResponse().setBody(response).setResponseCode(401).setHeader("Content-Type", JSON_MEDIA_TYPE));
 
@@ -408,7 +408,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void validate_fails_when_ssl_verification_failed() throws IOException {
+  void validateFailsWhenSslVerificationFailed() throws IOException {
     // GIVEN
     OkHttpClient okHttpClient = mock(OkHttpClient.class);
     Call call = mock(Call.class);
@@ -424,7 +424,7 @@ class BitbucketCloudRestClientTest {
   }
 
   @Test
-  void getRepo_with_error_throws_illegal_state_exception_with_http_code() {
+  void getRepoWithErrorThrowsIllegalStateExceptionWithHttpCode() {
     String errorMessage = "Access forbidden";
     String response = String.format("{\"type\": \"error\", \"error\": {\"message\": \"%s\"}}", errorMessage);
     server.enqueue(new MockResponse().setBody(response).setResponseCode(403).setHeader("Content-Type", JSON_MEDIA_TYPE));

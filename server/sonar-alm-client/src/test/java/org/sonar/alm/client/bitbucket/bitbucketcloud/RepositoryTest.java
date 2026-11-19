@@ -26,14 +26,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RepositoryTest {
 
   @Test
-  void getHtmlHref_whenLinksIsNull_returnsNull() {
+  void getHtmlHrefWhenLinksIsNullReturnsNull() {
     Repository repository = new Repository("uuid", "slug", "name", new Project("project-uuid", "key", "name"), new MainBranch("branch", "main"));
 
     assertThat(repository.getHtmlHref()).isNull();
   }
 
   @Test
-  void getHtmlHref_whenHtmlLinkIsNull_returnsNull() {
+  void getHtmlHrefWhenHtmlLinkIsNullReturnsNull() {
     Repository repository = new Repository("uuid", "slug", "name", new Project("project-uuid", "key", "name"), new MainBranch("branch", "main"))
       .setLinks(new Repository.Links(null));
 
@@ -41,7 +41,7 @@ class RepositoryTest {
   }
 
   @Test
-  void getHtmlHref_whenHtmlLinkIsPresent_returnsHref() {
+  void getHtmlHrefWhenHtmlLinkIsPresentReturnsHref() {
     Repository repository = new Repository("uuid", "slug", "name", new Project("project-uuid", "key", "name"), new MainBranch("branch", "main"))
       .setLinks(new Repository.Links(new Repository.Link("https://bitbucket.org/workspace/repo")));
 

@@ -248,7 +248,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void get_projects_failed() {
+  public void getProjectsFailed() {
     server.enqueue(new MockResponse()
       .setBody(new Buffer().write(new byte[4096]))
       .setSocketPolicy(SocketPolicy.DISCONNECT_DURING_RESPONSE_BODY));
@@ -347,7 +347,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void invalid_empty_url() {
+  public void invalidEmptyUrl() {
     assertThatThrownBy(() -> BitbucketServerRestClient.buildUrl(null, ""))
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("url must start with http:// or https://");
@@ -375,7 +375,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void fail_json_error_handling() {
+  public void failJsonErrorHandling() {
     assertThatThrownBy(() -> BitbucketServerRestClient.applyHandler(body -> BitbucketServerRestClient.buildGson().fromJson(body, Object.class), "not json"))
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("Unable to contact Bitbucket server, got an unexpected response");
@@ -384,7 +384,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void validate_handler_call_on_empty_body() {
+  public void validateHandlerCallOnEmptyBody() {
     server.enqueue(new MockResponse().setResponseCode(200)
       .setBody(""));
     assertThat(underTest.doGet("token", server.url("/"), Function.identity()))
@@ -454,7 +454,7 @@ public class BitbucketServerRestClientTest {
 
   @Test
   @UseDataProvider("expectedErrorMessageFromHttpNoJsonBody")
-  public void fail_response_when_http_no_json_body(int responseCode, String body, String headerContent, String expectedErrorMessage) {
+  public void failResponseWhenHttpNoJsonBody(int responseCode, String body, String headerContent, String expectedErrorMessage) {
     server.enqueue(new MockResponse()
       .setHeader("Content-Type", headerContent)
       .setResponseCode(responseCode)
@@ -508,7 +508,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void validate_url_success() {
+  public void validateUrlSuccess() {
     server.enqueue(new MockResponse().setResponseCode(200)
       .setBody(STATUS_BODY));
 
@@ -516,14 +516,14 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void validate_url_fail_when_not_starting_with_protocol() {
+  public void validateUrlFailWhenNotStartingWithProtocol() {
     assertThatThrownBy(() -> underTest.validateUrl("any_url_not_starting_with_http.com"))
       .isInstanceOf(IllegalArgumentException.class)
       .hasMessage("url must start with http:// or https://");
   }
 
   @Test
-  public void validate_token_success() {
+  public void validateTokenSuccess() {
     server.enqueue(new MockResponse().setResponseCode(200)
       .setBody("""
         {
@@ -572,7 +572,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void validate_read_permission_success() {
+  public void validateReadPermissionSuccess() {
     server.enqueue(new MockResponse().setResponseCode(200)
       .setBody(REPOS_BODY));
 
@@ -580,7 +580,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void fail_validate_url_when_on_http_error() {
+  public void failValidateUrlWhenOnHttpError() {
     server.enqueue(new MockResponse().setResponseCode(500)
       .setBody("something unexpected"));
 
@@ -591,7 +591,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void fail_validate_url_when_not_found_is_returned() {
+  public void failValidateUrlWhenNotFoundIsReturned() {
     server.enqueue(new MockResponse().setResponseCode(404)
       .setBody("something unexpected"));
 
@@ -603,7 +603,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void fail_validate_url_when_body_is_empty() {
+  public void failValidateUrlWhenBodyIsEmpty() {
     server.enqueue(new MockResponse().setResponseCode(404).setBody(""));
 
     String serverUrl = server.url("/").toString();
@@ -614,7 +614,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void fail_validate_url_when_validate_url_return_non_json_payload() {
+  public void failValidateUrlWhenValidateUrlReturnNonJsonPayload() {
     server.enqueue(new MockResponse().setResponseCode(400)
       .setBody("this is not a json payload"));
 
@@ -625,7 +625,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void fail_validate_url_when_returning_non_json_payload_with_a_200_code() {
+  public void failValidateUrlWhenReturningNonJsonPayloadWithA200Code() {
     server.enqueue(new MockResponse().setResponseCode(200)
       .setBody("this is not a json payload"));
 
@@ -638,7 +638,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void fail_validate_token_when_server_return_non_json_payload() {
+  public void failValidateTokenWhenServerReturnNonJsonPayload() {
     server.enqueue(new MockResponse().setResponseCode(400)
       .setBody("this is not a json payload"));
 
@@ -649,7 +649,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void fail_validate_token_when_returning_non_json_payload_with_a_200_code() {
+  public void failValidateTokenWhenReturningNonJsonPayloadWithA200Code() {
     server.enqueue(new MockResponse().setResponseCode(200)
       .setBody("this is not a json payload"));
 
@@ -708,7 +708,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void check_mediaTypes_equality() {
+  public void checkMediaTypesEquality() {
     assertThat(BitbucketServerRestClient.equals(null, null)).isFalse();
     assertThat(BitbucketServerRestClient.equals(MediaType.parse("application/json"), null)).isFalse();
     assertThat(BitbucketServerRestClient.equals(null, MediaType.parse("application/json"))).isFalse();
@@ -718,7 +718,7 @@ public class BitbucketServerRestClientTest {
 
   @Test
   @UseDataProvider("validStartAndPageSizeProvider")
-  public void get_repositories_with_pagination(int start, int pageSize, boolean isLastPage, int totalRepos) {
+  public void getRepositoriesWithPagination(int start, int pageSize, boolean isLastPage, int totalRepos) {
     String body = generateRepositoriesResponse(totalRepos, start, pageSize, isLastPage);
     server.enqueue(new MockResponse()
       .setHeader("Content-Type", "application/json;charset=UTF-8")
@@ -773,7 +773,7 @@ public class BitbucketServerRestClientTest {
 
   @Test
   @UseDataProvider("validStartAndPageSizeProvider")
-  public void get_projects_with_pagination(int start, int pageSize, boolean isLastPage, int totalProjects) {
+  public void getProjectsWithPagination(int start, int pageSize, boolean isLastPage, int totalProjects) {
     String body = generateProjectsResponse(totalProjects, start, pageSize, isLastPage);
     server.enqueue(new MockResponse()
       .setHeader("Content-Type", "application/json;charset=UTF-8")
@@ -833,7 +833,7 @@ public class BitbucketServerRestClientTest {
   }
 
   @Test
-  public void constructor_derives_client_from_injected_okHttpClient_preserving_proxy_config() {
+  public void constructorDerivesClientFromInjectedOkHttpClientPreservingProxyConfig() {
     Authenticator proxyAuthenticator = mock(Authenticator.class);
     Interceptor interceptor = chain -> chain.proceed(chain.request());
     OkHttpClient sharedClient = new OkHttpClient.Builder()

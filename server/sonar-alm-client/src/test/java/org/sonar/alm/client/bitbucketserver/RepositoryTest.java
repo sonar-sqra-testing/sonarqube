@@ -27,14 +27,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RepositoryTest {
 
   @Test
-  public void getSelfHref_whenLinksIsNull_returnsNull() {
+  public void getSelfHrefWhenLinksIsNullReturnsNull() {
     Repository repository = new Repository("slug", "name", 1L, new Project("key", "name", 2L));
 
     assertThat(repository.getSelfHref()).isNull();
   }
 
   @Test
-  public void getSelfHref_whenSelfLinksIsNull_returnsNull() {
+  public void getSelfHrefWhenSelfLinksIsNullReturnsNull() {
     Repository repository = new Repository("slug", "name", 1L, new Project("key", "name", 2L))
       .setLinks(new Repository.Links(null));
 
@@ -42,7 +42,7 @@ public class RepositoryTest {
   }
 
   @Test
-  public void getSelfHref_whenSelfLinksIsEmpty_returnsNull() {
+  public void getSelfHrefWhenSelfLinksIsEmptyReturnsNull() {
     Repository repository = new Repository("slug", "name", 1L, new Project("key", "name", 2L))
       .setLinks(new Repository.Links(List.of()));
 
@@ -50,7 +50,7 @@ public class RepositoryTest {
   }
 
   @Test
-  public void getSelfHref_whenSelfLinksHasEntries_returnsFirstHref() {
+  public void getSelfHrefWhenSelfLinksHasEntriesReturnsFirstHref() {
     Repository repository = new Repository("slug", "name", 1L, new Project("key", "name", 2L))
       .setLinks(new Repository.Links(List.of(new Repository.Link("https://bitbucket-server.example.com/browse"))));
 

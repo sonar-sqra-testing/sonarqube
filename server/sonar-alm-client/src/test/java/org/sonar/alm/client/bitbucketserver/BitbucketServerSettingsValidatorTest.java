@@ -48,7 +48,7 @@ public class BitbucketServerSettingsValidatorTest {
   }
 
   @Test
-  public void validate_success() {
+  public void validateSuccess() {
     AlmSettingDto almSettingDto = createNewBitbucketDto("http://abc.com", "abc");
     when(encryption.isEncrypted(any())).thenReturn(false);
 
@@ -60,7 +60,7 @@ public class BitbucketServerSettingsValidatorTest {
   }
 
   @Test
-  public void validate_success_with_encrypted_token() {
+  public void validateSuccessWithEncryptedToken() {
     String encryptedToken = "abc";
     String decryptedToken = "decrypted-token";
     AlmSettingDto almSettingDto = createNewBitbucketDto("http://abc.com", encryptedToken);
@@ -75,7 +75,7 @@ public class BitbucketServerSettingsValidatorTest {
   }
 
   @Test
-  public void validate_failure_on_incomplete_configuration() {
+  public void validateFailureOnIncompleteConfiguration() {
     AlmSettingDto almSettingDto = createNewBitbucketDto(null, "abc");
 
     assertThatThrownBy(() -> underTest.validate(almSettingDto))
@@ -83,7 +83,7 @@ public class BitbucketServerSettingsValidatorTest {
   }
 
   @Test
-  public void validate_failure_on_bitbucket_server_api_error() {
+  public void validateFailureOnBitbucketServerApiError() {
     doThrow(new IllegalArgumentException("error")).when(bitbucketServerRestClient).validateUrl(anyString());
     AlmSettingDto almSettingDto = createNewBitbucketDto("http://abc.com", "abc");
 
