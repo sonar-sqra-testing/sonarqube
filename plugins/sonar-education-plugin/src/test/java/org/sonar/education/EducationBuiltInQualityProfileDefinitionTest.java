@@ -29,7 +29,7 @@ public class EducationBuiltInQualityProfileDefinitionTest {
   private final EducationBuiltInQualityProfileDefinition underTest = new EducationBuiltInQualityProfileDefinition();
 
   @Test
-  public void define_definesAtLeast4rules() {
+  public void defineDefinesAtLeast4Rules() {
     BuiltInQualityProfilesDefinition.Context context = new BuiltInQualityProfilesDefinition.Context();
 
     underTest.define(context);

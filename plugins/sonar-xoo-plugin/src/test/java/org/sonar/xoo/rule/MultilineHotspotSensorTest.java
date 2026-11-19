@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MultilineHotspotSensorTest {
 
   @Test
-  public void getRuleKey_returnsTheKey() {
+  public void getRuleKeyReturnsTheKey() {
     assertThat(new MultilineHotspotSensor().getRuleKey()).isEqualTo(MultilineHotspotSensor.RULE_KEY);
   }
 }

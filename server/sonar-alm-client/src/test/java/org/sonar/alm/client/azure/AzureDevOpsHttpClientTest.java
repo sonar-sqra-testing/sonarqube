@@ -205,7 +205,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void get_project() throws InterruptedException {
+  public void getProject() throws InterruptedException {
     enqueueResponse(200, """
       {
         "id": "3311cd05-3f00-4a5e-b47f-df94a9982b6e",
@@ -350,7 +350,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void isGlobalPat_returns_true_when_response_is_successful() throws InterruptedException {
+  public void isGlobalPatReturnsTrueWhenResponseIsSuccessful() throws InterruptedException {
     enqueueResponse(200, "{}");
 
     boolean result = underTest.isGlobalPat(server.url("").toString(), "token");
@@ -363,7 +363,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void isGlobalPat_returns_false_when_response_is_401() {
+  public void isGlobalPatReturnsFalseWhenResponseIs401() {
     enqueueResponse(401);
 
     boolean result = underTest.isGlobalPat(server.url("").toString(), "token");
@@ -372,7 +372,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void isGlobalPat_returns_false_when_response_is_403() {
+  public void isGlobalPatReturnsFalseWhenResponseIs403() {
     enqueueResponse(403);
 
     boolean result = underTest.isGlobalPat(server.url("").toString(), "token");
@@ -381,7 +381,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void isGlobalPat_throws_when_response_is_server_error() {
+  public void isGlobalPatThrowsWhenResponseIsServerError() {
     enqueueResponse(500);
 
     String serverUrl = server.url("").toString();
@@ -390,7 +390,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void isGlobalPat_throws_when_response_is_203_non_authoritative() {
+  public void isGlobalPatThrowsWhenResponseIs203NonAuthoritative() {
     enqueueResponse(203);
 
     String serverUrl = server.url("").toString();
@@ -399,7 +399,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void isGlobalPat_times_out_quickly_when_probe_host_is_unreachable() {
+  public void isGlobalPatTimesOutQuicklyWhenProbeHostIsUnreachable() {
     server.enqueue(new MockResponse().setSocketPolicy(SocketPolicy.NO_RESPONSE));
     String serverUrl = server.url("").toString();
 
@@ -425,7 +425,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void check_pat_with_trailing_slash() throws InterruptedException {
+  public void checkPatWithTrailingSlash() throws InterruptedException {
     enqueueResponse(200, """
        { "count": 1,
         "value": [
@@ -450,7 +450,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void get_repos_with_trailing_slash() throws InterruptedException {
+  public void getReposWithTrailingSlash() throws InterruptedException {
     enqueueResponse(200, """
       {
         "value": [
@@ -484,7 +484,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void get_repo_with_path_traversal_attempt() throws InterruptedException {
+  public void getRepoWithPathTraversalAttempt() throws InterruptedException {
     enqueueResponse(200, """
       { \
         "id": "Repo-Id-1",
@@ -511,7 +511,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void get_repo_with_protocol_injection_attempt() throws InterruptedException {
+  public void getRepoWithProtocolInjectionAttempt() throws InterruptedException {
     enqueueResponse(200, """
       { \
         "id": "Repo-Id-1",
@@ -538,7 +538,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void get_repo_with_special_characters() throws InterruptedException {
+  public void getRepoWithSpecialCharacters() throws InterruptedException {
     enqueueResponse(200, """
       { \
         "id": "Repo-Id-1",
@@ -565,7 +565,7 @@ public class AzureDevOpsHttpClientTest {
   }
 
   @Test
-  public void constructor_derives_client_from_injected_okHttpClient_preserving_proxy_config() {
+  public void constructorDerivesClientFromInjectedOkHttpClientPreservingProxyConfig() {
     Authenticator proxyAuthenticator = mock(Authenticator.class);
     Interceptor interceptor = chain -> chain.proceed(chain.request());
     OkHttpClient sharedClient = new OkHttpClient.Builder()

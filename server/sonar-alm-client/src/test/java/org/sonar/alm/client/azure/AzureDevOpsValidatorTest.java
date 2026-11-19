@@ -70,21 +70,21 @@ public class AzureDevOpsValidatorTest {
   }
 
   @Test
-  public void checkPatIsNotGlobal_givenServerUrl_doesNotProbe() {
+  public void checkPatIsNotGlobalGivenServerUrlDoesNotProbe() {
     underTest.checkPatIsNotGlobal("https://ado.sonarqube.com/", "token");
 
     verifyNoInteractions(azureDevOpsHttpClient);
   }
 
   @Test
-  public void checkPatIsNotGlobal_givenCloudUrlAndScopedPat_doesNotThrow() {
+  public void checkPatIsNotGlobalGivenCloudUrlAndScopedPatDoesNotThrow() {
     when(azureDevOpsHttpClient.isGlobalPat("token")).thenReturn(false);
 
     underTest.checkPatIsNotGlobal("https://dev.azure.com/myorg", "token");
   }
 
   @Test
-  public void checkPatIsNotGlobal_givenCloudUrlAndGlobalPat_throws() {
+  public void checkPatIsNotGlobalGivenCloudUrlAndGlobalPatThrows() {
     when(azureDevOpsHttpClient.isGlobalPat("token")).thenReturn(true);
 
     assertThatExceptionOfType(IllegalArgumentException.class)
@@ -93,7 +93,7 @@ public class AzureDevOpsValidatorTest {
   }
 
   @Test
-  public void checkPatIsNotGlobal_givenVisualStudioUrlAndGlobalPat_throws() {
+  public void checkPatIsNotGlobalGivenVisualStudioUrlAndGlobalPatThrows() {
     when(azureDevOpsHttpClient.isGlobalPat("token")).thenReturn(true);
 
     assertThatExceptionOfType(IllegalArgumentException.class)
@@ -102,7 +102,7 @@ public class AzureDevOpsValidatorTest {
   }
 
   @Test
-  public void checkPatIsNotGlobal_givenProbeFailure_failsOpenAndLogsWarning() {
+  public void checkPatIsNotGlobalGivenProbeFailureFailsOpenAndLogsWarning() {
     doThrow(new IllegalArgumentException("boom")).when(azureDevOpsHttpClient).isGlobalPat("token");
 
     underTest.checkPatIsNotGlobal("https://dev.azure.com/myorg", "token");
@@ -111,7 +111,7 @@ public class AzureDevOpsValidatorTest {
   }
 
   @Test
-  public void checkPatIsNotGlobal_givenProbeServerError_failsOpenAndLogsWarning() {
+  public void checkPatIsNotGlobalGivenProbeServerErrorFailsOpenAndLogsWarning() {
     doThrow(new AzureDevopsServerException(500, "boom")).when(azureDevOpsHttpClient).isGlobalPat("token");
 
     underTest.checkPatIsNotGlobal("https://dev.azure.com/myorg", "token");

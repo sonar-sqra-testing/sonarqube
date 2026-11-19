@@ -89,7 +89,7 @@ class InternalTagsIssueSensorTest {
   }
 
   @Test
-  void execute_shouldSetInternalTagsOnIssues() {
+  void executeShouldSetInternalTagsOnIssues() {
     SensorContextTester sensorContextTester = SensorContextTester.create(fs.baseDir());
     sensorContextTester.setFileSystem(fs);
 
@@ -101,7 +101,7 @@ class InternalTagsIssueSensorTest {
   }
 
   @Test
-  void execute_shouldNotSetInternalTags_whenDisabledByProperty() {
+  void executeShouldNotSetInternalTagsWhenDisabledByProperty() {
     when(settings.get("sonar.enable.internalTags")).thenReturn(Optional.of("false"));
     SensorContextTester sensorContextTester = SensorContextTester.create(fs.baseDir());
     sensorContextTester.setFileSystem(fs);

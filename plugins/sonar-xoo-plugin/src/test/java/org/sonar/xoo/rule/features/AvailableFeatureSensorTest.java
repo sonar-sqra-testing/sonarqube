@@ -80,7 +80,7 @@ class AvailableFeatureSensorTest {
   }
 
   @Test
-  void execute_shouldRaiseIssue_whenFeatureIsAvailable() {
+  void executeShouldRaiseIssueWhenFeatureIsAvailable() {
     DefaultInputFile inputFile = newTestFile(FILE_CONTENT);
     fs.add(inputFile);
     sensorContextTester.addAvailableFeatures("sca", "asast");
@@ -96,7 +96,7 @@ class AvailableFeatureSensorTest {
   }
 
   @Test
-  void execute_shouldNotRaiseIssue_whenFeatureIsNotAvailable() {
+  void executeShouldNotRaiseIssueWhenFeatureIsNotAvailable() {
     DefaultInputFile inputFile = newTestFile(FILE_CONTENT);
     fs.add(inputFile);
 
@@ -106,7 +106,7 @@ class AvailableFeatureSensorTest {
   }
 
   @Test
-  void execute_shouldNotRaiseIssue_whenNoRequiredFeaturePattern() {
+  void executeShouldNotRaiseIssueWhenNoRequiredFeaturePattern() {
     String content = "This file has no required feature patterns.\n" +
       "Just some regular text.";
     DefaultInputFile inputFile = newTestFile(content);
@@ -118,7 +118,7 @@ class AvailableFeatureSensorTest {
   }
 
   @Test
-  void execute_shouldHandleUnderscoresAndDashesInFeatureNames() {
+  void executeShouldHandleUnderscoresAndDashesInFeatureNames() {
     String content = "[REQUIRED_FEATURE](feature-with-dashes) and [REQUIRED_FEATURE](feature_with_underscores)";
     DefaultInputFile inputFile = newTestFile(content);
     fs.add(inputFile);
@@ -130,7 +130,7 @@ class AvailableFeatureSensorTest {
   }
 
   @Test
-  void execute_shouldNotRaiseIssue_whenRuleNotActive() {
+  void executeShouldNotRaiseIssueWhenRuleNotActive() {
     RuleKey ruleKey = RuleKey.of(XooRulesDefinition.XOO_REPOSITORY, AvailableFeatureSensor.RULE_KEY);
     when(activeRules.find(ruleKey)).thenReturn(null);
     DefaultInputFile inputFile = newTestFile(FILE_CONTENT);

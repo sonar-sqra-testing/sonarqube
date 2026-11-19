@@ -82,7 +82,7 @@ public class GenericPaginatedHttpClientImplTest {
   }
 
   @Test
-  public void get_whenNoPagination_ReturnsCorrectResponse() throws IOException {
+  public void getWhenNoPaginationReturnsCorrectResponse() throws IOException {
 
     GetResponse response = mockResponseWithoutPagination("[\"result1\", \"result2\"]");
     when(appHttpClient.get(APP_URL, accessToken, ENDPOINT + "?per_page=100")).thenReturn(response);
@@ -94,7 +94,7 @@ public class GenericPaginatedHttpClientImplTest {
   }
 
   @Test
-  public void get_whenEndpointAlreadyContainsPathParameter_shouldAddANewParameter() throws IOException {
+  public void getWhenEndpointAlreadyContainsPathParameterShouldAddANewParameter() throws IOException {
     ArgumentCaptor<String> urlCaptor = ArgumentCaptor.forClass(String.class);
 
     GetResponse response = mockResponseWithoutPagination("[\"result1\", \"result2\"]");
@@ -106,7 +106,7 @@ public class GenericPaginatedHttpClientImplTest {
   }
 
   @Test
-  public void getStrict_whenAllPagesHaveContent_returnsResponseFromAllPages() throws IOException {
+  public void getStrictWhenAllPagesHaveContentReturnsResponseFromAllPages() throws IOException {
     GetResponse firstPage = mockResponseWithPagination("[\"result1\"]", "/next-endpoint");
     GetResponse lastPage = mockResponseWithoutPagination("[\"result2\"]");
     when(appHttpClient.get(APP_URL, accessToken, ENDPOINT + "?per_page=100")).thenReturn(firstPage);
@@ -118,7 +118,7 @@ public class GenericPaginatedHttpClientImplTest {
   }
 
   @Test
-  public void getStrict_whenALaterPageHasNoContent_throwsInsteadOfReturningAShortList() throws IOException {
+  public void getStrictWhenALaterPageHasNoContentThrowsInsteadOfReturningAShortList() throws IOException {
     GetResponse firstPage = mockResponseWithPagination("[\"result1\"]", "/next-endpoint");
     GetResponse bodilessPage = mock(GetResponse.class);
     when(bodilessPage.getCode()).thenReturn(200);
@@ -132,7 +132,7 @@ public class GenericPaginatedHttpClientImplTest {
   }
 
   @Test
-  public void get_whenAPageHasNoContent_stillSkipsIt() throws IOException {
+  public void getWhenAPageHasNoContentStillSkipsIt() throws IOException {
     // The tolerant behavior getStrict() opts out of: unchanged for every existing caller.
     GetResponse firstPage = mockResponseWithPagination("[\"result1\"]", "/next-endpoint");
     GetResponse bodilessPage = mock(GetResponse.class);
@@ -160,7 +160,7 @@ public class GenericPaginatedHttpClientImplTest {
   }
 
   @Test
-  public void get_whenPaginationAndRateLimiting_returnsResponseFromAllPages() throws IOException, InterruptedException {
+  public void getWhenPaginationAndRateLimitingReturnsResponseFromAllPages() throws IOException, InterruptedException {
     GetResponse response1 = mockResponseWithPaginationAndRateLimit("[\"result1\", \"result2\"]", "/next-endpoint");
     GetResponse response2 = mockResponseWithoutPagination("[\"result3\"]");
     when(appHttpClient.get(APP_URL, accessToken, ENDPOINT + "?per_page=100")).thenReturn(response1);
@@ -188,7 +188,7 @@ public class GenericPaginatedHttpClientImplTest {
   }
 
   @Test
-  public void get_whenGitHubReturnsNonSuccessCode_shouldThrow() throws IOException {
+  public void getWhenGitHubReturnsNonSuccessCodeShouldThrow() throws IOException {
     GetResponse response1 = mockResponseWithPaginationAndRateLimit("[\"result1\", \"result2\"]", "/next-endpoint");
     GetResponse response2 = mockFailedResponse("failed");
     when(appHttpClient.get(APP_URL, accessToken, ENDPOINT + "?per_page=100")).thenReturn(response1);
@@ -208,7 +208,7 @@ public class GenericPaginatedHttpClientImplTest {
   }
 
   @Test
-  public void getRepositoryTeams_whenRateLimitCheckerThrowsInterruptedException_shouldSucceed() throws IOException, InterruptedException {
+  public void getRepositoryTeamsWhenRateLimitCheckerThrowsInterruptedExceptionShouldSucceed() throws IOException, InterruptedException {
     GetResponse response1 = mockResponseWithPaginationAndRateLimit("[\"result1\", \"result2\"]", "/next-endpoint");
     GetResponse response2 = mockResponseWithoutPagination("[\"result3\"]");
     when(appHttpClient.get(APP_URL, accessToken, ENDPOINT + "?per_page=100")).thenReturn(response1);
@@ -224,7 +224,7 @@ public class GenericPaginatedHttpClientImplTest {
   }
 
   @Test
-  public void getRepositoryCollaborators_whenDevOpsPlatformCallThrowsIOException_shouldLogAndReThrow() throws IOException {
+  public void getRepositoryCollaboratorsWhenDevOpsPlatformCallThrowsIOExceptionShouldLogAndReThrow() throws IOException {
     AccessToken accessToken = mock();
     when(appHttpClient.get(APP_URL, accessToken, "query?per_page=100")).thenThrow(new IOException("error"));
 

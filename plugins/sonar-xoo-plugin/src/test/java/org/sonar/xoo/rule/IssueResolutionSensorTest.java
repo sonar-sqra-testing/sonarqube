@@ -46,7 +46,7 @@ class IssueResolutionSensorTest {
   private final IssueResolutionSensor sensor = new IssueResolutionSensor();
 
   @Test
-  void test_parse_accept_issue_resolution() throws IOException {
+  void testParseAcceptIssueResolution() throws IOException {
     DefaultInputFile inputFile = createInputFile("//sonar-resolve java:S899 Mr X allowed me\n");
     SensorContextTester context = createContext(inputFile);
 
@@ -65,7 +65,7 @@ class IssueResolutionSensorTest {
   }
 
   @Test
-  void test_parse_fp_issue_resolution() throws IOException {
+  void testParseFpIssueResolution() throws IOException {
     DefaultInputFile inputFile = createInputFile("//sonar-resolve [FP] java:S123 false positive\n");
     SensorContextTester context = createContext(inputFile);
 
@@ -84,7 +84,7 @@ class IssueResolutionSensorTest {
   }
 
   @Test
-  void test_parse_multiple_rule_keys() throws IOException {
+  void testParseMultipleRuleKeys() throws IOException {
     DefaultInputFile inputFile = createInputFile("//sonar-resolve java:S899,java:S1036 comment\n");
     SensorContextTester context = createContext(inputFile);
 
@@ -101,7 +101,7 @@ class IssueResolutionSensorTest {
   }
 
   @Test
-  void test_no_issue_resolution_when_no_sonar_resolve_comments() throws IOException {
+  void testNoIssueResolutionWhenNoSonarResolveComments() throws IOException {
     DefaultInputFile inputFile = createInputFile("some regular code\nno issue resolution here\n");
     SensorContextTester context = createContext(inputFile);
 
@@ -111,7 +111,7 @@ class IssueResolutionSensorTest {
   }
 
   @Test
-  void test_explicit_accept_status() throws IOException {
+  void testExplicitAcceptStatus() throws IOException {
     DefaultInputFile inputFile = createInputFile("//sonar-resolve [ACCEPT] java:S899 comment\n");
     SensorContextTester context = createContext(inputFile);
 
