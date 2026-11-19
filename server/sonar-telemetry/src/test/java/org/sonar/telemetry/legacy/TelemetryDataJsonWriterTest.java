@@ -399,7 +399,7 @@ class TelemetryDataJsonWriterTest {
         ]
       }
       """
-      .formatted(DigestUtil.sha3_224Hex("uuid-0"), DigestUtil.sha3_224Hex("uuid-1"), DigestUtil.sha3_224Hex("uuid-2")));
+      .formatted(DigestUtil.sha3224Hex("uuid-0"), DigestUtil.sha3224Hex("uuid-1"), DigestUtil.sha3224Hex("uuid-2")));
   }
 
   @Test

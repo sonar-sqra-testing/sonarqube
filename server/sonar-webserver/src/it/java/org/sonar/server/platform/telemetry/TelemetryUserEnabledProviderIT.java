@@ -87,8 +87,8 @@ class TelemetryUserEnabledProviderIT {
 
     Map<String, Boolean> uuidValues = underTest.getValues();
 
-    String anonymizedUser1 = DigestUtil.sha3_224Hex(userDto1.getUuid());
-    String anonymizedUser2 = DigestUtil.sha3_224Hex(userDto2.getUuid());
+    String anonymizedUser1 = DigestUtil.sha3224Hex(userDto1.getUuid());
+    String anonymizedUser2 = DigestUtil.sha3224Hex(userDto2.getUuid());
     assertThat(uuidValues.keySet()).containsExactlyInAnyOrder(anonymizedUser1, anonymizedUser2);
   }
 

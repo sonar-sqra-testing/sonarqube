@@ -117,7 +117,7 @@ public class TelemetryDataJsonWriter {
       json.beginArray();
       telemetryData.getUserTelemetries().forEach(user -> {
         json.beginObject();
-        json.prop("userUuid", DigestUtil.sha3_224Hex(user.getUuid()));
+        json.prop("userUuid", DigestUtil.sha3224Hex(user.getUuid()));
         json.prop("status", user.isActive() ? "active" : "inactive");
         json.prop("identityProvider", user.getExternalIdentityProvider());
 

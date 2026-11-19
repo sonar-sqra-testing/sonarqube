@@ -51,7 +51,7 @@ public class TelemetryUserEnabledProvider extends AbstractTelemetryDataProvider<
       do {
         userDtos = dbClient.userDao().selectUsers(dbSession, UserQuery.builder().build(), page, pageSize);
         for (UserDto userDto : userDtos) {
-          String anonymizedUuid = DigestUtil.sha3_224Hex(userDto.getUuid());
+          String anonymizedUuid = DigestUtil.sha3224Hex(userDto.getUuid());
           result.put(anonymizedUuid, userDto.isActive());
         }
         page++;
