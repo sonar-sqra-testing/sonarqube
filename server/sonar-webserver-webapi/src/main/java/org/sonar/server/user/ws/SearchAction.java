@@ -51,6 +51,7 @@ public class SearchAction implements UsersWsAction {
   static final String SONAR_LINT_LAST_CONNECTION_DATE_FROM = "slLastConnectedAfter";
   static final String SONAR_LINT_LAST_CONNECTION_DATE_TO = "slLastConnectedBefore";
   static final String EXTERNAL_IDENTITY = "externalIdentity";
+  private static final String NEW_OPTIONAL_PARAMETERS = "New optional parameters ";
 
   private final UserSession userSession;
   private final UserService userService;
@@ -83,10 +84,10 @@ public class SearchAction implements UsersWsAction {
       .setChangelog(
         new Change("26.9", "Field 'scmAccounts' is only returned when user has Administer System permission or for the logged-in user"),
         new Change("10.4", "Deprecated. Use GET api/v2/users-management/users instead"),
-        new Change("10.3", "New optional parameters " + EXTERNAL_IDENTITY + " to find a user by its IdP login"),
-        new Change("10.1", "New optional parameters " + SONAR_LINT_LAST_CONNECTION_DATE_FROM +
+        new Change("10.3", NEW_OPTIONAL_PARAMETERS + EXTERNAL_IDENTITY + " to find a user by its IdP login"),
+        new Change("10.1", NEW_OPTIONAL_PARAMETERS + SONAR_LINT_LAST_CONNECTION_DATE_FROM +
           " and " + SONAR_LINT_LAST_CONNECTION_DATE_TO + " to filter users by SonarLint last connection date. Only available with Administer System permission."),
-        new Change("10.1", "New optional parameters " + LAST_CONNECTION_DATE_FROM +
+        new Change("10.1", NEW_OPTIONAL_PARAMETERS + LAST_CONNECTION_DATE_FROM +
           " and " + LAST_CONNECTION_DATE_TO + " to filter users by SonarQube last connection date. Only available with Administer System permission."),
         new Change("10.1", "New field 'sonarLintLastConnectionDate' is added to response"),
         new Change("10.0", "'q' parameter values is now always performing a case insensitive match"),

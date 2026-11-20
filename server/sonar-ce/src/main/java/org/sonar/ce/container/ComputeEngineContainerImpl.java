@@ -184,6 +184,8 @@ import static org.sonar.process.ProcessProperties.Property.CLUSTER_ENABLED;
 
 public class ComputeEngineContainerImpl implements ComputeEngineContainer {
 
+  private static final String CORE_EXTENSION_LOADING_NOT_AVAILABLE = "Core extension loading mechanism is not available";
+
   private ComputeEngineStatus computeEngineStatus = null;
   @CheckForNull
   private SpringComponentContainer level1 = null;
@@ -361,7 +363,7 @@ public class ComputeEngineContainerImpl implements ComputeEngineContainer {
     );
 
     level2Container.getParent().getOptionalComponentByType(CECoreExtensionsInstaller.class)
-      .orElseThrow(() -> new IllegalStateException("Core extension loading mechanism is not available"))
+      .orElseThrow(() -> new IllegalStateException(CORE_EXTENSION_LOADING_NOT_AVAILABLE))
       .install(level2Container, hasPlatformLevel(2), noAdditionalSideFilter());
   }
 
@@ -375,7 +377,7 @@ public class ComputeEngineContainerImpl implements ComputeEngineContainer {
       SynchronousAsyncExecution.class);
 
     level3Container.getParent().getOptionalComponentByType(CECoreExtensionsInstaller.class)
-      .orElseThrow(() -> new IllegalStateException("Core extension loading mechanism is not available"))
+      .orElseThrow(() -> new IllegalStateException(CORE_EXTENSION_LOADING_NOT_AVAILABLE))
       .install(level3Container, hasPlatformLevel(3), noAdditionalSideFilter());
 
   }
@@ -514,11 +516,11 @@ public class ComputeEngineContainerImpl implements ComputeEngineContainer {
     addClusterOrStandaloneComponents(level4Container, props);
 
     level4Container.getParent().getOptionalComponentByType(CECoreExtensionsInstaller.class)
-      .orElseThrow(() -> new IllegalStateException("Core extension loading mechanism is not available"))
+      .orElseThrow(() -> new IllegalStateException(CORE_EXTENSION_LOADING_NOT_AVAILABLE))
       .install(level4Container, hasPlatformLevel4OrNone(), noAdditionalSideFilter());
 
     level4Container.getParent().getOptionalComponentByType(ServerExtensionInstaller.class)
-      .orElseThrow(() -> new IllegalStateException("Core extension loading mechanism is not available"))
+      .orElseThrow(() -> new IllegalStateException(CORE_EXTENSION_LOADING_NOT_AVAILABLE))
       .installExtensions(level4Container);
   }
 

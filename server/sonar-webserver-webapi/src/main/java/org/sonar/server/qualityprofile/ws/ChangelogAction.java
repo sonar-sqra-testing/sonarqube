@@ -62,6 +62,8 @@ import static org.sonarqube.ws.client.qualityprofile.QualityProfileWsParameters.
 
 public class ChangelogAction implements QProfileWsAction {
 
+  private static final String SEVERITY = "severity";
+
   private final QProfileWsSupport wsSupport;
   private final Languages languages;
   private final DbClient dbClient;
@@ -213,7 +215,7 @@ public class ChangelogAction implements QProfileWsAction {
           changeWriter
             .beginObject()
             .prop("softwareQuality", impact.getSoftwareQuality().toString())
-            .prop("severity", impact.getSeverity().toString())
+            .prop(SEVERITY, impact.getSeverity().toString())
             .endObject();
         }
 
@@ -228,7 +230,7 @@ public class ChangelogAction implements QProfileWsAction {
 
   private static void writeChanges(JsonWriter json, QProfileChangeDto change) {
     json.name("params").beginObject()
-      .prop("severity", change.getDataAsMap().get("severity"));
+      .prop(SEVERITY, change.getDataAsMap().get(SEVERITY));
     json.prop("prioritizedRule", change.getDataAsMap().get("prioritizedRule"));
     change.getDataAsMap().entrySet().stream()
       .filter(entry -> entry.getKey().startsWith("param_"))

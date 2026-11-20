@@ -63,7 +63,9 @@ public class XooRulesDefinition implements RulesDefinition {
   public static final String XOO2_REPOSITORY = "xoo2";
 
   private static final String TEN_MIN = "10min";
+  private static final String ONE_MIN_GAP_DESCRIPTION = "It takes about 1 minute to an experienced software craftsman to remove a line of code";
   public static final String COMPLIANCE_REPORT_KEY_DESCRIPTION = "A rule to test compliance reports";
+  private static final String ONE_EXTERNAL_ISSUE_PER_LINE_DESCRIPTION = "Generates one external issue in each line";
 
   @Nullable
   private final Version version;
@@ -98,7 +100,7 @@ public class XooRulesDefinition implements RulesDefinition {
     addAllDescriptionSections(oneIssuePerLine, "Generate an issue on each line of a file. It requires the metric \"lines\".");
     oneIssuePerLine
       .setDebtRemediationFunction(hasTag.debtRemediationFunctions().linear("1min"))
-      .setGapDescription("It takes about 1 minute to an experienced software craftsman to remove a line of code");
+      .setGapDescription(ONE_MIN_GAP_DESCRIPTION);
 
     repo.done();
   }
@@ -143,7 +145,7 @@ public class XooRulesDefinition implements RulesDefinition {
     addHowToFixSectionsWithContexts(oneIssuePerLine);
     oneIssuePerLine
       .setDebtRemediationFunction(oneIssuePerLine.debtRemediationFunctions().linear("1min"))
-      .setGapDescription("It takes about 1 minute to an experienced software craftsman to remove a line of code")
+      .setGapDescription(ONE_MIN_GAP_DESCRIPTION)
       .addEducationPrincipleKeys("defense_in_depth", "never_trust_user_input");
 
     NewRule oneQuickFixPerLine = repo.createRule(OneQuickFixPerLineSensor.RULE_KEY).setName("One Quick Fix Per Line")
@@ -155,7 +157,7 @@ public class XooRulesDefinition implements RulesDefinition {
 
     oneQuickFixPerLine
       .setDebtRemediationFunction(oneQuickFixPerLine.debtRemediationFunctions().linear("1min"))
-      .setGapDescription("It takes about 1 minute to an experienced software craftsman to remove a line of code");
+      .setGapDescription(ONE_MIN_GAP_DESCRIPTION);
 
     NewRule oneIssueOnDirPerFile = repo.createRule(OneIssueOnDirPerFileSensor.RULE_KEY).setName("One Issue On Dir Per File");
     addAllDescriptionSections(oneIssueOnDirPerFile,
@@ -442,8 +444,8 @@ public class XooRulesDefinition implements RulesDefinition {
 
     repo.createRule(OnePredefinedRuleExternalIssueCctPerLineSensor.RULE_ID)
       .setScope(RuleScope.ALL)
-      .setHtmlDescription("Generates one external issue in each line")
-      .addDescriptionSection(descriptionSection(INTRODUCTION_SECTION_KEY, "Generates one external issue in each line"))
+      .setHtmlDescription(ONE_EXTERNAL_ISSUE_PER_LINE_DESCRIPTION)
+      .addDescriptionSection(descriptionSection(INTRODUCTION_SECTION_KEY, ONE_EXTERNAL_ISSUE_PER_LINE_DESCRIPTION))
       .setName("One external issue per line");
 
     repo.done();
@@ -456,8 +458,8 @@ public class XooRulesDefinition implements RulesDefinition {
       .setSeverity(OnePredefinedRuleExternalIssuePerLineSensor.SEVERITY)
       .setType(OnePredefinedRuleExternalIssuePerLineSensor.TYPE)
       .setScope(RuleScope.ALL)
-      .setHtmlDescription("Generates one external issue in each line")
-      .addDescriptionSection(descriptionSection(INTRODUCTION_SECTION_KEY, "Generates one external issue in each line"))
+      .setHtmlDescription(ONE_EXTERNAL_ISSUE_PER_LINE_DESCRIPTION)
+      .addDescriptionSection(descriptionSection(INTRODUCTION_SECTION_KEY, ONE_EXTERNAL_ISSUE_PER_LINE_DESCRIPTION))
       .setName("One external issue per line")
       .setTags("riri", "fifi", "loulou");
 

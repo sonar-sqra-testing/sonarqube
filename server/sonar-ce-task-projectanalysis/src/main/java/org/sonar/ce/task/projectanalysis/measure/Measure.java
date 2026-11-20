@@ -34,6 +34,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 import static org.sonar.ce.task.projectanalysis.measure.Measure.Level.toLevel;
+import static org.sonar.ce.task.projectanalysis.measure.MeasureToStringKeys.VALUE_TYPE;
 import static org.sonar.ce.task.projectanalysis.measure.ValueType.BOOLEAN;
 import static org.sonar.ce.task.projectanalysis.measure.ValueType.DOUBLE;
 import static org.sonar.ce.task.projectanalysis.measure.ValueType.INT;
@@ -246,7 +247,7 @@ public interface Measure {
     @Override
     public String toString() {
       return toStringHelper(this)
-        .add("valueType", valueType)
+        .add(VALUE_TYPE, valueType)
         .add("value", value)
         .add("data", data)
         .add("dataLevel", dataLevel)
@@ -337,7 +338,7 @@ public interface Measure {
     @Override
     public String toString() {
       return toStringHelper(this)
-        .add("valueType", valueType)
+        .add(VALUE_TYPE, valueType)
         .add("value", value)
         .toString();
     }
@@ -397,7 +398,7 @@ public interface Measure {
     @Override
     public String toString() {
       return toStringHelper(this)
-        .add("valueType", NO_VALUE)
+        .add(VALUE_TYPE, NO_VALUE)
         .toString();
     }
   }

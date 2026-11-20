@@ -37,6 +37,8 @@ import static org.sonar.process.ProcessProperties.Property.CLUSTER_NODE_HZ_PORT;
 import static org.sonar.process.cluster.hz.JoinConfigurationType.KUBERNETES;
 
 public class HazelcastMemberBuilder {
+  private static final String FALSE = "false";
+
   private String nodeName;
   private int port;
   private ProcessId processId;
@@ -126,13 +128,13 @@ public class HazelcastMemberBuilder {
       // Increase the number of tries
       .setProperty("hazelcast.tcp.join.port.try.count", "10")
       // Don't bind on all interfaces
-      .setProperty("hazelcast.socket.bind.any", "false")
+      .setProperty("hazelcast.socket.bind.any", FALSE)
       // Don't phone home
-      .setProperty("hazelcast.phone.home.enabled", "false")
+      .setProperty("hazelcast.phone.home.enabled", FALSE)
       // Use slf4j for logging
       .setProperty("hazelcast.logging.type", "slf4j")
       // support ip v6
-      .setProperty("hazelcast.prefer.ipv4.stack", "false")
+      .setProperty("hazelcast.prefer.ipv4.stack", FALSE)
       .setProperty("hazelcast.partial.member.disconnection.resolution.heartbeat.count", "5");
 
     MemberAttributeConfig attributes = config.getMemberAttributeConfig();

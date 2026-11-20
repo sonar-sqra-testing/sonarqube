@@ -217,7 +217,7 @@ public class ComponentAction implements NavigationWsAction {
       .prop("description", component.description())
       .prop("isFavorite", isFavourite);
     if (branchKey != null) {
-      json.prop("branch", branchKey);
+      json.prop(PARAM_BRANCH, branchKey);
     }
     if (ComponentQualifiers.APP.equals(component.qualifier())) {
       json.prop("canBrowseAllChildProjects", userSession.hasChildProjectsPermission(USER, component));

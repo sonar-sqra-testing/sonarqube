@@ -43,6 +43,7 @@ import static java.util.Objects.requireNonNull;
 public class Files2 {
 
   public static final Files2 FILES2 = new Files2();
+  private static final String FILE_IS_DIRECTORY_MESSAGE = "File %s exists but is a directory";
 
   private Files2() {
     // use FILES2 singleton
@@ -144,7 +145,7 @@ public class Files2 {
    */
   public FileOutputStream openOutputStreamOrThrowIOE(File file, boolean append) throws IOException {
     if (file.exists()) {
-      checkOrThrowIOE(!file.isDirectory(), "File %s exists but is a directory", file);
+      checkOrThrowIOE(!file.isDirectory(), FILE_IS_DIRECTORY_MESSAGE, file);
       checkOrThrowIOE(file.canWrite(), "File %s can not be written to", file);
     } else {
       File parent = file.getParentFile();
@@ -189,7 +190,7 @@ public class Files2 {
    * @throws IOException if the file can not be read
    */
   public FileInputStream openInputStreamOrThrowIOE(File file) throws IOException {
-    checkOrThrowIOE(!file.isDirectory(), "File %s exists but is a directory", file);
+    checkOrThrowIOE(!file.isDirectory(), FILE_IS_DIRECTORY_MESSAGE, file);
     checkOrThrowIOE(file.exists(), "File %s does not exist", file);
     checkOrThrowIOE(file.canRead(), "File %s can not be read", file);
     return new FileInputStream(file);
@@ -221,7 +222,7 @@ public class Files2 {
    * @throws IOException if {@code toDir} can not be created
    */
   public void unzipToDirOrThrowIOE(File zipFile, File toDir) throws IOException {
-    checkOrThrowIOE(!zipFile.isDirectory(), "File %s exists but is a directory", zipFile);
+    checkOrThrowIOE(!zipFile.isDirectory(), FILE_IS_DIRECTORY_MESSAGE, zipFile);
     checkOrThrowIOE(zipFile.exists(), "File %s does not exist", zipFile);
     ZipUtils.unzip(zipFile, toDir);
   }

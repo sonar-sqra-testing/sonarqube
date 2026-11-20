@@ -40,6 +40,8 @@ import static org.sonar.db.measure.MeasureTesting.newProjectMeasureDto;
 import static org.sonar.db.metric.MetricTesting.newMetricDto;
 
 public class MeasureDbTester {
+  private static final String ISSUES_DISTRIBUTION_DATA = "{\"LOW\":0,\"MEDIUM\":1,\"HIGH\":0,\"total\":1}";
+
   private final DbClient dbClient;
   private final DbTester db;
 
@@ -152,9 +154,9 @@ public class MeasureDbTester {
       });
       put(CoreMetrics.QUALITY_GATE_DETAILS_KEY, (metric, m) -> m.setData("{\"level\":\"OK\",\"conditions\":[],\"ignoredConditions\":false}"));
       put(CoreMetrics.QUALITY_PROFILES_KEY, (metric, m) -> m.setData("[{\"key\":\"62969160-dcda-40a0-9981-772b7820d587\",\"language\":\"xml\",\"name\":\"Sonar way\",\"rulesUpdatedAt\":\"2024-09-11T14:40:55+0000\"}]"));
-      put(CoreMetrics.RELIABILITY_ISSUES_KEY, (metric, m) -> m.setData("{\"LOW\":0,\"MEDIUM\":1,\"HIGH\":0,\"total\":1}"));
-      put(CoreMetrics.MAINTAINABILITY_ISSUES_KEY, (metric, m) -> m.setData("{\"LOW\":0,\"MEDIUM\":1,\"HIGH\":0,\"total\":1}"));
-      put(CoreMetrics.SECURITY_ISSUES_KEY, (metric, m) -> m.setData("{\"LOW\":0,\"MEDIUM\":1,\"HIGH\":0,\"total\":1}"));
+      put(CoreMetrics.RELIABILITY_ISSUES_KEY, (metric, m) -> m.setData(ISSUES_DISTRIBUTION_DATA));
+      put(CoreMetrics.MAINTAINABILITY_ISSUES_KEY, (metric, m) -> m.setData(ISSUES_DISTRIBUTION_DATA));
+      put(CoreMetrics.SECURITY_ISSUES_KEY, (metric, m) -> m.setData(ISSUES_DISTRIBUTION_DATA));
       put(CoreMetrics.NCLOC_LANGUAGE_DISTRIBUTION_KEY, (metric, m) -> m.setData("java=123;xml=10"));
     }
   };

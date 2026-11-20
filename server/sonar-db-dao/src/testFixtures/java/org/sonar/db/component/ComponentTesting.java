@@ -36,6 +36,8 @@ import static org.sonar.db.portfolio.PortfolioDto.SelectionMode.NONE;
 
 public class ComponentTesting {
 
+  private static final String NAME_PREFIX = "NAME_";
+
   public static ComponentDto newFileDto(ComponentDto branch) {
     return newFileDto(branch, (ComponentDto) null);
   }
@@ -57,7 +59,7 @@ public class ComponentTesting {
   }
 
   public static ComponentDto newFileDto(ComponentDto branch, @Nullable ComponentDto directory, String fileUuid, @Nullable String mainBranchUuid) {
-    String filename = "NAME_" + fileUuid;
+    String filename = NAME_PREFIX + fileUuid;
     String path = directory != null ? directory.path() + "/" + filename : branch.path() + "/" + filename;
     return newChildComponent(fileUuid, branch, directory == null ? branch : directory)
       .setKey("FILE_KEY_" + fileUuid)
@@ -72,10 +74,10 @@ public class ComponentTesting {
   }
 
   public static ComponentDto newDependencyDto(ComponentDto branch, String dependencyUuid) {
-    String name = "NAME_" + dependencyUuid;
+    String name = NAME_PREFIX + dependencyUuid;
     return newChildComponent(dependencyUuid, branch, branch)
       .setKey("DEP_KEY_" + dependencyUuid)
-      .setName("NAME_" + dependencyUuid)
+      .setName(NAME_PREFIX + dependencyUuid)
       .setLongName("LONGNAME_" + dependencyUuid)
       .setScope("DEP")
       .setBranchUuid(branch.branchUuid())
@@ -144,7 +146,7 @@ public class ComponentTesting {
       .setUuidPath(UUID_PATH_OF_ROOT)
       .setBranchUuid(uuid)
       .setKey("KEY_" + uuid)
-      .setName("NAME_" + uuid)
+      .setName(NAME_PREFIX + uuid)
       .setLongName("LONG_NAME_" + uuid)
       .setDescription("DESCRIPTION_" + uuid)
       .setScope(ComponentScopes.PROJECT)

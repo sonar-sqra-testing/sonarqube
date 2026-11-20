@@ -138,6 +138,7 @@ public class SearchAction implements RulesWsAction {
     FACET_ACTIVE_IMPACT_SEVERITY,
     FACET_COMPLIANCE_STANDARDS
   };
+  private static final String VERSION_2025_6 = "2025.6";
 
   private final RuleQueryFactory ruleQueryFactory;
   private final DbClient dbClient;
@@ -222,8 +223,8 @@ public class SearchAction implements RulesWsAction {
         new Change("10.8", "The value 'severity' for the 'fields' parameter is not deprecated anymore."),
         new Change("2025.1", format("The facet '%s' has been added.", FACET_ACTIVE_IMPACT_SEVERITY)),
         new Change("2025.1", "The deprecated field 'htmlDesc' is not returned anymore, even if specified in the 'fields' parameter."),
-        new Change("2025.6", format("The facet '%s' was added.", FACET_COMPLIANCE_STANDARDS)),
-        new Change("2025.6", format("The parameter '%s' was added.", PARAM_COMPLIANCE_STANDARDS)),
+        new Change(VERSION_2025_6, format("The facet '%s' was added.", FACET_COMPLIANCE_STANDARDS)),
+        new Change(VERSION_2025_6, format("The parameter '%s' was added.", PARAM_COMPLIANCE_STANDARDS)),
         new Change("2026.2", "Description-related fields in the response are obfuscated for anonymous users."));
 
     action.createParam(FACETS)
@@ -234,7 +235,7 @@ public class SearchAction implements RulesWsAction {
     action
       .createParam(PARAM_COMPLIANCE_STANDARDS)
       .setDescription("Comma-separated list of compliance standards")
-      .setSince("2025.6")
+      .setSince(VERSION_2025_6)
       .setExampleValue("asvs:4.0.3=6.1.2");
 
     WebService.NewParam paramFields = action.createParam(FIELDS)

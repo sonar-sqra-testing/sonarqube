@@ -44,6 +44,8 @@ public class EducationRulesDefinition implements RulesDefinition {
   private static final String[] ALL_SECTIONS = {INTRODUCTION_SECTION_KEY, ROOT_CAUSE_SECTION_KEY, ASSESS_THE_PROBLEM_SECTION_KEY,
     RESOURCES_SECTION_KEY, HOW_TO_FIX_SECTION_KEY};
   private static final String IGNORED_FAKE_SECTION = "fake_section_to_be_ignored";
+  private static final String TRIGGER_ISSUE_DESCRIPTION = "trigger an issue using this rule you need to scan any text file with a line " +
+    "containing %s key word.";
 
   public static final String[] CONTEXTS = {"spring", "hibernate", "apache_commons", "vaadin", "mybatis"};
 
@@ -92,7 +94,7 @@ public class EducationRulesDefinition implements RulesDefinition {
 
     ruleWithSingleContext
       .setHtmlDescription(String.format("This rule contains description sections and single context for 'how to fix' section. To " +
-        "trigger an issue using this rule you need to scan any text file with a line containing %s key word.", ruleKey));
+        TRIGGER_ISSUE_DESCRIPTION, ruleKey));
 
     addNonContextualizedDescriptionSections(ruleWithSingleContext);
 
@@ -142,7 +144,7 @@ public class EducationRulesDefinition implements RulesDefinition {
 
     rule2CodeSnippetsIn2Sections
       .setHtmlDescription(String.format("This rule contains description sections and 2 linked code snippets in 2 sections. To " +
-          "trigger an issue using this rule you need to scan any text file with a line containing %s key word.", ruleKey));
+          TRIGGER_ISSUE_DESCRIPTION, ruleKey));
 
     String completelyDifferentSnippetsHtml = readResource("2completelyDifferentSnippets.html");
     String codeSnippetsHtml = readResource("2codeSnippets.html");
@@ -162,7 +164,7 @@ public class EducationRulesDefinition implements RulesDefinition {
 
     rule2CodeSnippetsInTheSameSection
       .setHtmlDescription(String.format("This rule contains description sections and 4 linked code snippets in the same section. To " +
-        "trigger an issue using this rule you need to scan any text file with a line containing %s key word.", ruleKey));
+        TRIGGER_ISSUE_DESCRIPTION, ruleKey));
 
     String codeSnippetsHtml = readResource("4codeSnippets.html");
 
